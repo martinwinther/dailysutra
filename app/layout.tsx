@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
+import { ThemeProvider } from "../components/theme-provider";
+import { ThemeToggle } from "../components/theme-toggle";
 
 export const metadata: Metadata = {
   title: "52 Weeks of Raja Yoga",
-  description: "A one-year structured practice journey based on Patañjali's Yoga Sūtras",
+  description: "A 52-week Raja Yoga practice journey based on the Yoga Sūtras.",
 };
 
 export default function RootLayout({
@@ -13,47 +15,52 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="min-h-screen bg-slate-950 text-slate-100">
-        <div className="flex min-h-screen flex-col">
-          <nav className="border-b border-slate-800">
-            <div className="mx-auto flex max-w-4xl items-center gap-6 px-4 py-4">
-              <Link
-                href="/"
-                className="text-lg font-semibold text-slate-100 hover:text-slate-200"
-              >
-                52 Weeks of Raja Yoga
-              </Link>
-              <div className="flex gap-4">
-                <Link
-                  href="/"
-                  className="text-sm text-slate-400 hover:text-slate-200"
-                >
-                  Home
-                </Link>
-                <Link
-                  href="/progress"
-                  className="text-sm text-slate-400 hover:text-slate-200"
-                >
-                  Progress
-                </Link>
-                <Link
-                  href="/journal"
-                  className="text-sm text-slate-400 hover:text-slate-200"
-                >
-                  Journal
-                </Link>
-                <Link
-                  href="/settings"
-                  className="text-sm text-slate-400 hover:text-slate-200"
-                >
-                  Settings
-                </Link>
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <ThemeProvider>
+          <div className="flex min-h-screen flex-col">
+            <header className="glass-nav sticky top-0 z-20">
+              <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
+                <div className="flex items-center gap-6">
+                  <span className="text-sm font-semibold tracking-wide">
+                    52 Weeks of Raja Yoga
+                  </span>
+                  <nav className="hidden gap-4 text-sm text-[hsl(var(--muted))] sm:flex">
+                    <Link href="/" className="hover:text-[hsl(var(--text))]">
+                      Home
+                    </Link>
+                    <Link
+                      href="/progress"
+                      className="hover:text-[hsl(var(--text))]"
+                    >
+                      Progress
+                    </Link>
+                    <Link
+                      href="/journal"
+                      className="hover:text-[hsl(var(--text))]"
+                    >
+                      Journal
+                    </Link>
+                    <Link
+                      href="/settings"
+                      className="hover:text-[hsl(var(--text))]"
+                    >
+                      Settings
+                    </Link>
+                  </nav>
+                </div>
+                <div className="flex items-center gap-2">
+                  <ThemeToggle />
+                </div>
               </div>
-            </div>
-          </nav>
-          {children}
-        </div>
+            </header>
+            <main className="flex-1">
+              <div className="mx-auto max-w-5xl px-4 py-8 sm:py-10">
+                {children}
+              </div>
+            </main>
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );

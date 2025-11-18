@@ -2,3 +2,82 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --bg: 210 40% 98%;
+  --bg-elevated: 210 40% 100%;
+  --surface: 210 40% 100%;
+  --border: 215 20% 80%;
+  --text: 222 47% 11%;
+  --muted: 215 20% 50%;
+  --accent: 222 84% 56%;
+  --accent-soft: 222 84% 96%;
+}
+
+.dark {
+  --bg: 222 47% 7%;
+  --bg-elevated: 222 47% 11%;
+  --surface: 222 47% 13%;
+  --border: 215 25% 35%;
+  --text: 210 40% 98%;
+  --muted: 215 20% 70%;
+  --accent: 222 84% 60%;
+  --accent-soft: 222 84% 20%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  color: hsl(var(--text));
+  background: radial-gradient(
+    circle at top,
+    hsl(222 84% 8%),
+    hsl(var(--bg))
+  );
+}
+
+.glass-card {
+  background: linear-gradient(
+    135deg,
+    hsla(var(--surface), 0.85),
+    hsla(var(--surface), 0.65)
+  );
+  border: 1px solid hsla(var(--border), 0.6);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+}
+
+.glass-nav {
+  background: linear-gradient(
+    135deg,
+    hsla(var(--bg-elevated), 0.8),
+    hsla(var(--bg-elevated), 0.5)
+  );
+  border-bottom: 1px solid hsla(var(--border), 0.6);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium transition-colors;
+  background: linear-gradient(135deg, hsl(var(--accent)), hsl(222 84% 72%));
+  color: white;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.05);
+}
+
+.btn-ghost {
+  @apply inline-flex items-center justify-center rounded-full px-3 py-1.5 text-sm font-medium transition-colors;
+  background: transparent;
+  color: hsl(var(--text));
+}
+
+.btn-ghost:hover {
+  background: hsla(var(--accent-soft), 0.6);
+}
+
