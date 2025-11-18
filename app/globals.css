@@ -3,17 +3,6 @@
 @tailwind utilities;
 
 :root {
-  --bg: 220 15% 96%;
-  --bg-elevated: 220 15% 98%;
-  --surface: 0 0% 100%;
-  --border: 220 15% 90%;
-  --text: 220 15% 8%;
-  --muted: 220 10% 40%;
-  --accent: 262 80% 50%;
-  --accent-soft: 262 80% 95%;
-}
-
-.dark {
   --bg: 220 15% 8%;
   --bg-elevated: 220 15% 10%;
   --surface: 220 15% 12%;
@@ -31,10 +20,6 @@
 body {
   min-height: 100vh;
   color: hsl(var(--text));
-  background: hsl(var(--bg));
-}
-
-.dark body {
   background: radial-gradient(
     ellipse at top,
     hsl(220 20% 6%),
@@ -43,20 +28,6 @@ body {
 }
 
 .glass-card {
-  background: linear-gradient(
-    135deg,
-    hsla(var(--surface), 0.25),
-    hsla(var(--surface), 0.2)
-  );
-  border: 1px solid hsla(var(--border), 0.18);
-  backdrop-filter: blur(12px) saturate(180%);
-  -webkit-backdrop-filter: blur(12px) saturate(180%);
-  box-shadow: 
-    0 1px 2px rgba(0, 0, 0, 0.04),
-    0 4px 8px rgba(0, 0, 0, 0.06);
-}
-
-.dark .glass-card {
   background: linear-gradient(
     135deg,
     hsla(var(--surface), 0.35),
@@ -73,22 +44,12 @@ body {
 .glass-nav {
   background: linear-gradient(
     135deg,
-    hsla(var(--bg-elevated), 0.3),
-    hsla(var(--bg-elevated), 0.25)
-  );
-  border-bottom: 1px solid hsla(var(--border), 0.2);
-  backdrop-filter: blur(12px) saturate(180%);
-  -webkit-backdrop-filter: blur(12px) saturate(180%);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-}
-
-.dark .glass-nav {
-  background: linear-gradient(
-    135deg,
     hsla(var(--bg-elevated), 0.4),
     hsla(var(--bg-elevated), 0.35)
   );
   border-bottom: 1px solid hsla(var(--border), 0.25);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 

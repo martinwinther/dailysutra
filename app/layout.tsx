@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "../components/theme-provider";
-import { ThemeToggle } from "../components/theme-toggle";
 import { MainNav } from "../components/main-nav";
 
 export const metadata: Metadata = {
@@ -15,20 +14,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body>
         <ThemeProvider>
           <div className="flex min-h-screen flex-col">
             <header className="glass-nav sticky top-0 z-20">
-              <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
+              <div className="mx-auto flex max-w-5xl items-center px-4 py-3">
                 <div className="flex items-center gap-6">
                   <span className="text-sm font-semibold tracking-wide text-[hsl(var(--text))]">
                     52 Weeks of Raja Yoga
                   </span>
                   <MainNav />
-                </div>
-                <div className="flex items-center gap-2">
-                  <ThemeToggle />
                 </div>
               </div>
             </header>
