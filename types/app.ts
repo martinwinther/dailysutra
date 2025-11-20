@@ -16,3 +16,4 @@ export interface AppSettings {
   startDate: string | null; // ISO date string, e.g. "2025-01-01"
 }
 
+

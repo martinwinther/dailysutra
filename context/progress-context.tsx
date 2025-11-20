@@ -3,6 +3,9 @@
 import * as React from "react";
 import { DayProgress, WeekProgress, AppSettings } from "../types/app";
 import { TOTAL_DAYS, TOTAL_WEEKS } from "../data/yogaProgram";
+import { db } from "../lib/firebase/client";
+import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
+import { useAuth } from "./auth-context";
 
 export interface ProgressState {
   dayProgress: Record<number, DayProgress>;
@@ -190,6 +193,7 @@ function progressReducer(
 
 export function ProgressProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = React.useReducer(progressReducer, initialState);
+  const { user, loading: authLoading } = useAuth();
 
   // Hydrate from localStorage once on mount
   React.useEffect(() => {
@@ -229,6 +233,90 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
       );
     }
   }, [state]);
+
+  // Firestore hydration once we know auth state
+  React.useEffect(() => {
+    if (authLoading) return;
+    if (!user) return;
+
+    const run = async () => {
+      try {
+        const journeyRef = doc(
+          db,
+          "users",
+          user.uid,
+          "journeys",
+          "raja-yoga-v1"
+        );
+        const snap = await getDoc(journeyRef);
+        if (snap.exists()) {
+          const data = snap.data() as Partial<ProgressState>;
+          if (data && data.dayProgress && data.weekProgress && data.settings) {
+            dispatch({
+              type: "HYDRATE_FROM_STORAGE",
+              payload: {
+                dayProgress: data.dayProgress,
+                weekProgress: data.weekProgress,
+                settings: data.settings,
+              },
+            });
+          }
+        } else {
+          // Initialize journey doc from current local state
+          await setDoc(journeyRef, {
+            ...state,
+            programKey: "raja-yoga-v1",
+            programVersion: "1",
+            updatedAt: serverTimestamp(),
+          });
+        }
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.warn("[Progress] Failed to hydrate from Firestore:", error);
+      }
+    };
+
+    run();
+    // we only want to run on first auth resolution or when user changes,
+    // not on every state change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authLoading, user?.uid]);
+
+  // Firestore persistence on state changes
+  React.useEffect(() => {
+    if (authLoading) return;
+    if (!user) return;
+
+    const journeyRef = doc(db, "users", user.uid, "journeys", "raja-yoga-v1");
+
+    const run = async () => {
+      try {
+        await setDoc(
+          journeyRef,
+          {
+            dayProgress: state.dayProgress,
+            weekProgress: state.weekProgress,
+            settings: state.settings,
+            programKey: "raja-yoga-v1",
+            programVersion: "1",
+            updatedAt: serverTimestamp(),
+          },
+          { merge: true }
+        );
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.warn("[Progress] Failed to persist to Firestore:", error);
+      }
+    };
+
+    run();
+  }, [
+    authLoading,
+    user?.uid,
+    state.dayProgress,
+    state.weekProgress,
+    state.settings,
+  ]);
 
   const value: ProgressContextValue = React.useMemo(
     () => ({
