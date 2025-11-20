@@ -39,57 +39,62 @@ export default function ProgressPage() {
       />
 
       <GlassCard>
-        <div className="grid gap-4 sm:grid-cols-4">
-          <StatBlock
-            label="Days practiced"
-            value={stats.daysPracticed.toString()}
-            helper={`Out of ${TOTAL_DAYS} total days`}
-          />
+        <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+          <div className="grid gap-4 sm:grid-cols-4">
+            <StatBlock
+              label="Days practiced"
+              value={stats.daysPracticed.toString()}
+              helper={`Out of ${TOTAL_DAYS} total days`}
+            />
 
-          <StatBlock
-            label="Completion"
-            value={completionPercentLabel}
-            helper="Practice check-ins across the whole journey"
-          />
+            <StatBlock
+              label="Completion"
+              value={completionPercentLabel}
+              helper="Practice check-ins across the whole journey"
+            />
 
-          <StatBlock
-            label="Weeks completed"
-            value={stats.completedWeeks.toString()}
-            helper={`Out of ${TOTAL_WEEKS} weeks`}
-          />
+            <StatBlock
+              label="Weeks completed"
+              value={stats.completedWeeks.toString()}
+              helper={`Out of ${TOTAL_WEEKS} weeks`}
+            />
 
-          <StatBlock
-            label="Bookmarked weeks"
-            value={stats.bookmarkedWeeks.toString()}
-            helper="Weeks you'd like to revisit"
-          />
+            <StatBlock
+              label="Bookmarked weeks"
+              value={stats.bookmarkedWeeks.toString()}
+              helper="Weeks you'd like to revisit"
+            />
+          </div>
         </div>
       </GlassCard>
 
       {!hasAnyData && (
         <GlassCard>
-          <p className="text-sm text-[hsl(var(--muted))]">
-            You haven't recorded any practice yet. Once you start checking off
-            days and writing notes on the day pages, your progress will appear
-            here.
-          </p>
+          <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+            <p className="text-sm text-[hsl(var(--muted))]">
+              You haven't recorded any practice yet. Once you start checking off
+              days and writing notes on the day pages, your progress will appear
+              here.
+            </p>
+          </div>
         </GlassCard>
       )}
 
       {recentHistory.length > 0 && (
         <GlassCard>
-          <div className="flex items-center justify-between gap-2">
-            <div>
-              <h2 className="text-sm font-medium text-[hsl(var(--text))]">
-                Recent days
-              </h2>
-              <p className="mt-1 text-xs text-[hsl(var(--muted))]">
-                The last few days where you've added a note or marked practice.
-              </p>
+          <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+            <div className="flex items-center justify-between gap-2">
+              <div>
+                <h2 className="text-sm font-medium text-[hsl(var(--text))]">
+                  Recent days
+                </h2>
+                <p className="mt-1 text-xs text-[hsl(var(--muted))]">
+                  The last few days where you've added a note or marked practice.
+                </p>
+              </div>
             </div>
-          </div>
 
-          <div className="mt-4 flex flex-wrap gap-2">
+            <div className="mt-4 flex flex-wrap gap-2">
             {recentHistory.map((item) => {
               const week = getWeekForDay(item.dayNumber);
               const dayIndex = getDayIndexInWeek(item.dayNumber);
@@ -120,25 +125,27 @@ export default function ProgressPage() {
                 </Link>
               );
             })}
+            </div>
           </div>
         </GlassCard>
       )}
 
       {bookmarkedWeekNumbers.length > 0 && (
         <GlassCard>
-          <div className="flex items-center justify-between gap-2">
-            <div>
-              <h2 className="text-sm font-medium text-[hsl(var(--text))]">
-                Bookmarked weeks
-              </h2>
-              <p className="mt-1 text-xs text-[hsl(var(--muted))]">
-                Weeks you've marked as worth revisiting when the 52-week cycle
-                is complete.
-              </p>
+          <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+            <div className="flex items-center justify-between gap-2">
+              <div>
+                <h2 className="text-sm font-medium text-[hsl(var(--text))]">
+                  Bookmarked weeks
+                </h2>
+                <p className="mt-1 text-xs text-[hsl(var(--muted))]">
+                  Weeks you've marked as worth revisiting when the 52-week cycle
+                  is complete.
+                </p>
+              </div>
             </div>
-          </div>
 
-          <div className="mt-4 flex flex-wrap gap-2">
+            <div className="mt-4 flex flex-wrap gap-2">
             {bookmarkedWeekNumbers.map((weekNumber) => {
               const firstDayOfWeek = (weekNumber - 1) * 7 + 1;
               const week = getWeekForDay(firstDayOfWeek) ?? {
@@ -157,6 +164,7 @@ export default function ProgressPage() {
                 </Link>
               );
             })}
+            </div>
           </div>
         </GlassCard>
       )}

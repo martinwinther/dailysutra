@@ -95,151 +95,159 @@ export default function DayPage({ params }: DayPageProps) {
       />
 
       <GlassCard>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex flex-col">
-            <p className="text-xs font-medium uppercase tracking-wide text-[hsl(var(--muted))]">
-              Core Sūtras
-            </p>
-            <p className="mt-1 text-sm text-[hsl(var(--muted))]">
-              {week.coreSutras}
-            </p>
-          </div>
-          {dateLabel ? (
-            <div className="flex flex-col items-start text-right sm:items-end">
+        <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-col">
               <p className="text-xs font-medium uppercase tracking-wide text-[hsl(var(--muted))]">
-                Date
+                Core Sūtras
               </p>
               <p className="mt-1 text-sm text-[hsl(var(--muted))]">
-                {dateLabel}
+                {week.coreSutras}
               </p>
             </div>
-          ) : null}
-        </div>
+            {dateLabel ? (
+              <div className="flex flex-col items-start text-right sm:items-end">
+                <p className="text-xs font-medium uppercase tracking-wide text-[hsl(var(--muted))]">
+                  Date
+                </p>
+                <p className="mt-1 text-sm text-[hsl(var(--muted))]">
+                  {dateLabel}
+                </p>
+              </div>
+            ) : null}
+          </div>
 
-        <div className="mt-4">
-          <p className="text-xs font-medium uppercase tracking-wide text-[hsl(var(--muted))]">
-            Key idea
-          </p>
-          <p className="mt-1 text-sm text-[hsl(var(--muted))]">
-            {week.keyIdea}
-          </p>
-        </div>
-
-        <div className="mt-4">
-          <p className="text-xs font-medium uppercase tracking-wide text-[hsl(var(--muted))]">
-            Weekly practice
-          </p>
-          <p className="mt-1 text-sm leading-relaxed text-[hsl(var(--muted))]">
-            {week.weeklyPractice}
-          </p>
-        </div>
-      </GlassCard>
-
-      <GlassCard>
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="text-sm font-medium text-[hsl(var(--text))]">
-              Did today&apos;s practice?
+          <div className="mt-4">
+            <p className="text-xs font-medium uppercase tracking-wide text-[hsl(var(--muted))]">
+              Key idea
             </p>
-            <p className="mt-1 text-xs text-[hsl(var(--muted))]">
-              Check this when you&apos;ve engaged with today&apos;s practice in
-              a way that feels honest, not perfect.
+            <p className="mt-1 text-sm text-[hsl(var(--muted))]">
+              {week.keyIdea}
             </p>
           </div>
-          <button
-            type="button"
-            onClick={handleTogglePractice}
-            className={
-              didPractice
-                ? "btn-primary"
-                : "btn-ghost border border-[hsla(var(--border),0.7)]"
-            }
-          >
-            {didPractice ? "Marked as done" : "Mark as done"}
-          </button>
+
+          <div className="mt-4">
+            <p className="text-xs font-medium uppercase tracking-wide text-[hsl(var(--muted))]">
+              Weekly practice
+            </p>
+            <p className="mt-1 text-sm leading-relaxed text-[hsl(var(--muted))]">
+              {week.weeklyPractice}
+            </p>
+          </div>
         </div>
       </GlassCard>
 
       <GlassCard>
-        <div className="flex flex-col gap-2">
-          <p className="text-sm font-medium text-[hsl(var(--text))]">
-            Today&apos;s note
-          </p>
-          <p className="text-xs text-[hsl(var(--muted))]">
-            Jot down what you noticed in practice, any resistance, or a single
-            sentence about how the day related to this week&apos;s theme.
-          </p>
-          <textarea
-            value={note}
-            onChange={handleNoteChange}
-            rows={5}
-            className="mt-2 w-full rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7"
-            placeholder="For example: I noticed how often my mind jumped to planning today. Pausing to observe it made things feel a bit slower."
-          />
+        <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-sm font-medium text-[hsl(var(--text))]">
+                Did today&apos;s practice?
+              </p>
+              <p className="mt-1 text-xs text-[hsl(var(--muted))]">
+                Check this when you&apos;ve engaged with today&apos;s practice in
+                a way that feels honest, not perfect.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={handleTogglePractice}
+              className={
+                didPractice
+                  ? "btn-primary"
+                  : "btn-ghost border border-[hsla(var(--border),0.7)]"
+              }
+            >
+              {didPractice ? "Marked as done" : "Mark as done"}
+            </button>
+          </div>
+        </div>
+      </GlassCard>
+
+      <GlassCard>
+        <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+          <div className="flex flex-col gap-2">
+            <p className="text-sm font-medium text-[hsl(var(--text))]">
+              Today&apos;s note
+            </p>
+            <p className="text-xs text-[hsl(var(--muted))]">
+              Jot down what you noticed in practice, any resistance, or a single
+              sentence about how the day related to this week&apos;s theme.
+            </p>
+            <textarea
+              value={note}
+              onChange={handleNoteChange}
+              rows={5}
+              className="mt-2 w-full rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7"
+              placeholder="For example: I noticed how often my mind jumped to planning today. Pausing to observe it made things feel a bit slower."
+            />
+          </div>
         </div>
       </GlassCard>
 
       {isLastDayOfWeek && (
         <GlassCard>
-          <div className="flex flex-col gap-4">
-            <div>
-              <p className="text-sm font-medium text-[hsl(var(--text))]">
-                Weekly review
-              </p>
-              <p className="mt-1 text-xs text-[hsl(var(--muted))]">
-                On the last day of the week, take a moment to reflect on how
-                this theme played out in your life, and whether you&apos;d like
-                to revisit it after the 52 weeks.
-              </p>
-            </div>
+          <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+            <div className="flex flex-col gap-4">
+              <div>
+                <p className="text-sm font-medium text-[hsl(var(--text))]">
+                  Weekly review
+                </p>
+                <p className="mt-1 text-xs text-[hsl(var(--muted))]">
+                  On the last day of the week, take a moment to reflect on how
+                  this theme played out in your life, and whether you&apos;d like
+                  to revisit it after the 52 weeks.
+                </p>
+              </div>
 
-            <div className="flex flex-col gap-2">
-              <label className="flex items-center gap-2 text-sm text-[hsl(var(--muted))]">
-                <input
-                  type="checkbox"
-                  checked={weekCompleted}
-                  onChange={handleToggleWeekCompleted}
-                  className="h-4 w-4 rounded border border-[hsla(var(--border),0.4)] bg-white/5"
+              <div className="flex flex-col gap-2">
+                <label className="flex items-center gap-2 text-sm text-[hsl(var(--muted))]">
+                  <input
+                    type="checkbox"
+                    checked={weekCompleted}
+                    onChange={handleToggleWeekCompleted}
+                    className="h-4 w-4 rounded border border-[hsla(var(--border),0.4)] bg-white/5"
+                  />
+                  <span>Mark this week as completed</span>
+                </label>
+
+                <label className="flex items-center gap-2 text-sm text-[hsl(var(--muted))]">
+                  <input
+                    type="checkbox"
+                    checked={weekEnjoyed}
+                    onChange={handleToggleWeekEnjoyed}
+                    className="h-4 w-4 rounded border border-[hsla(var(--border),0.4)] bg-white/5"
+                  />
+                  <span>I enjoyed this week</span>
+                </label>
+
+                <label className="flex items-center gap-2 text-sm text-[hsl(var(--muted))]">
+                  <input
+                    type="checkbox"
+                    checked={weekBookmarked}
+                    onChange={handleToggleWeekBookmarked}
+                    className="h-4 w-4 rounded border border-[hsla(var(--border),0.4)] bg-white/5"
+                  />
+                  <span>I want to bookmark this week to revisit later</span>
+                </label>
+              </div>
+
+              <div className="mt-2 flex flex-col gap-2">
+                <p className="text-sm font-medium text-[hsl(var(--text))]">
+                  Weekly reflection
+                </p>
+                <p className="text-xs text-[hsl(var(--muted))]">
+                  A few lines about what shifted (or didn&apos;t) for you this
+                  week is enough.
+                </p>
+                <textarea
+                  value={reflectionNote}
+                  onChange={handleReflectionChange}
+                  rows={4}
+                  className="mt-1 w-full rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7"
+                  placeholder="What did you notice about this week&apos;s theme in your day-to-day life?"
                 />
-                <span>Mark this week as completed</span>
-              </label>
-
-              <label className="flex items-center gap-2 text-sm text-[hsl(var(--muted))]">
-                <input
-                  type="checkbox"
-                  checked={weekEnjoyed}
-                  onChange={handleToggleWeekEnjoyed}
-                  className="h-4 w-4 rounded border border-[hsla(var(--border),0.4)] bg-white/5"
-                />
-                <span>I enjoyed this week</span>
-              </label>
-
-              <label className="flex items-center gap-2 text-sm text-[hsl(var(--muted))]">
-                <input
-                  type="checkbox"
-                  checked={weekBookmarked}
-                  onChange={handleToggleWeekBookmarked}
-                  className="h-4 w-4 rounded border border-[hsla(var(--border),0.4)] bg-white/5"
-                />
-                <span>I want to bookmark this week to revisit later</span>
-              </label>
-            </div>
-
-            <div className="mt-2 flex flex-col gap-2">
-              <p className="text-sm font-medium text-[hsl(var(--text))]">
-                Weekly reflection
-              </p>
-              <p className="text-xs text-[hsl(var(--muted))]">
-                A few lines about what shifted (or didn&apos;t) for you this
-                week is enough.
-              </p>
-              <textarea
-                value={reflectionNote}
-                onChange={handleReflectionChange}
-                rows={4}
-                className="mt-1 w-full rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7"
-                placeholder="What did you notice about this week&apos;s theme in your day-to-day life?"
-              />
+              </div>
             </div>
           </div>
         </GlassCard>
