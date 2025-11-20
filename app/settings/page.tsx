@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { PageHeader } from "../../components/page-header";
 import { GlassCard } from "../../components/glass-card";
 import {
@@ -8,6 +9,7 @@ import {
   PROGRESS_STORAGE_KEY,
 } from "../../context/progress-context";
 import { useSubscription } from "../../context/subscription-context";
+import { useAuth } from "../../context/auth-context";
 
 export default function SettingsPage() {
   const { settings, dispatch } = useProgress();
@@ -19,6 +21,9 @@ export default function SettingsPage() {
     isActivePaid,
     isExpired,
   } = useSubscription();
+  const { user, authLoading } = useAuth();
+  const [upgradeLoading, setUpgradeLoading] = useState(false);
+  const [upgradeError, setUpgradeError] = useState<string | null>(null);
 
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value || null;
@@ -125,6 +130,48 @@ export default function SettingsPage() {
     reader.readAsText(file);
   };
 
+  const handleUpgradeClick = async () => {
+    if (!user || !user.email) {
+      setUpgradeError("You need to be signed in with an email to upgrade.");
+      return;
+    }
+
+    setUpgradeLoading(true);
+    setUpgradeError(null);
+
+    try {
+      const res = await fetch("/api/create-checkout-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          uid: user.uid,
+          email: user.email,
+        }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Failed to start checkout.");
+      }
+
+      const data = (await res.json()) as { url?: string };
+      if (!data.url) {
+        throw new Error("No checkout URL returned.");
+      }
+
+      window.location.href = data.url;
+    } catch (error: any) {
+      console.warn("[Settings] Upgrade error:", error);
+      setUpgradeError(
+        error?.message || "Something went wrong when starting checkout."
+      );
+    } finally {
+      setUpgradeLoading(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <PageHeader
@@ -217,22 +264,31 @@ export default function SettingsPage() {
               and see your journey, but new edits will be locked.
             </p>
             <p>
-              In a future version, this is where you&apos;ll be able to upgrade
-              to the full paid experience.
+              Upgrade to continue your practice with full access to all features.
             </p>
           </div>
         </div>
         <div className="mt-4 flex flex-wrap items-center gap-2">
           <button
             type="button"
-            className="btn-primary opacity-70 cursor-not-allowed"
-            disabled
+            className="btn-primary"
+            onClick={handleUpgradeClick}
+            disabled={upgradeLoading || authLoading || isActivePaid}
           >
-            Upgrade (coming soon)
+            {isActivePaid
+              ? "You're on Pro"
+              : upgradeLoading
+              ? "Starting checkout…"
+              : "Upgrade to full access"}
           </button>
-          <span className="text-[10px] text-[hsl(var(--muted))]">
-            Payments are not enabled yet.
-          </span>
+          {upgradeError && (
+            <p className="text-[10px] text-red-300">{upgradeError}</p>
+          )}
+          {!isActivePaid && !upgradeError && (
+            <span className="text-[10px] text-[hsl(var(--muted))]">
+              You&apos;ll be redirected to a secure Stripe checkout page.
+            </span>
+          )}
         </div>
       </GlassCard>
 
