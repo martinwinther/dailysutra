@@ -4,7 +4,7 @@ import * as React from "react";
 import { DayProgress, WeekProgress, AppSettings } from "../types/app";
 import { TOTAL_DAYS, TOTAL_WEEKS } from "../data/yogaProgram";
 
-interface ProgressState {
+export interface ProgressState {
   dayProgress: Record<number, DayProgress>;
   weekProgress: Record<number, WeekProgress>;
   settings: AppSettings;
@@ -27,7 +27,7 @@ interface ProgressContextValue extends ProgressState {
 
 const ProgressContext = React.createContext<ProgressContextValue | null>(null);
 
-const STORAGE_KEY = "raja-yoga-progress-v1";
+export const PROGRESS_STORAGE_KEY = "raja-yoga-progress-v1";
 
 const initialState: ProgressState = {
   dayProgress: {},
@@ -196,7 +196,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     if (typeof window === "undefined") return;
 
     try {
-      const raw = window.localStorage.getItem(STORAGE_KEY);
+      const raw = window.localStorage.getItem(PROGRESS_STORAGE_KEY);
       if (!raw) return;
 
       const parsed = JSON.parse(raw) as ProgressState;
@@ -220,7 +220,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
 
     try {
       const serialized = JSON.stringify(state);
-      window.localStorage.setItem(STORAGE_KEY, serialized);
+      window.localStorage.setItem(PROGRESS_STORAGE_KEY, serialized);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.warn(

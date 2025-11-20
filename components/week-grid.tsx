@@ -15,9 +15,13 @@ import {
 import { GlassCard } from "./glass-card";
 
 import { cn } from "../lib/cn";
+import { getCurrentWeekAndDay } from "../lib/progress-time";
 
 export function WeekGrid() {
+  const { settings } = useProgress();
   const weeks = Array.from({ length: TOTAL_WEEKS }, (_, i) => i + 1);
+  const current = getCurrentWeekAndDay(settings);
+  const todayGlobalDayNumber = current?.globalDayNumber ?? null;
 
   return (
     <div className="space-y-3">
@@ -32,7 +36,11 @@ export function WeekGrid() {
 
       <div className="grid gap-3 sm:grid-cols-2">
         {weeks.map((weekNumber) => (
-          <WeekCard key={weekNumber} weekNumber={weekNumber} />
+          <WeekCard
+            key={weekNumber}
+            weekNumber={weekNumber}
+            todayGlobalDayNumber={todayGlobalDayNumber}
+          />
         ))}
       </div>
 
@@ -45,9 +53,10 @@ export function WeekGrid() {
 
 interface WeekCardProps {
   weekNumber: number;
+  todayGlobalDayNumber: number | null;
 }
 
-function WeekCard({ weekNumber }: WeekCardProps) {
+function WeekCard({ weekNumber, todayGlobalDayNumber }: WeekCardProps) {
   const { dayProgress, weekProgress } = useProgress();
 
   const yogaWeek = YOGA_PROGRAM.find((w) => w.week === weekNumber);
@@ -106,6 +115,10 @@ function WeekCard({ weekNumber }: WeekCardProps) {
 
               const done = dayState?.didPractice ?? false;
 
+              const isToday =
+                todayGlobalDayNumber !== null &&
+                globalDayNumber === todayGlobalDayNumber;
+
               return (
                 <Link
                   key={globalDayNumber}
@@ -113,9 +126,12 @@ function WeekCard({ weekNumber }: WeekCardProps) {
                   className={cn(
                     "flex h-8 w-8 items-center justify-center rounded-xl border text-xs transition-colors",
                     done
-                      ? "border-emerald-400/80 bg-emerald-500/20 text-emerald-50"
-                      : "border-[hsla(var(--border),0.35)] bg-white/6 text-[hsl(var(--muted))] hover:border-[hsl(var(--accent))] hover:bg-white/8"
+                      ? "border-emerald-400/80 bg-emerald-500/25 text-emerald-50"
+                      : "border-[hsla(var(--border),0.35)] bg-white/6 text-[hsl(var(--muted))] hover:border-[hsla(var(--border),0.7)]",
+                    isToday &&
+                      "ring-2 ring-[hsla(var(--accent-soft),0.9)] ring-offset-2 ring-offset-black/30"
                   )}
+                  title={isToday ? "Today" : undefined}
                 >
                   {dayIndex}
                 </Link>

@@ -2,7 +2,11 @@
 
 import { PageHeader } from "../../components/page-header";
 import { GlassCard } from "../../components/glass-card";
-import { useProgress } from "../../context/progress-context";
+import {
+  useProgress,
+  ProgressState,
+  PROGRESS_STORAGE_KEY,
+} from "../../context/progress-context";
 
 export default function SettingsPage() {
   const { settings, dispatch } = useProgress();
@@ -19,6 +23,97 @@ export default function SettingsPage() {
     if (!confirmed) return;
 
     dispatch({ type: "RESET_ALL" });
+  };
+
+  const handleExport = () => {
+    try {
+      const raw = window.localStorage.getItem(PROGRESS_STORAGE_KEY);
+      let exportState: ProgressState | null = null;
+
+      if (raw) {
+        const parsed = JSON.parse(raw) as ProgressState | null;
+        if (parsed && typeof parsed === "object") {
+          exportState = parsed;
+        }
+      }
+
+      // If nothing in storage yet, still export a minimal empty state
+      if (!exportState) {
+        exportState = {
+          dayProgress: {},
+          weekProgress: {},
+          settings,
+        };
+      }
+
+      const blob = new Blob([JSON.stringify(exportState, null, 2)], {
+        type: "application/json",
+      });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      const stamp = new Date().toISOString().slice(0, 10);
+      link.href = url;
+      link.download = `raja-yoga-progress-${stamp}.json`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.warn("[Settings] Failed to export progress:", error);
+      window.alert("Sorry, something went wrong while exporting your data.");
+    }
+  };
+
+  const handleImport = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const text = reader.result;
+        if (typeof text !== "string") {
+          throw new Error("Unexpected file content");
+        }
+
+        const parsed = JSON.parse(text) as ProgressState;
+
+        // Basic structural sanity check
+        if (
+          !parsed ||
+          typeof parsed !== "object" ||
+          !("dayProgress" in parsed) ||
+          !("weekProgress" in parsed) ||
+          !("settings" in parsed)
+        ) {
+          throw new Error(
+            "File does not look like a Raja Yoga progress backup."
+          );
+        }
+
+        const confirmed = window.confirm(
+          "Importing will replace your current progress with the data from this file. Continue?"
+        );
+        if (!confirmed) return;
+
+        dispatch({ type: "HYDRATE_FROM_STORAGE", payload: parsed });
+
+        // localStorage persistence effect in ProgressProvider will run automatically
+        window.alert("Import completed. Your journey state has been updated.");
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.warn("[Settings] Failed to import progress:", error);
+        window.alert(
+          "Sorry, this file could not be imported. Make sure it is an unmodified backup from this app."
+        );
+      } finally {
+        // reset file input so the same file can be selected again if needed
+        event.target.value = "";
+      }
+    };
+
+    reader.readAsText(file);
   };
 
   return (
@@ -69,6 +164,37 @@ export default function SettingsPage() {
             Reset all progress
           </button>
         </div>
+      </GlassCard>
+
+      <GlassCard>
+        <h2 className="text-sm font-medium uppercase tracking-wide text-[hsl(var(--muted))]">
+          Backup &amp; restore
+        </h2>
+        <p className="mt-2 text-sm text-[hsl(var(--muted))]">
+          You can export your current journey to a JSON file and later import it
+          on this or another device. This is useful if you uninstall the app,
+          switch browsers, or want a manual backup.
+        </p>
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <button type="button" onClick={handleExport} className="btn-primary">
+            Export progress as JSON
+          </button>
+          <label className="inline-flex cursor-pointer items-center gap-2 text-xs text-[hsl(var(--muted))]">
+            <span className="rounded-full bg-white/5 px-2 py-1 text-[11px] font-medium">
+              Import backup
+            </span>
+            <input
+              type="file"
+              accept="application/json"
+              onChange={handleImport}
+              className="hidden"
+            />
+          </label>
+        </div>
+        <p className="mt-2 text-[10px] text-[hsl(var(--muted))]">
+          Imported files completely replace your current progress. Only use
+          backups that were exported from this app.
+        </p>
       </GlassCard>
     </div>
   );

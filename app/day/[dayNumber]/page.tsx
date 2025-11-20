@@ -1,6 +1,7 @@
 "use client";
 
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { PageHeader } from "../../../components/page-header";
 import { GlassCard } from "../../../components/glass-card";
 import {
@@ -37,6 +38,11 @@ export default function DayPage({ params }: DayPageProps) {
   const week = getWeekForDay(dayNumber);
   const dayIndex = getDayIndexInWeek(dayNumber);
   const { dayProgress, weekProgress, settings, dispatch } = useProgress();
+
+  const hasPrev = dayNumber > 1;
+  const hasNext = dayNumber < TOTAL_DAYS;
+  const prevDay = hasPrev ? dayNumber - 1 : null;
+  const nextDay = hasNext ? dayNumber + 1 : null;
 
   if (!week || !dayIndex) {
     return notFound();
@@ -93,6 +99,39 @@ export default function DayPage({ params }: DayPageProps) {
         title={`Week ${week.week} · Day ${dayIndex}`}
         subtitle={week.theme}
       />
+
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex gap-2">
+          {hasPrev ? (
+            <Link href={`/day/${prevDay}`} className="btn-ghost">
+              ← Previous day
+            </Link>
+          ) : (
+            <button
+              className="btn-ghost opacity-40 cursor-not-allowed"
+              disabled
+              aria-disabled="true"
+            >
+              ← Previous day
+            </button>
+          )}
+        </div>
+        <div className="flex gap-2">
+          {hasNext ? (
+            <Link href={`/day/${nextDay}`} className="btn-ghost">
+              Next day →
+            </Link>
+          ) : (
+            <button
+              className="btn-ghost opacity-40 cursor-not-allowed"
+              disabled
+              aria-disabled="true"
+            >
+              Next day →
+            </button>
+          )}
+        </div>
+      </div>
 
       <GlassCard>
         <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
