@@ -3,6 +3,7 @@
 import { PageHeader } from "../../components/page-header";
 import { GlassCard } from "../../components/glass-card";
 import { useProgress } from "../../context/progress-context";
+import { useAuth } from "../../context/auth-context";
 import { computeStats, getRecentDayHistory } from "../../lib/progress-stats";
 import {
   TOTAL_DAYS,
@@ -13,6 +14,7 @@ import {
 import Link from "next/link";
 
 export default function ProgressPage() {
+  const { loading: authLoading } = useAuth();
   const { dayProgress, weekProgress } = useProgress();
 
   const stats = computeStats({ dayProgress, weekProgress });
@@ -31,11 +33,27 @@ export default function ProgressPage() {
     .filter((w) => weekProgress[w]?.bookmarked)
     .sort((a, b) => a - b);
 
+  if (authLoading) {
+    return (
+      <div className="space-y-6">
+        <PageHeader
+          title="Progress"
+          subtitle="See how many days you&apos;ve practiced and which weeks you&apos;ve completed."
+        />
+        <GlassCard>
+          <p className="text-sm text-[hsl(var(--muted))]">
+            Loading your journey…
+          </p>
+        </GlassCard>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       <PageHeader
         title="Progress"
-        subtitle="See how many days you've practiced, which weeks you've completed, and what you might want to revisit after the 52 weeks."
+        subtitle="See how many days you&apos;ve practiced, which weeks you&apos;ve completed, and what you might want to revisit after the 52 weeks."
       />
 
       <GlassCard>
@@ -72,7 +90,7 @@ export default function ProgressPage() {
         <GlassCard>
           <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
             <p className="text-sm text-[hsl(var(--muted))]">
-              You haven't recorded any practice yet. Once you start checking off
+              You haven&apos;t recorded any practice yet. Once you start checking off
               days and writing notes on the day pages, your progress will appear
               here.
             </p>
@@ -89,7 +107,7 @@ export default function ProgressPage() {
                   Recent days
                 </h2>
                 <p className="mt-1 text-xs text-[hsl(var(--muted))]">
-                  The last few days where you've added a note or marked practice.
+                  The last few days where you&apos;ve added a note or marked practice.
                 </p>
               </div>
             </div>
@@ -139,7 +157,7 @@ export default function ProgressPage() {
                   Bookmarked weeks
                 </h2>
                 <p className="mt-1 text-xs text-[hsl(var(--muted))]">
-                  Weeks you've marked as worth revisiting when the 52-week cycle
+                  Weeks you&apos;ve marked as worth revisiting when the 52-week cycle
                   is complete.
                 </p>
               </div>
@@ -160,7 +178,7 @@ export default function ProgressPage() {
                   className="flex items-center gap-2 rounded-full border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-1.5 text-xs text-[hsl(var(--muted))] hover:border-[hsla(var(--border),0.7)]"
                 >
                   <span className="font-medium">Week {weekNumber}</span>
-                  <span className="truncate text-[10px]">{week.theme}</span>
+                  <span className="truncate text-[10px] max-w-[10rem]">{week.theme}</span>
                 </Link>
               );
             })}
