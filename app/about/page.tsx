@@ -10,18 +10,21 @@ export default function AboutPage() {
         subtitle="A year-long, realistic exploration of the Yoga Sūtras of Patañjali."
       />
 
+      <div className="flex items-center justify-between px-6">
+        <h2 className="text-sm font-medium uppercase tracking-wide text-[hsl(var(--muted))]">
+          What this is
+        </h2>
+      </div>
+
       <GlassCard>
         <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
-          <h2 className="text-sm font-medium text-[hsl(var(--text))]">
-            What this is
-          </h2>
-          <p className="mt-2 text-sm text-[hsl(var(--muted))]">
+          <p className="text-sm text-[hsl(var(--muted))]">
             52 Weeks of Raja Yoga is a structured journey through the Yoga Sūtras.
             Each week you focus on one theme from Patañjali&apos;s text, with a small
             daily practice and space to reflect on how it shows up in real life.
           </p>
 
-          <h3 className="mt-4 text-xs font-semibold uppercase tracking-wide text-[hsl(var(--muted))]">
+          <h3 className="mt-4 text-xs font-semibold text-[hsl(var(--text))]">
             How it works
           </h3>
           <ul className="mt-2 space-y-1 text-sm text-[hsl(var(--muted))]">
@@ -31,7 +34,7 @@ export default function AboutPage() {
             <li>• Progress syncs across devices via your account.</li>
           </ul>
 
-          <h3 className="mt-4 text-xs font-semibold uppercase tracking-wide text-[hsl(var(--muted))]">
+          <h3 className="mt-4 text-xs font-semibold text-[hsl(var(--text))]">
             Free month and beyond
           </h3>
           <p className="mt-2 text-sm text-[hsl(var(--muted))]">

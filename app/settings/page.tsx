@@ -179,12 +179,15 @@ export default function SettingsPage() {
         subtitle="Adjust your start date, or reset your journey if you want to begin again."
       />
 
+      <div className="flex items-center justify-between px-6">
+        <h2 className="text-sm font-medium uppercase tracking-wide text-[hsl(var(--muted))]">
+          Start date
+        </h2>
+      </div>
+
       <GlassCard>
         <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
-          <h2 className="text-sm font-medium uppercase tracking-wide text-[hsl(var(--text))]">
-            Start date
-          </h2>
-          <p className="mt-2 text-sm text-[hsl(var(--muted))]">
+          <p className="text-sm text-[hsl(var(--muted))]">
             The start date determines which week and day you are on today. You
             can change it if you want to restart or sync the journey to a
             different calendar date.
@@ -203,12 +206,15 @@ export default function SettingsPage() {
         </div>
       </GlassCard>
 
+      <div className="flex items-center justify-between px-6">
+        <h2 className="text-sm font-medium uppercase tracking-wide text-[hsl(var(--muted))]">
+          Reset journey
+        </h2>
+      </div>
+
       <GlassCard>
         <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
-          <h2 className="text-sm font-medium uppercase tracking-wide text-[hsl(var(--text))]">
-            Reset journey
-          </h2>
-          <p className="mt-2 text-sm text-[hsl(var(--muted))]">
+          <p className="text-sm text-[hsl(var(--muted))]">
             This will clear all recorded practice check-ins and notes, and remove
             your start date. You can&apos;t undo this action.
           </p>
@@ -222,14 +228,18 @@ export default function SettingsPage() {
         </div>
       </GlassCard>
 
-      <GlassCard>
+      <div className="flex items-center justify-between px-6">
         <h2 className="text-sm font-medium uppercase tracking-wide text-[hsl(var(--muted))]">
           Subscription
         </h2>
-        <p className="mt-1 text-sm text-[hsl(var(--muted))]">
-          This journey starts with a free month so you can see if the 52-week
-          structure fits your life.
-        </p>
+      </div>
+
+      <GlassCard>
+        <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+          <p className="text-sm text-[hsl(var(--muted))]">
+            This journey starts with a free month so you can see if the 52-week
+            structure fits your life.
+          </p>
         <div className="mt-3 flex flex-wrap items-center gap-3">
           <div className="rounded-xl bg-white/5 px-3 py-2">
             <p className="text-xs uppercase tracking-wide text-[hsl(var(--muted))]">
@@ -290,17 +300,22 @@ export default function SettingsPage() {
             </span>
           )}
         </div>
+        </div>
       </GlassCard>
 
-      <GlassCard>
+      <div className="flex items-center justify-between px-6">
         <h2 className="text-sm font-medium uppercase tracking-wide text-[hsl(var(--muted))]">
           Backup &amp; restore
         </h2>
-        <p className="mt-2 text-sm text-[hsl(var(--muted))]">
-          You can export your current journey to a JSON file and later import it
-          on this or another device. This is useful if you uninstall the app,
-          switch browsers, or want a manual backup.
-        </p>
+      </div>
+
+      <GlassCard>
+        <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+          <p className="text-sm text-[hsl(var(--muted))]">
+            You can export your current journey to a JSON file and later import it
+            on this or another device. This is useful if you uninstall the app,
+            switch browsers, or want a manual backup.
+          </p>
         <div className="mt-4 flex flex-wrap items-center gap-3">
           <button type="button" onClick={handleExport} className="btn-primary">
             Export progress as JSON
@@ -317,10 +332,11 @@ export default function SettingsPage() {
             />
           </label>
         </div>
-        <p className="mt-2 text-[10px] text-[hsl(var(--muted))]">
-          Imported files completely replace your current progress. Only use
-          backups that were exported from this app.
-        </p>
+          <p className="mt-2 text-[10px] text-[hsl(var(--muted))]">
+            Imported files completely replace your current progress. Only use
+            backups that were exported from this app.
+          </p>
+        </div>
       </GlassCard>
     </div>
   );

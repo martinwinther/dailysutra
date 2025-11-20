@@ -83,8 +83,8 @@ export default function HomePage() {
       {hasStartDate ? (
         current && firstWeek ? (
           <GlassCard>
-            <div className="-mx-6 rounded-lg bg-white/7 px-6 py-3 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
-              <h2 className="text-sm font-medium uppercase tracking-wide text-[hsl(var(--text))]">
+            <div className="-mx-6 rounded-lg bg-white/6 px-6 py-3 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+              <h2 className="text-sm font-medium text-[hsl(var(--text))]">
                 Today&apos;s position
               </h2>
               <p className="mt-2 text-sm text-[hsl(var(--muted))]">
@@ -112,8 +112,8 @@ export default function HomePage() {
           </GlassCard>
         ) : (
           <GlassCard>
-            <div className="-mx-6 rounded-lg bg-white/7 px-6 py-3 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
-              <h2 className="text-sm font-medium uppercase tracking-wide text-[hsl(var(--text))]">
+            <div className="-mx-6 rounded-lg bg-white/6 px-6 py-3 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+              <h2 className="text-sm font-medium text-[hsl(var(--text))]">
                 Today&apos;s position
               </h2>
               <p className="mt-2 text-sm text-[hsl(var(--muted))]">
@@ -131,7 +131,7 @@ export default function HomePage() {
               Set your journey start date to anchor which week and day you&apos;re
               on. You can back-date it if you already started.
             </p>
-            <h2 className="text-sm font-medium uppercase tracking-wide text-[hsl(var(--text))]">
+            <h2 className="text-sm font-medium text-[hsl(var(--text))]">
               Choose a start date
             </h2>
             <p className="mt-2 text-sm text-[hsl(var(--muted))]">
@@ -152,7 +152,7 @@ export default function HomePage() {
 
       <GlassCard>
         <div className="-mx-6 rounded-lg bg-white/6 px-6 py-3 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
-          <h2 className="text-sm font-medium uppercase tracking-wide text-[hsl(var(--text))]">
+          <h2 className="text-sm font-medium text-[hsl(var(--text))]">
             Program overview
           </h2>
           <p className="mt-2 text-sm text-[hsl(var(--muted))]">
@@ -162,7 +162,7 @@ export default function HomePage() {
           </p>
         </div>
         {firstWeek ? (
-          <div className="-mx-6 mt-4 rounded-xl bg-white/8 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+          <div className="-mx-6 mt-4 rounded-xl bg-white/7 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
             <p className="text-xs font-medium uppercase tracking-wide text-[hsl(var(--muted))]">
               Week {firstWeek.week} preview
             </p>
