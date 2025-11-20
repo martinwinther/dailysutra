@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "../components/theme-provider";
 import { MainNav } from "../components/main-nav";
 import { AuthProvider } from "../context/auth-context";
+import { SubscriptionProvider } from "../context/subscription-context";
 import { ProgressProvider } from "../context/progress-context";
 
 export const metadata: Metadata = {
@@ -20,25 +21,27 @@ export default function RootLayout({
       <body>
         <ThemeProvider>
           <AuthProvider>
-            <ProgressProvider>
-              <div className="flex min-h-screen flex-col">
-                <header className="glass-nav sticky top-0 z-20">
-                  <div className="mx-auto flex max-w-5xl items-center px-4 py-3">
-                    <div className="flex items-center gap-6">
-                      <span className="text-sm font-semibold tracking-wide text-[hsl(var(--text))]">
-                        52 Weeks of Raja Yoga
-                      </span>
-                      <MainNav />
+            <SubscriptionProvider>
+              <ProgressProvider>
+                <div className="flex min-h-screen flex-col">
+                  <header className="glass-nav sticky top-0 z-20">
+                    <div className="mx-auto flex max-w-5xl items-center px-4 py-3">
+                      <div className="flex items-center gap-6">
+                        <span className="text-sm font-semibold tracking-wide text-[hsl(var(--text))]">
+                          52 Weeks of Raja Yoga
+                        </span>
+                        <MainNav />
+                      </div>
                     </div>
-                  </div>
-                </header>
-                <main className="flex-1">
-                  <div className="mx-auto max-w-5xl px-4 py-8 sm:py-10">
-                    {children}
-                  </div>
-                </main>
-              </div>
-            </ProgressProvider>
+                  </header>
+                  <main className="flex-1">
+                    <div className="mx-auto max-w-5xl px-4 py-8 sm:py-10">
+                      {children}
+                    </div>
+                  </main>
+                </div>
+              </ProgressProvider>
+            </SubscriptionProvider>
           </AuthProvider>
         </ThemeProvider>
       </body>
