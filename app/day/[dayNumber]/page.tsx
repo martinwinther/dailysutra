@@ -11,7 +11,7 @@ import {
 } from "../../../data/yogaProgram";
 import { useProgress } from "../../../context/progress-context";
 import { useSubscription } from "../../../context/subscription-context";
-import { getDateForDayNumber } from "../../../lib/progress-time";
+import { getDateForDayNumber, getCurrentWeekAndDay } from "../../../lib/progress-time";
 
 interface DayPageProps {
   params: {
@@ -69,6 +69,20 @@ export default function DayPage({ params }: DayPageProps) {
 
   const dateForDay = getDateForDayNumber(settings, dayNumber);
   const dateLabel = formatDate(dateForDay);
+
+  const current = getCurrentWeekAndDay(settings);
+  const todayGlobal = current?.globalDayNumber ?? null;
+
+  let dayRelativeHint: string | null = null;
+  if (todayGlobal !== null) {
+    if (dayNumber < todayGlobal) {
+      dayRelativeHint =
+        "This is a past day in your journey. You can still update your notes and see what you logged.";
+    } else if (dayNumber > todayGlobal) {
+      dayRelativeHint =
+        "This is a future day in your journey. You can preview the theme, but it may feel easier if you mostly stay with today.";
+    }
+  }
 
   const handleTogglePractice = () => {
     if (!canEditJourney) return;
@@ -138,6 +152,12 @@ export default function DayPage({ params }: DayPageProps) {
             where an upgrade option will appear.
           </p>
         </GlassCard>
+      )}
+
+      {dayRelativeHint && (
+        <p className="mb-2 text-xs text-[hsl(var(--muted))]">
+          {dayRelativeHint}
+        </p>
       )}
 
       <div className="flex items-center justify-between gap-2">

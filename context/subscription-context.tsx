@@ -10,6 +10,7 @@ import {
 import { doc, getDoc, onSnapshot, setDoc, Timestamp } from "firebase/firestore";
 import { db } from "../lib/firebase/client";
 import { useAuth } from "./auth-context";
+import { useAppStatus } from "./app-status-context";
 
 export type SubscriptionStatus = "none" | "trial" | "active" | "expired";
 
@@ -32,6 +33,7 @@ const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
 export function SubscriptionProvider({ children }: { children: ReactNode }) {
   const { user, loading: authLoading } = useAuth();
+  const { setLastError } = useAppStatus();
   const [status, setStatus] = useState<SubscriptionStatus>("none");
   const [trialEndsAt, setTrialEndsAt] = useState<Date | null>(null);
   const [subLoading, setSubLoading] = useState<boolean>(true);
@@ -110,6 +112,7 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
         (error) => {
           // eslint-disable-next-line no-console
           console.warn("[Subscription] onSnapshot error:", error);
+          setLastError("Failed to sync with server. Working from local copy.");
           setStatus("none");
           setTrialEndsAt(null);
           setSubLoading(false);
@@ -122,7 +125,7 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
     return () => {
       if (unsub) unsub();
     };
-  }, [authLoading, user?.uid]);
+  }, [authLoading, user?.uid, setLastError]);
 
   const nowMs = Date.now();
   const endsMs = trialEndsAt ? trialEndsAt.getTime() : 0;

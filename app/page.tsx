@@ -125,6 +125,10 @@ export default function HomePage() {
       ) : (
         <GlassCard>
           <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+            <p className="mb-3 text-xs text-[hsl(var(--muted))]">
+              Set your journey start date to anchor which week and day you&apos;re
+              on. You can back-date it if you already started.
+            </p>
             <h2 className="text-sm font-medium uppercase tracking-wide text-[hsl(var(--text))]">
               Choose a start date
             </h2>

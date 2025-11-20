@@ -6,6 +6,7 @@ import { TOTAL_DAYS, TOTAL_WEEKS } from "../data/yogaProgram";
 import { db } from "../lib/firebase/client";
 import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
 import { useAuth } from "./auth-context";
+import { useAppStatus } from "./app-status-context";
 
 export interface ProgressState {
   dayProgress: Record<number, DayProgress>;
@@ -194,6 +195,7 @@ function progressReducer(
 export function ProgressProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = React.useReducer(progressReducer, initialState);
   const { user, loading: authLoading } = useAuth();
+  const { setLastError } = useAppStatus();
 
   // Hydrate from localStorage once on mount
   React.useEffect(() => {
@@ -273,6 +275,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
       } catch (error) {
         // eslint-disable-next-line no-console
         console.warn("[Progress] Failed to hydrate from Firestore:", error);
+        setLastError("Failed to sync with server. Working from local copy.");
       }
     };
 
@@ -280,7 +283,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     // we only want to run on first auth resolution or when user changes,
     // not on every state change
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authLoading, user?.uid]);
+  }, [authLoading, user?.uid, setLastError]);
 
   // Firestore persistence on state changes
   React.useEffect(() => {
@@ -306,6 +309,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
       } catch (error) {
         // eslint-disable-next-line no-console
         console.warn("[Progress] Failed to persist to Firestore:", error);
+        setLastError("Failed to sync with server. Working from local copy.");
       }
     };
 
@@ -316,6 +320,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     state.dayProgress,
     state.weekProgress,
     state.settings,
+    setLastError,
   ]);
 
   const value: ProgressContextValue = React.useMemo(
