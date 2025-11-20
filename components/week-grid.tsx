@@ -21,8 +21,8 @@ export function WeekGrid() {
 
   return (
     <div className="space-y-3">
-      <div className="flex items-center justify-between">
-        <h2 className="text-sm font-medium uppercase tracking-wide text-[hsl(var(--muted))]">
+      <div className="flex items-center justify-between rounded-xl bg-white/6 px-6 py-3 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm">
+        <h2 className="text-sm font-medium uppercase tracking-wide text-[hsl(var(--text))]">
           Your journey
         </h2>
         <p className="text-xs text-[hsl(var(--muted))]">
@@ -36,7 +36,7 @@ export function WeekGrid() {
         ))}
       </div>
 
-      <p className="mt-1 text-[10px] text-[hsl(var(--muted))]">
+      <p className="mt-1 rounded-lg bg-white/6 px-6 py-2 text-[10px] text-[hsl(var(--muted))] shadow-[0_2px_8px_rgba(0,0,0,0.25)] backdrop-blur-sm">
         Green squares indicate days where you marked the practice as done.
       </p>
     </div>
@@ -61,65 +61,67 @@ function WeekCard({ weekNumber }: WeekCardProps) {
   const isBookmarked = weekState?.bookmarked ?? false;
 
   return (
-    <GlassCard className="flex flex-col gap-3 p-4 sm:p-5">
-      <div className="flex items-center justify-between gap-2">
-        <div className="flex flex-col">
-          <span className="text-xs font-semibold uppercase tracking-wide text-[hsl(var(--muted))]">
-            Week {weekNumber}
-          </span>
-          <span className="text-sm font-medium text-[hsl(var(--text))]">
-            {yogaWeek?.theme ?? "Upcoming theme"}
-          </span>
-        </div>
-
-        <div className="flex items-center gap-1">
-          {isCompleted && (
-            <span className="rounded-full bg-emerald-500/20 px-2 py-0.5 text-xs font-medium text-emerald-300">
-              Done
+    <GlassCard className="week-card">
+      <div className="-mx-6 rounded-lg bg-white/7 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm">
+        <div className="flex items-center justify-between gap-2 mb-3">
+          <div className="flex flex-col">
+            <span className="text-xs font-semibold uppercase tracking-wide text-[hsl(var(--muted))]">
+              Week {weekNumber}
             </span>
-          )}
-
-          {isBookmarked && (
-            <span
-              className="text-xs"
-              aria-label="Bookmarked week"
-              title="Bookmarked week"
-            >
-              ⭐
+            <span className="text-sm font-medium text-[hsl(var(--text))]">
+              {yogaWeek?.theme ?? "Upcoming theme"}
             </span>
-          )}
-        </div>
-      </div>
+          </div>
 
-      <div className="flex items-center justify-between gap-1">
-        <div className="flex flex-1 items-center justify-between gap-1">
-          {days.map((dayIndex) => {
-            const globalDayNumber =
-              getGlobalDayNumberFromWeekAndDay(weekNumber, dayIndex);
+          <div className="flex items-center gap-1">
+            {isCompleted && (
+              <span className="rounded-full bg-emerald-500/20 px-2 py-0.5 text-xs font-medium text-emerald-300">
+                Done
+              </span>
+            )}
 
-            if (!globalDayNumber || globalDayNumber > TOTAL_DAYS) {
-              return null;
-            }
-
-            const dayState = dayProgress[globalDayNumber];
-
-            const done = dayState?.didPractice ?? false;
-
-            return (
-              <Link
-                key={globalDayNumber}
-                href={`/day/${globalDayNumber}`}
-                className={cn(
-                  "flex h-8 w-8 items-center justify-center rounded-xl border text-xs transition-colors",
-                  done
-                    ? "border-emerald-400/80 bg-emerald-500/20 text-emerald-50"
-                    : "border-[hsla(var(--border),0.7)] bg-black/20 text-[hsl(var(--muted))] hover:border-[hsl(var(--accent))]"
-                )}
+            {isBookmarked && (
+              <span
+                className="text-xs"
+                aria-label="Bookmarked week"
+                title="Bookmarked week"
               >
-                {dayIndex}
-              </Link>
-            );
-          })}
+                ⭐
+              </span>
+            )}
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between gap-1">
+          <div className="flex flex-1 items-center justify-between gap-1">
+            {days.map((dayIndex) => {
+              const globalDayNumber =
+                getGlobalDayNumberFromWeekAndDay(weekNumber, dayIndex);
+
+              if (!globalDayNumber || globalDayNumber > TOTAL_DAYS) {
+                return null;
+              }
+
+              const dayState = dayProgress[globalDayNumber];
+
+              const done = dayState?.didPractice ?? false;
+
+              return (
+                <Link
+                  key={globalDayNumber}
+                  href={`/day/${globalDayNumber}`}
+                  className={cn(
+                    "flex h-8 w-8 items-center justify-center rounded-xl border text-xs transition-colors",
+                    done
+                      ? "border-emerald-400/80 bg-emerald-500/20 text-emerald-50"
+                      : "border-[hsla(var(--border),0.35)] bg-white/6 text-[hsl(var(--muted))] hover:border-[hsl(var(--accent))] hover:bg-white/8"
+                  )}
+                >
+                  {dayIndex}
+                </Link>
+              );
+            })}
+          </div>
         </div>
       </div>
     </GlassCard>

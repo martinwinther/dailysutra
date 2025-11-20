@@ -44,7 +44,7 @@ export default function SettingsPage() {
               type="date"
               value={settings.startDate ?? ""}
               onChange={handleDateChange}
-              className="rounded-xl border border-[hsla(var(--border),0.7)] bg-black/20 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))]"
+              className="rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7"
             />
           </label>
         </div>
