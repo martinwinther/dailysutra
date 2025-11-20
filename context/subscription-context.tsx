@@ -41,7 +41,7 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (authLoading) return;
 
-    if (!user) {
+    if (!user || !user.emailVerified) {
       setStatus("none");
       setTrialEndsAt(null);
       setSubLoading(false);

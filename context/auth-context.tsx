@@ -12,6 +12,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut as firebaseSignOut,
+  sendEmailVerification,
   User,
 } from "firebase/auth";
 import { auth } from "../lib/firebase/client";
@@ -24,6 +25,7 @@ interface AuthContextValue {
   signUp: (email: string, password: string) => Promise<void>;
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
+  resendVerificationEmail: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
@@ -47,7 +49,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setAuthLoading(true);
     setAuthError(null);
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      // Send email verification
+      await sendEmailVerification(userCredential.user);
       // onAuthStateChanged will update user
     } catch (error: any) {
       // eslint-disable-next-line no-console
@@ -93,6 +97,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const resendVerificationEmail = async () => {
+    if (!user) {
+      setAuthError("No user logged in");
+      return;
+    }
+    
+    setAuthLoading(true);
+    setAuthError(null);
+    try {
+      await sendEmailVerification(user);
+    } catch (error: any) {
+      // eslint-disable-next-line no-console
+      console.warn("[Auth] resendVerificationEmail error:", error);
+      setAuthError(error?.message ?? "Could not send verification email.");
+      throw error;
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
   const value: AuthContextValue = {
     user,
     loading,
@@ -101,6 +125,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     signUp,
     signIn,
     signOut,
+    resendVerificationEmail,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

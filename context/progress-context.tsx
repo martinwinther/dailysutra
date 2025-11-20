@@ -239,7 +239,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
   // Firestore hydration once we know auth state
   React.useEffect(() => {
     if (authLoading) return;
-    if (!user) return;
+    if (!user || !user.emailVerified) return;
 
     const run = async () => {
       try {
@@ -288,7 +288,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
   // Firestore persistence on state changes
   React.useEffect(() => {
     if (authLoading) return;
-    if (!user) return;
+    if (!user || !user.emailVerified) return;
 
     const journeyRef = doc(db, "users", user.uid, "journeys", "raja-yoga-v1");
 

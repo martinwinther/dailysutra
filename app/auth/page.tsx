@@ -7,14 +7,15 @@ import { GlassCard } from "../../components/glass-card";
 import { useAuth } from "../../context/auth-context";
 
 export default function AuthPage() {
-  const { user, authError, authLoading, signUp, signIn } = useAuth();
+  const { user, authError, authLoading, signUp, signIn, resendVerificationEmail } = useAuth();
   const router = useRouter();
   const [mode, setMode] = useState<"signup" | "login">("signup");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showVerificationMessage, setShowVerificationMessage] = useState(false);
 
   useEffect(() => {
-    if (user) {
+    if (user && user.emailVerified) {
       router.push("/");
     }
   }, [user, router]);
@@ -26,9 +27,18 @@ export default function AuthPage() {
     try {
       if (mode === "signup") {
         await signUp(email, password);
+        setShowVerificationMessage(true);
       } else {
         await signIn(email, password);
       }
+    } catch (error) {
+      // Error is handled in auth context
+    }
+  };
+
+  const handleResendVerification = async () => {
+    try {
+      await resendVerificationEmail();
     } catch (error) {
       // Error is handled in auth context
     }
@@ -42,6 +52,22 @@ export default function AuthPage() {
       />
 
       <GlassCard>
+        {user && !user.emailVerified && (
+          <div className="mb-4 rounded-lg bg-blue-500/20 border border-blue-400/30 px-4 py-3">
+            <p className="text-sm text-blue-100 mb-2">
+              Please check your email and click the verification link to complete your account setup.
+            </p>
+            <button
+              type="button"
+              onClick={handleResendVerification}
+              className="text-xs text-blue-200 hover:text-blue-100 underline"
+              disabled={authLoading}
+            >
+              {authLoading ? "Sending..." : "Resend verification email"}
+            </button>
+          </div>
+        )}
+        
         <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
           <div className="flex items-center gap-2">
             <button
@@ -108,6 +134,12 @@ export default function AuthPage() {
 
             {authError && (
               <p className="text-xs text-red-300">{authError}</p>
+            )}
+
+            {showVerificationMessage && (
+              <p className="text-xs text-green-300">
+                Account created! Please check your email for a verification link.
+              </p>
             )}
 
             <button
