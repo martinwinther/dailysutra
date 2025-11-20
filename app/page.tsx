@@ -1,7 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { PageHeader } from "../components/page-header";
 import { GlassCard } from "../components/glass-card";
+import { useAuth } from "../context/auth-context";
 import { useProgress } from "../context/progress-context";
 import {
   TOTAL_WEEKS,
@@ -10,15 +12,64 @@ import {
   getYogaWeek,
 } from "../data/yogaProgram";
 import { getCurrentWeekAndDay } from "../lib/progress-time";
-import Link from "next/link";
 import { WeekGrid } from "../components/week-grid";
 
 export default function HomePage() {
+  const { user, loading: authLoading } = useAuth();
   const { settings } = useProgress();
   const firstWeek = YOGA_PROGRAM[0];
   const current = getCurrentWeekAndDay(settings);
   const currentWeekData = current ? getYogaWeek(current.week) : null;
   const hasStartDate = Boolean(settings.startDate);
+
+  if (authLoading) {
+    return (
+      <div className="space-y-6">
+        <PageHeader
+          title="52 Weeks of Raja Yoga"
+          subtitle="Loading your journey…"
+        />
+        <GlassCard>
+          <p className="text-sm text-[hsl(var(--muted))]">
+            Please wait while we check your account.
+          </p>
+        </GlassCard>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="space-y-6">
+        <PageHeader
+          title="52 Weeks of Raja Yoga"
+          subtitle="A guided year-long journey through the Yoga Sūtras, with one small practice each day."
+        />
+        <GlassCard>
+          <h2 className="text-sm font-medium text-[hsl(var(--text))]">
+            Start your free month
+          </h2>
+          <p className="mt-2 text-sm text-[hsl(var(--muted))]">
+            Create a free account to begin a 1-month trial. You&apos;ll get a clear
+            weekly theme, a daily micro-practice, and space to track notes and
+            reflections as you move through the 52 weeks.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-3">
+            <Link href="/auth" className="btn-primary">
+              Create account
+            </Link>
+            <Link href="/auth" className="btn-ghost text-xs">
+              Already have an account? Log in
+            </Link>
+          </div>
+          <p className="mt-3 text-[10px] text-[hsl(var(--muted))]">
+            No spam. Your email is used only to save your progress and manage your
+            subscription status.
+          </p>
+        </GlassCard>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

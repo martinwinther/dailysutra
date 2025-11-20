@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "../lib/cn";
+import { useAuth } from "../context/auth-context";
 import { useSubscription } from "../context/subscription-context";
 
 const links = [
@@ -64,6 +65,7 @@ function SubscriptionBadge() {
 
 export function MainNav() {
   const pathname = usePathname();
+  const { user, signOut, authLoading } = useAuth();
 
   return (
     <nav className="hidden gap-4 text-sm text-[hsl(var(--muted))] sm:flex sm:items-center">
@@ -85,6 +87,21 @@ export function MainNav() {
         );
       })}
       <SubscriptionBadge />
+      {user && (
+        <button
+          type="button"
+          onClick={signOut}
+          className="btn-ghost text-[10px]"
+          disabled={authLoading}
+        >
+          Sign out
+        </button>
+      )}
+      {!user && (
+        <Link href="/auth" className="btn-ghost text-[10px]">
+          Sign in
+        </Link>
+      )}
     </nav>
   );
 }
