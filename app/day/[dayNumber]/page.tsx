@@ -197,7 +197,7 @@ export default function DayPage({ params }: DayPageProps) {
         <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex flex-col">
-              <p className="text-xs font-medium uppercase tracking-wide text-[hsl(var(--muted))]">
+              <p className="text-xs font-bold uppercase tracking-wide text-[hsl(var(--muted))]">
                 Core Sūtras
               </p>
               <p className="mt-1 text-sm text-[hsl(var(--muted))]">
@@ -206,7 +206,7 @@ export default function DayPage({ params }: DayPageProps) {
             </div>
             {dateLabel ? (
               <div className="flex flex-col items-start text-right sm:items-end">
-                <p className="text-xs font-medium uppercase tracking-wide text-[hsl(var(--muted))]">
+                <p className="text-xs font-bold uppercase tracking-wide text-[hsl(var(--muted))]">
                   Date
                 </p>
                 <p className="mt-1 text-sm text-[hsl(var(--muted))]">
@@ -217,7 +217,7 @@ export default function DayPage({ params }: DayPageProps) {
           </div>
 
           <div className="mt-4">
-            <p className="text-xs font-medium uppercase tracking-wide text-[hsl(var(--muted))]">
+            <p className="text-xs font-bold uppercase tracking-wide text-[hsl(var(--muted))]">
               Key idea
             </p>
             <p className="mt-1 text-sm text-[hsl(var(--muted))]">
@@ -226,7 +226,7 @@ export default function DayPage({ params }: DayPageProps) {
           </div>
 
           <div className="mt-4">
-            <p className="text-xs font-medium uppercase tracking-wide text-[hsl(var(--muted))]">
+            <p className="text-xs font-bold uppercase tracking-wide text-[hsl(var(--muted))]">
               Weekly practice
             </p>
             <p className="mt-1 text-sm leading-relaxed text-[hsl(var(--muted))]">
