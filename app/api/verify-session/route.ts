@@ -1,13 +1,8 @@
 import Stripe from "stripe";
 import { NextRequest, NextResponse } from "next/server";
+import { config } from "../../../lib/config";
 
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
-
-if (!stripeSecretKey) {
-  throw new Error("STRIPE_SECRET_KEY must be set in env");
-}
-
-const stripe = new Stripe(stripeSecretKey);
+const stripe = new Stripe(config.stripe.secretKey);
 
 export async function POST(request: NextRequest) {
   try {

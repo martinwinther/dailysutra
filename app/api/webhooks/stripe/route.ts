@@ -2,32 +2,17 @@ import Stripe from "stripe";
 import { NextRequest, NextResponse } from "next/server";
 import { getFirestore } from "firebase-admin/firestore";
 import { initializeApp, getApps, cert, App } from "firebase-admin/app";
+import { config } from "../../../lib/config";
 
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-
-if (!stripeSecretKey) {
-  throw new Error("STRIPE_SECRET_KEY must be set in env");
-}
-
-if (!webhookSecret) {
-  throw new Error("STRIPE_WEBHOOK_SECRET must be set in env");
-}
-
-const stripe = new Stripe(stripeSecretKey);
+const stripe = new Stripe(config.stripe.secretKey);
 
 function getFirebaseAdmin(): App {
   if (getApps().length > 0) {
     return getApps()[0];
   }
 
-  const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT;
-  if (!serviceAccount) {
-    throw new Error("FIREBASE_SERVICE_ACCOUNT must be set in env (JSON string)");
-  }
-
   try {
-    const serviceAccountJson = JSON.parse(serviceAccount);
+    const serviceAccountJson = JSON.parse(config.firebase.serviceAccount);
     return initializeApp({
       credential: cert(serviceAccountJson),
     });
@@ -52,7 +37,7 @@ export async function POST(request: NextRequest) {
   let event: Stripe.Event;
 
   try {
-    event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
+    event = stripe.webhooks.constructEvent(body, signature, config.stripe.webhookSecret);
   } catch (error: any) {
     console.error("[webhook] Signature verification failed:", error.message);
     return NextResponse.json(

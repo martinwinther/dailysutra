@@ -1,18 +1,12 @@
 import Stripe from "stripe";
 import { NextRequest, NextResponse } from "next/server";
+import { config } from "../../../lib/config";
 
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
-const stripePriceId = process.env.STRIPE_PRICE_ID;
-
-if (!stripeSecretKey || !stripePriceId) {
-  throw new Error("STRIPE_SECRET_KEY and STRIPE_PRICE_ID must be set in env");
-}
-
-const stripe = new Stripe(stripeSecretKey);
+const stripe = new Stripe(config.stripe.secretKey);
 
 export async function POST(request: NextRequest) {
   try {
-    const origin = request.headers.get("origin") ?? process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+    const origin = request.headers.get("origin") ?? config.app.url;
     const body = await request.json();
     const { uid, email } = body as { uid?: string; email?: string | null };
 
@@ -28,7 +22,7 @@ export async function POST(request: NextRequest) {
       payment_method_types: ["card"],
       line_items: [
         {
-          price: stripePriceId,
+          price: config.stripe.priceId,
           quantity: 1,
         },
       ],
