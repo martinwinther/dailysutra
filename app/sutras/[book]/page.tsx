@@ -30,17 +30,18 @@ export default function BookPage({ params }: BookPageProps) {
   const bookValue = bookParam ? bookMap[bookParam] : null;
 
   useEffect(() => {
-    if (!bookParam) {
-      return;
-    }
-
-    if (!bookValue) {
-      setError("Invalid book");
+    if (!bookParam || !bookValue) {
+      if (!bookValue) {
+        setError("Invalid book");
+      }
       setLoading(false);
       return;
     }
 
     async function fetchSutras() {
+      // TypeScript guard: bookValue is checked above, but we need to assert it here
+      if (!bookValue) return;
+      
       try {
         setLoading(true);
         const fetchedSutras = await getSutrasByBook(bookValue);

@@ -5,3 +5,4 @@ export interface GlossaryTerm {
   sortKey: string; // For alphabetical sorting (lowercase, normalized)
 }
 
+
