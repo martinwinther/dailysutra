@@ -139,36 +139,47 @@ function WeekCard({ weekNumber, todayGlobalDayNumber, currentWeek }: WeekCardPro
               const canAccess = canAccessDay(globalDayNumber);
               const isLocked = !canAccess || !isPastOrCurrent;
 
-              const DayButton = isLocked ? "div" : Link;
+              const dayClassName = cn(
+                "flex h-8 w-8 items-center justify-center rounded-xl border text-xs transition-colors",
+                isToday
+                  ? "border-emerald-400/80 bg-emerald-500/25 text-emerald-50 ring-2 ring-emerald-400/60 ring-offset-1 ring-offset-black/30"
+                  : done && canAccess && isPastOrCurrent
+                  ? "border-emerald-400/80 bg-emerald-500/25 text-emerald-50"
+                  : isLocked
+                  ? "border-[hsla(var(--border),0.2)] bg-white/3 text-[hsl(var(--muted))] opacity-40 cursor-not-allowed"
+                  : "border-[hsla(var(--border),0.35)] bg-white/6 text-[hsl(var(--muted))] hover:border-[hsla(var(--border),0.7)]"
+              );
+
+              const dayTitle =
+                isToday
+                  ? "Today"
+                  : isLocked && !isPastOrCurrent
+                  ? "Future day - not yet available"
+                  : isLocked
+                  ? "Upgrade to access"
+                  : undefined;
+
+              if (isLocked) {
+                return (
+                  <div
+                    key={globalDayNumber}
+                    className={dayClassName}
+                    title={dayTitle}
+                  >
+                    {dayIndex}
+                  </div>
+                );
+              }
 
               return (
-                <DayButton
+                <Link
                   key={globalDayNumber}
-                  {...(isLocked
-                    ? {}
-                    : { href: `/day/${globalDayNumber}` })}
-                  className={cn(
-                    "flex h-8 w-8 items-center justify-center rounded-xl border text-xs transition-colors",
-                    isToday
-                      ? "border-emerald-400/80 bg-emerald-500/25 text-emerald-50 ring-2 ring-emerald-400/60 ring-offset-1 ring-offset-black/30"
-                      : done && canAccess && isPastOrCurrent
-                      ? "border-emerald-400/80 bg-emerald-500/25 text-emerald-50"
-                      : isLocked
-                      ? "border-[hsla(var(--border),0.2)] bg-white/3 text-[hsl(var(--muted))] opacity-40 cursor-not-allowed"
-                      : "border-[hsla(var(--border),0.35)] bg-white/6 text-[hsl(var(--muted))] hover:border-[hsla(var(--border),0.7)]"
-                  )}
-                  title={
-                    isToday
-                      ? "Today"
-                      : isLocked && !isPastOrCurrent
-                      ? "Future day - not yet available"
-                      : isLocked
-                      ? "Upgrade to access"
-                      : undefined
-                  }
+                  href={`/day/${globalDayNumber}`}
+                  className={dayClassName}
+                  title={dayTitle}
                 >
                   {dayIndex}
-                </DayButton>
+                </Link>
               );
             })}
           </div>
