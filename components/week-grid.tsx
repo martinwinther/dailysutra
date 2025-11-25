@@ -81,7 +81,7 @@ function WeekCard({ weekNumber, todayGlobalDayNumber, currentWeek }: WeekCardPro
       <div
         className={cn(
           "-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]",
-          isCurrentWeek && "ring-2 ring-[hsla(var(--accent-soft),0.9)] ring-offset-2 ring-offset-black/30"
+          isCurrentWeek && "border-2 border-[hsla(var(--accent-soft),0.7)]"
         )}
       >
         <div className="flex items-center justify-between gap-2 mb-3">
