@@ -1,8 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import { PageHeader } from "../../components/page-header";
 import { GlassCard } from "../../components/glass-card";
+import { useAuth } from "../../context/auth-context";
 
 export default function AboutPage() {
+  const { user, loading: authLoading } = useAuth();
+
   return (
     <div className="space-y-6">
       <PageHeader
@@ -48,9 +53,11 @@ export default function AboutPage() {
             <Link href="/" className="btn-primary">
               Go to Home
             </Link>
-            <Link href="/auth" className="btn-ghost text-xs">
-              Create account / Sign in
-            </Link>
+            {!authLoading && !user && (
+              <Link href="/auth" className="btn-ghost text-xs">
+                Create account / Sign in
+              </Link>
+            )}
           </div>
         </div>
       </GlassCard>
