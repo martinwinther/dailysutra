@@ -105,7 +105,6 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 {
   subscriptionStatus: "none" | "trial" | "active" | "expired",
   trialStartedAt: Timestamp,
-  trialEndsAt: Timestamp,
   createdAt: Timestamp,
   updatedAt: Timestamp
 }

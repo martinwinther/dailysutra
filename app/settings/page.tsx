@@ -15,8 +15,6 @@ export default function SettingsPage() {
   const { settings, dispatch } = useProgress();
   const {
     status,
-    daysLeft,
-    trialEndsAt,
     isTrialActive,
     isActivePaid,
     isExpired,
@@ -237,8 +235,8 @@ export default function SettingsPage() {
       <GlassCard>
         <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
           <p className="text-sm text-[hsl(var(--muted))]">
-            This journey starts with a free month so you can see if the 52-week
-            structure fits your life.
+            Your free trial includes the first 4 weeks of content. Upgrade to
+            access all 52 weeks of the program.
           </p>
         <div className="mt-3 flex flex-wrap items-center gap-3">
           <div className="rounded-xl bg-white/5 px-3 py-2">
@@ -248,33 +246,22 @@ export default function SettingsPage() {
             <p className="mt-1 text-sm font-semibold text-[hsl(var(--text))]">
               {isActivePaid && "Pro (paid)"}
               {isTrialActive && "Free trial"}
-              {isExpired && "Trial ended"}
+              {isExpired && "Upgrade required"}
               {!isActivePaid && !isTrialActive && !isExpired && "Free"}
             </p>
-            {isTrialActive && daysLeft !== null && (
+            {isTrialActive && (
               <p className="mt-1 text-xs text-[hsl(var(--muted))]">
-                About {daysLeft} day{daysLeft === 1 ? "" : "s"} left in your
-                trial.
-              </p>
-            )}
-            {trialEndsAt && (
-              <p className="mt-1 text-[10px] text-[hsl(var(--muted))]">
-                Trial ends:{" "}
-                {trialEndsAt.toLocaleDateString(undefined, {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                })}
+                Access to weeks 1-4 (28 days)
               </p>
             )}
           </div>
           <div className="flex flex-col gap-1 text-[10px] text-[hsl(var(--muted))]">
             <p>
-              When the trial ends, you&apos;ll still be able to read your notes
-              and see your journey, but new edits will be locked.
+              With a free trial, you can access and edit content for the first 4
+              weeks. Weeks 5-52 require a paid subscription.
             </p>
             <p>
-              Upgrade to continue your practice with full access to all features.
+              Upgrade to unlock full access to all 52 weeks of content.
             </p>
           </div>
         </div>

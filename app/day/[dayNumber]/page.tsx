@@ -31,11 +31,10 @@ function formatDate(date: Date | null): string | null {
 export default function DayPage({ params }: DayPageProps) {
   const { dayProgress, weekProgress, settings, dispatch } = useProgress();
   const {
-    canEditJourney,
+    canAccessDay,
     isExpired,
     isTrialActive,
     isActivePaid,
-    daysLeft,
   } = useSubscription();
 
   const raw = Number(params.dayNumber);
@@ -84,35 +83,37 @@ export default function DayPage({ params }: DayPageProps) {
     }
   }
 
+  const canAccessThisDay = canAccessDay(dayNumber);
+
   const handleTogglePractice = () => {
-    if (!canEditJourney) return;
+    if (!canAccessThisDay) return;
     dispatch({ type: "TOGGLE_DAY_PRACTICE", dayNumber });
   };
 
   const handleNoteChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (!canEditJourney) return;
+    if (!canAccessThisDay) return;
     dispatch({ type: "UPDATE_DAY_NOTE", dayNumber, note: event.target.value });
   };
 
   const handleToggleWeekCompleted = () => {
-    if (!canEditJourney) return;
+    if (!canAccessThisDay) return;
     dispatch({ type: "TOGGLE_WEEK_COMPLETED", week: week.week });
   };
 
   const handleToggleWeekEnjoyed = () => {
-    if (!canEditJourney) return;
+    if (!canAccessThisDay) return;
     dispatch({ type: "TOGGLE_WEEK_ENJOYED", week: week.week });
   };
 
   const handleToggleWeekBookmarked = () => {
-    if (!canEditJourney) return;
+    if (!canAccessThisDay) return;
     dispatch({ type: "TOGGLE_WEEK_BOOKMARKED", week: week.week });
   };
 
   const handleReflectionChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    if (!canEditJourney) return;
+    if (!canAccessThisDay) return;
     dispatch({
       type: "UPDATE_WEEK_REFLECTION",
       week: week.week,
@@ -129,14 +130,15 @@ export default function DayPage({ params }: DayPageProps) {
         subtitle={week.theme}
       />
 
-      {isTrialActive && daysLeft !== null && daysLeft <= 7 && (
+      {isTrialActive && !canAccessThisDay && (
         <GlassCard>
           <p className="text-sm font-medium text-[hsl(var(--text))]">
-            Your free month is ending soon
+            Upgrade to continue
           </p>
           <p className="mt-1 text-xs text-[hsl(var(--muted))]">
-            About {daysLeft} day{daysLeft === 1 ? "" : "s"} left in your free
-            trial. In the future, this is where an upgrade option will appear.
+            Your free trial includes the first 4 weeks of content. To access
+            weeks 5-52, please upgrade to a paid subscription. In the future,
+            this is where an upgrade option will appear.
           </p>
         </GlassCard>
       )}
@@ -144,12 +146,12 @@ export default function DayPage({ params }: DayPageProps) {
       {isExpired && (
         <GlassCard>
           <p className="text-sm font-medium text-[hsl(var(--text))]">
-            Your free month has ended
+            Subscription required
           </p>
           <p className="mt-1 text-xs text-[hsl(var(--muted))]">
             You can still read your past notes and see your journey, but marking
-            new practice and editing notes is now locked. In the future, this is
-            where an upgrade option will appear.
+            new practice and editing notes requires an active subscription. In
+            the future, this is where an upgrade option will appear.
           </p>
         </GlassCard>
       )}
@@ -252,15 +254,15 @@ export default function DayPage({ params }: DayPageProps) {
               type="button"
               onClick={handleTogglePractice}
               className={
-                canEditJourney
+                canAccessThisDay
                   ? didPractice
                     ? "btn-primary"
                     : "btn-ghost border border-[hsla(var(--border),0.7)]"
                   : "btn-ghost opacity-40 cursor-not-allowed border border-[hsla(var(--border),0.4)]"
               }
-              disabled={!canEditJourney}
+              disabled={!canAccessThisDay}
             >
-              {canEditJourney
+              {canAccessThisDay
                 ? didPractice
                   ? "Marked as done"
                   : "Mark as done"
@@ -286,11 +288,11 @@ export default function DayPage({ params }: DayPageProps) {
               rows={5}
               className="mt-2 w-full rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7 disabled:opacity-40 disabled:cursor-not-allowed"
               placeholder={
-                canEditJourney
+                canAccessThisDay
                   ? "For example: I noticed how often my mind jumped to planning today. Pausing to observe it made things feel a bit slower."
-                  : "Editing locked – your trial has ended. You can still read past notes."
+                  : "Editing locked – this content requires a paid subscription. You can still read past notes."
               }
-              disabled={!canEditJourney}
+              disabled={!canAccessThisDay}
             />
           </div>
         </div>
@@ -317,7 +319,7 @@ export default function DayPage({ params }: DayPageProps) {
                     type="checkbox"
                     checked={weekCompleted}
                     onChange={handleToggleWeekCompleted}
-                    disabled={!canEditJourney}
+                    disabled={!canAccessThisDay}
                     className="h-4 w-4 rounded border border-[hsla(var(--border),0.4)] bg-white/5 disabled:opacity-40 disabled:cursor-not-allowed"
                   />
                   <span>Mark this week as completed</span>
@@ -328,7 +330,7 @@ export default function DayPage({ params }: DayPageProps) {
                     type="checkbox"
                     checked={weekEnjoyed}
                     onChange={handleToggleWeekEnjoyed}
-                    disabled={!canEditJourney}
+                    disabled={!canAccessThisDay}
                     className="h-4 w-4 rounded border border-[hsla(var(--border),0.4)] bg-white/5 disabled:opacity-40 disabled:cursor-not-allowed"
                   />
                   <span>I enjoyed this week</span>
@@ -339,7 +341,7 @@ export default function DayPage({ params }: DayPageProps) {
                     type="checkbox"
                     checked={weekBookmarked}
                     onChange={handleToggleWeekBookmarked}
-                    disabled={!canEditJourney}
+                    disabled={!canAccessThisDay}
                     className="h-4 w-4 rounded border border-[hsla(var(--border),0.4)] bg-white/5 disabled:opacity-40 disabled:cursor-not-allowed"
                   />
                   <span>I want to bookmark this week to revisit later</span>
@@ -358,12 +360,12 @@ export default function DayPage({ params }: DayPageProps) {
                   value={reflectionNote}
                   onChange={handleReflectionChange}
                   rows={4}
-                  disabled={!canEditJourney}
+                  disabled={!canAccessThisDay}
                   className="mt-1 w-full rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7 disabled:opacity-40 disabled:cursor-not-allowed"
                   placeholder={
-                    canEditJourney
+                    canAccessThisDay
                       ? "What did you notice about this week&apos;s theme in your day-to-day life?"
-                      : "Editing locked – your trial has ended. You can still read past notes."
+                      : "Editing locked – this content requires a paid subscription. You can still read past notes."
                   }
                 />
               </div>

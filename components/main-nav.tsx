@@ -19,7 +19,6 @@ const links = [
 function SubscriptionBadge() {
   const {
     status,
-    daysLeft,
     isTrialActive,
     isActivePaid,
     isExpired,
@@ -42,10 +41,10 @@ function SubscriptionBadge() {
     );
   }
 
-  if (isTrialActive && daysLeft !== null) {
+  if (isTrialActive) {
     return (
       <span className="rounded-full bg-amber-500/15 px-2 py-1 text-[10px] font-medium text-amber-100 border border-amber-400/70">
-        Trial · {daysLeft} day{daysLeft === 1 ? "" : "s"} left
+        Trial · 4 weeks free
       </span>
     );
   }
@@ -53,7 +52,7 @@ function SubscriptionBadge() {
   if (isExpired) {
     return (
       <span className="rounded-full bg-red-500/15 px-2 py-1 text-[10px] font-medium text-red-200 border border-red-400/70">
-        Trial ended
+        Upgrade required
       </span>
     );
   }

@@ -3,6 +3,7 @@
 import Link from "next/link";
 
 import { useProgress } from "../context/progress-context";
+import { useSubscription } from "../context/subscription-context";
 
 import {
   DAYS_PER_WEEK,
@@ -58,6 +59,7 @@ interface WeekCardProps {
 
 function WeekCard({ weekNumber, todayGlobalDayNumber }: WeekCardProps) {
   const { dayProgress, weekProgress } = useProgress();
+  const { canAccessDay } = useSubscription();
 
   const yogaWeek = YOGA_PROGRAM.find((w) => w.week === weekNumber);
 
@@ -119,19 +121,31 @@ function WeekCard({ weekNumber, todayGlobalDayNumber }: WeekCardProps) {
                 todayGlobalDayNumber !== null &&
                 globalDayNumber === todayGlobalDayNumber;
 
+              const canAccess = canAccessDay(globalDayNumber);
+              const isLocked = !canAccess;
+
               return (
                 <Link
                   key={globalDayNumber}
                   href={`/day/${globalDayNumber}`}
                   className={cn(
                     "flex h-8 w-8 items-center justify-center rounded-xl border text-xs transition-colors",
-                    done
+                    done && canAccess
                       ? "border-emerald-400/80 bg-emerald-500/25 text-emerald-50"
+                      : isLocked
+                      ? "border-[hsla(var(--border),0.2)] bg-white/3 text-[hsl(var(--muted))] opacity-40 cursor-not-allowed"
                       : "border-[hsla(var(--border),0.35)] bg-white/6 text-[hsl(var(--muted))] hover:border-[hsla(var(--border),0.7)]",
                     isToday &&
+                      canAccess &&
                       "ring-2 ring-[hsla(var(--accent-soft),0.9)] ring-offset-2 ring-offset-black/30"
                   )}
-                  title={isToday ? "Today" : undefined}
+                  title={
+                    isToday
+                      ? "Today"
+                      : isLocked
+                      ? "Upgrade to access"
+                      : undefined
+                  }
                 >
                   {dayIndex}
                 </Link>

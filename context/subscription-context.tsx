@@ -14,14 +14,16 @@ import { useAppStatus } from "./app-status-context";
 
 export type SubscriptionStatus = "none" | "trial" | "active" | "expired";
 
+const TRIAL_WEEKS = 4;
+const TRIAL_DAYS = TRIAL_WEEKS * 7; // 28 days
+
 interface SubscriptionContextValue {
   status: SubscriptionStatus;
-  trialEndsAt: Date | null;
-  daysLeft: number | null;
   isTrialActive: boolean;
   isActivePaid: boolean;
   isExpired: boolean;
   canEditJourney: boolean;
+  canAccessDay: (dayNumber: number) => boolean;
   loading: boolean;
 }
 
@@ -29,13 +31,10 @@ const SubscriptionContext = createContext<SubscriptionContextValue | undefined>(
   undefined
 );
 
-const MS_PER_DAY = 24 * 60 * 60 * 1000;
-
 export function SubscriptionProvider({ children }: { children: ReactNode }) {
   const { user, loading: authLoading } = useAuth();
   const { setLastError } = useAppStatus();
   const [status, setStatus] = useState<SubscriptionStatus>("none");
-  const [trialEndsAt, setTrialEndsAt] = useState<Date | null>(null);
   const [subLoading, setSubLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -43,7 +42,6 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
 
     if (!user || !user.emailVerified) {
       setStatus("none");
-      setTrialEndsAt(null);
       setSubLoading(false);
       return;
     }
@@ -58,12 +56,10 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
       const snap = await getDoc(userRef);
       if (!snap.exists()) {
         const now = new Date();
-        const trialEnd = new Date(now.getTime() + 30 * MS_PER_DAY);
 
         await setDoc(userRef, {
           subscriptionStatus: "trial",
           trialStartedAt: Timestamp.fromDate(now),
-          trialEndsAt: Timestamp.fromDate(trialEnd),
           createdAt: Timestamp.fromDate(now),
           updatedAt: Timestamp.fromDate(now),
         });
@@ -75,38 +71,25 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
         (docSnap) => {
           if (!docSnap.exists()) {
             setStatus("none");
-            setTrialEndsAt(null);
             setSubLoading(false);
             return;
           }
 
           const data = docSnap.data() as {
             subscriptionStatus?: SubscriptionStatus;
-            trialEndsAt?: Timestamp;
           };
 
           const rawStatus = data.subscriptionStatus ?? "none";
-          const endsTs = data.trialEndsAt ?? null;
-          const endsDate = endsTs ? endsTs.toDate() : null;
 
-          // compute derived flags
-          const nowMs = Date.now();
-          const endsMs = endsDate ? endsDate.getTime() : 0;
-          const remainingMs = endsDate ? endsMs - nowMs : 0;
-
-          const trialStillValid =
-            rawStatus === "trial" && endsDate !== null && remainingMs > 0;
-
-          const normalizedStatus: SubscriptionStatus = trialStillValid
-            ? "trial"
-            : rawStatus === "active"
-            ? "active"
-            : rawStatus === "trial" && !trialStillValid
-            ? "expired"
-            : rawStatus;
+          // Trial status never expires by time - it's content-based
+          const normalizedStatus: SubscriptionStatus =
+            rawStatus === "active"
+              ? "active"
+              : rawStatus === "trial"
+              ? "trial"
+              : rawStatus;
 
           setStatus(normalizedStatus);
-          setTrialEndsAt(endsDate);
           setSubLoading(false);
         },
         (error) => {
@@ -114,7 +97,6 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
           console.warn("[Subscription] onSnapshot error:", error);
           setLastError("Failed to sync with server. Working from local copy.");
           setStatus("none");
-          setTrialEndsAt(null);
           setSubLoading(false);
         }
       );
@@ -127,26 +109,26 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
     };
   }, [authLoading, user?.uid, setLastError]);
 
-  const nowMs = Date.now();
-  const endsMs = trialEndsAt ? trialEndsAt.getTime() : 0;
-  const daysLeft =
-    trialEndsAt && endsMs > nowMs
-      ? Math.max(0, Math.ceil((endsMs - nowMs) / MS_PER_DAY))
-      : null;
+  // Content-based access check: trial users can access days 1-28 (weeks 1-4)
+  const canAccessDay = (dayNumber: number): boolean => {
+    if (status === "active") return true;
+    if (status === "trial") return dayNumber <= TRIAL_DAYS;
+    return false; // expired or none
+  };
 
   const isActivePaid = status === "active";
-  const isTrialActive = status === "trial" && !!trialEndsAt && endsMs > nowMs;
+  const isTrialActive = status === "trial";
   const isExpired = status === "expired" || (!isActivePaid && !isTrialActive);
+  // canEditJourney is now content-agnostic - use canAccessDay(dayNumber) for day-specific checks
   const canEditJourney = isActivePaid || isTrialActive;
 
   const value: SubscriptionContextValue = {
     status,
-    trialEndsAt,
-    daysLeft,
     isTrialActive,
     isActivePaid,
     isExpired,
     canEditJourney,
+    canAccessDay,
     loading: subLoading || authLoading,
   };
 
