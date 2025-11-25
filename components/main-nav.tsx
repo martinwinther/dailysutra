@@ -9,6 +9,7 @@ import { useSubscription } from "../context/subscription-context";
 const links = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
+  { href: "/sutras", label: "Sutras" },
   { href: "/progress", label: "Progress" },
   { href: "/journal", label: "Journal" },
   { href: "/settings", label: "Settings" },

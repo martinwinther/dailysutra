@@ -46,6 +46,15 @@
   //     ]
   //   },
   // ]
-  "indexes": [],
+  "indexes": [
+    {
+      "collectionGroup": "sutras",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "book", "order": "ASCENDING" },
+        { "fieldPath": "sutraNumber", "order": "ASCENDING" }
+      ]
+    }
+  ],
   "fieldOverrides": []
 }
