@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { doc, setDoc } from "firebase/firestore";
@@ -9,7 +9,7 @@ import { useAuth } from "../../../context/auth-context";
 import { PageHeader } from "../../../components/page-header";
 import { GlassCard } from "../../../components/glass-card";
 
-export default function CheckoutSuccessPage() {
+function CheckoutSuccessContent() {
   const { user } = useAuth();
   const searchParams = useSearchParams();
   const [updated, setUpdated] = useState(false);
@@ -112,5 +112,29 @@ export default function CheckoutSuccessPage() {
         </div>
       </GlassCard>
     </div>
+  );
+}
+
+export default function CheckoutSuccessPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="space-y-6">
+          <PageHeader
+            title="Welcome to the full journey"
+            subtitle="Your subscription is active. Thank you for supporting this work."
+          />
+          <GlassCard>
+            <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+              <p className="text-sm text-[hsl(var(--muted))]">
+                Loading...
+              </p>
+            </div>
+          </GlassCard>
+        </div>
+      }
+    >
+      <CheckoutSuccessContent />
+    </Suspense>
   );
 }
