@@ -10,8 +10,8 @@ A year-long Raja Yoga journey tracker based on the Yoga Sūtras, guiding users t
 - **Progress dashboard** showing statistics, recent activity, and bookmarked weeks
 - **Journal timeline** displaying daily notes and weekly reflections in chronological order
 - **Email-based authentication** powered by Firebase Auth
-- **Trial subscription model** with 1-month free access, then editing locked unless upgraded
-- **Stripe Checkout integration** for upgrading to "Pro" subscription
+- **Trial subscription model** with 4-week free access (weeks 1-4), then editing locked unless upgraded
+- **Stripe Checkout integration** for one-time payment to unlock remaining 48 weeks (weeks 5-52)
 - **PWA support** with installable manifest, icons, and basic offline functionality
 - **Local backup/restore** of journey data as JSON files
 
@@ -54,8 +54,9 @@ A year-long Raja Yoga journey tracker based on the Yoga Sūtras, guiding users t
 
 4. **Set up Stripe**
    - Create a Stripe account and get your test keys
-   - Create a subscription product with a recurring price
-   - Copy the price ID for your subscription
+   - Create a product with a one-time payment price (not recurring)
+   - Copy the price ID for your one-time payment
+   - Set up a webhook endpoint (see Stripe Integration section below)
 
 5. **Configure environment variables**
    ```bash
@@ -92,7 +93,11 @@ NEXT_PUBLIC_FIREBASE_APP_ID=your_firebase_app_id
 # Stripe Configuration
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
 STRIPE_SECRET_KEY=sk_test_...
-STRIPE_PRICE_ID=price_... # Your subscription price ID
+STRIPE_PRICE_ID=price_... # Your one-time payment price ID
+STRIPE_WEBHOOK_SECRET=whsec_... # Webhook signing secret from Stripe dashboard
+
+# Firebase Admin (for webhooks)
+FIREBASE_SERVICE_ACCOUNT='{"type":"service_account",...}' # JSON string of service account key
 
 # App URL (fallback for Stripe checkout URLs)
 NEXT_PUBLIC_APP_URL=http://localhost:3000
@@ -105,6 +110,7 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 {
   subscriptionStatus: "none" | "trial" | "active" | "expired",
   trialStartedAt: Timestamp,
+  upgradedAt: Timestamp, // Set when payment is completed
   createdAt: Timestamp,
   updatedAt: Timestamp
 }
@@ -140,14 +146,42 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 
 ## Stripe Integration
 
-The subscription flow works as follows:
+The payment flow works as follows:
 
-1. `/api/create-checkout-session` creates a Stripe Checkout session
+1. `/api/create-checkout-session` creates a Stripe Checkout session for a one-time payment
 2. Session metadata includes the user's `firebaseUid`
 3. After successful payment, Stripe redirects to `/checkout/success`
-4. Success page updates user's `subscriptionStatus` to "active" in Firestore
+4. Success page verifies the session with `/api/verify-session` before updating status
+5. Stripe webhook (`/api/webhooks/stripe`) also processes `checkout.session.completed` events
+6. User's `subscriptionStatus` is set to "active" in Firestore, granting access to all 52 weeks
 
-**Production Note:** This implementation lacks Stripe webhooks. For production deployment, implement webhook endpoints to verify subscription status server-side and handle subscription lifecycle events.
+### Setting Up Stripe Webhooks
+
+For production, you must configure Stripe webhooks:
+
+1. **Get your webhook signing secret:**
+   - Go to Stripe Dashboard → Developers → Webhooks
+   - Click "Add endpoint" or use an existing one
+   - Set the endpoint URL to: `https://yourdomain.com/api/webhooks/stripe`
+   - Select event: `checkout.session.completed`
+   - Copy the "Signing secret" (starts with `whsec_`)
+
+2. **Set environment variable:**
+   ```bash
+   STRIPE_WEBHOOK_SECRET=whsec_your_signing_secret
+   ```
+
+3. **Set up Firebase Service Account:**
+   - Go to Firebase Console → Project Settings → Service Accounts
+   - Click "Generate new private key"
+   - Copy the entire JSON content
+   - Set as environment variable (as a JSON string on a single line):
+   ```bash
+   FIREBASE_SERVICE_ACCOUNT='{"type":"service_account","project_id":"...","private_key":"...",...}'
+   ```
+   **Important:** The JSON must be on a single line. Remove all line breaks and ensure proper escaping of quotes within the JSON string.
+
+**Note:** The webhook provides server-side verification and is the authoritative source for payment status. The success page verification is a fallback for immediate user feedback.
 
 ## PWA Behavior
 
@@ -182,7 +216,6 @@ The app uses a custom "glass morphism" design system with:
 
 ## Future Work / TODO
 
-- **Add Stripe webhooks** with Firebase Admin SDK to ensure server-side subscription verification
 - **Enhance Firestore security rules** to enforce subscription status on write operations
 - **Implement account management** features (email change, password reset) in Settings
 - **Improve PWA assets** with better icons, splash screens, and branding
