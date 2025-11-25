@@ -263,6 +263,11 @@ export default function SettingsPage() {
             <p>
               Upgrade to unlock full access to all 52 weeks of content.
             </p>
+            {user?.email && (
+              <p className="mt-2 text-xs text-[hsl(var(--muted))]">
+                {user.email}
+              </p>
+            )}
           </div>
         </div>
         <div className="mt-4 flex flex-wrap items-center gap-2">
