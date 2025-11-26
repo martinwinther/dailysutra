@@ -5,11 +5,14 @@ import { usePathname } from "next/navigation";
 import { cn } from "../lib/cn";
 import { useAuth } from "../context/auth-context";
 
-const links = [
+const publicLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/sutras", label: "Sutras" },
   { href: "/glossary", label: "Glossary" },
+];
+
+const authenticatedLinks = [
   { href: "/progress", label: "Progress" },
   { href: "/journal", label: "Journal" },
   { href: "/settings", label: "Settings" },
@@ -18,6 +21,10 @@ const links = [
 export function MainNav() {
   const pathname = usePathname();
   const { user, signOut, authLoading } = useAuth();
+
+  const links = user
+    ? [...publicLinks, ...authenticatedLinks]
+    : publicLinks;
 
   return (
     <nav className="hidden gap-4 text-sm text-[hsl(var(--muted))] sm:flex sm:items-center">

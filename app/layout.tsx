@@ -51,12 +51,7 @@ export default function RootLayout({
                   <div className="flex min-h-screen flex-col">
                     <header className="glass-nav sticky top-0 z-20">
                       <div className="mx-auto flex max-w-5xl items-center px-4 py-3">
-                        <div className="flex items-center gap-6">
-                          <span className="text-sm font-semibold tracking-wide text-[hsl(var(--text))]">
-                            Daily Sutra
-                          </span>
-                          <MainNav />
-                        </div>
+                        <MainNav />
                       </div>
                     </header>
                     <AppStatusBanner />
