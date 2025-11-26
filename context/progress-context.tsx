@@ -31,7 +31,7 @@ interface ProgressContextValue extends ProgressState {
 
 const ProgressContext = React.createContext<ProgressContextValue | null>(null);
 
-export const PROGRESS_STORAGE_KEY = "raja-yoga-progress-v1";
+export const PROGRESS_STORAGE_KEY = "dailysutra-progress-v1";
 
 const initialState: ProgressState = {
   dayProgress: {},
@@ -248,7 +248,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
           "users",
           user.uid,
           "journeys",
-          "raja-yoga-v1"
+          "dailysutra-v1"
         );
         const snap = await getDoc(journeyRef);
         if (snap.exists()) {
@@ -267,7 +267,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
           // Initialize journey doc from current local state
           await setDoc(journeyRef, {
             ...state,
-            programKey: "raja-yoga-v1",
+            programKey: "dailysutra-v1",
             programVersion: "1",
             updatedAt: serverTimestamp(),
           });
@@ -290,7 +290,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     if (authLoading) return;
     if (!user || !user.emailVerified) return;
 
-    const journeyRef = doc(db, "users", user.uid, "journeys", "raja-yoga-v1");
+    const journeyRef = doc(db, "users", user.uid, "journeys", "dailysutra-v1");
 
     const run = async () => {
       try {
@@ -300,7 +300,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
             dayProgress: state.dayProgress,
             weekProgress: state.weekProgress,
             settings: state.settings,
-            programKey: "raja-yoga-v1",
+            programKey: "dailysutra-v1",
             programVersion: "1",
             updatedAt: serverTimestamp(),
           },

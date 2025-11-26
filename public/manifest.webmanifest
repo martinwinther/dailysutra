@@ -1,6 +1,6 @@
 {
-  "name": "52 Weeks of Raja Yoga",
-  "short_name": "Raja Yoga",
+  "name": "Daily Sutra",
+  "short_name": "Daily Sutra",
   "description": "A 52-week guided journey through the Yoga Sūtras with daily micro-practices and notes.",
   "start_url": "/",
   "scope": "/",
@@ -10,12 +10,12 @@
   "theme_color": "#111827",
   "icons": [
     {
-      "src": "/icons/raja-192.png",
+      "src": "/icons/android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/icons/raja-512.png",
+      "src": "/icons/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }

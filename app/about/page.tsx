@@ -11,7 +11,7 @@ export default function AboutPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="About 52 Weeks of Raja Yoga"
+        title="About Daily Sutra"
         subtitle="A year-long, realistic exploration of the Yoga Sūtras of Patañjali."
       />
 
@@ -24,7 +24,7 @@ export default function AboutPage() {
       <GlassCard>
         <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
           <p className="text-sm text-[hsl(var(--muted))]">
-            52 Weeks of Raja Yoga is a structured journey through the Yoga Sūtras.
+            Daily Sutra is a structured journey through the Yoga Sūtras.
             Each week you focus on one theme from Patañjali&apos;s text, with a small
             daily practice and space to reflect on how it shows up in real life.
           </p>

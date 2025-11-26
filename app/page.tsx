@@ -26,7 +26,7 @@ export default function HomePage() {
     return (
       <div className="space-y-6">
         <PageHeader
-          title="52 Weeks of Raja Yoga"
+          title="Daily Sutra"
           subtitle="Loading your journey…"
         />
         <GlassCard>
@@ -42,7 +42,7 @@ export default function HomePage() {
     return (
       <div className="space-y-6">
         <PageHeader
-          title="52 Weeks of Raja Yoga"
+          title="Daily Sutra"
           subtitle="A guided year-long journey through the Yoga Sūtras, with one small practice each day."
         />
         <GlassCard>
@@ -76,7 +76,7 @@ export default function HomePage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Your Raja Yoga Journey"
+        title="Your Journey"
         subtitle="A calm, structured 52-week program based on Patañjali&apos;s Yoga Sūtras. One weekly theme, tiny daily actions, and space to reflect."
       />
 

@@ -48,7 +48,7 @@ export default function GlossaryPage() {
     <div className="space-y-6">
       <PageHeader
         title="Glossary"
-        subtitle="Key Sanskrit and technical terms used in the Raja Yoga teachings and commentary. Click on any term to expand its definition."
+        subtitle="Key Sanskrit and technical terms used in the Yoga Sūtras teachings and commentary. Click on any term to expand its definition."
       />
 
       <GlassCard>

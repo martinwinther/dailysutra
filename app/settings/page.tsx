@@ -65,7 +65,7 @@ export default function SettingsPage() {
       const link = document.createElement("a");
       const stamp = new Date().toISOString().slice(0, 10);
       link.href = url;
-      link.download = `raja-yoga-progress-${stamp}.json`;
+      link.download = `dailysutra-progress-${stamp}.json`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -100,7 +100,7 @@ export default function SettingsPage() {
           !("settings" in parsed)
         ) {
           throw new Error(
-            "File does not look like a Raja Yoga progress backup."
+            "File does not look like a Daily Sutra progress backup."
           );
         }
 

@@ -9,18 +9,22 @@ import { ProgressProvider } from "../context/progress-context";
 import { AppStatusProvider } from "../context/app-status-context";
 
 export const metadata: Metadata = {
-  title: "52 Weeks of Raja Yoga",
+  title: "Daily Sutra",
   description:
     "A 52-week guided journey through the Yoga Sūtras with daily micro-practices, notes, and progress tracking.",
   manifest: "/manifest.webmanifest",
   icons: {
-    icon: "/icon.svg",
-    apple: "/icons/raja-192.png",
+    icon: [
+      { url: "/icons/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/icons/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icons/favicon.ico", sizes: "any" },
+    ],
+    apple: "/icons/apple-touch-icon.png",
   },
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "Raja Yoga",
+    title: "Daily Sutra",
   },
 };
 
@@ -49,7 +53,7 @@ export default function RootLayout({
                       <div className="mx-auto flex max-w-5xl items-center px-4 py-3">
                         <div className="flex items-center gap-6">
                           <span className="text-sm font-semibold tracking-wide text-[hsl(var(--text))]">
-                            52 Weeks of Raja Yoga
+                            Daily Sutra
                           </span>
                           <MainNav />
                         </div>

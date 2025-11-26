@@ -1,10 +1,10 @@
-# 52 Weeks of Raja Yoga
+# Daily Sutra
 
-A year-long Raja Yoga journey tracker based on the Yoga Sūtras, guiding users through 52 weeks of contemplative practices with daily tracking and reflection tools.
+A year-long journey through the Yoga Sūtras, guiding users through 52 weeks of contemplative practices with daily tracking and reflection tools.
 
 ## Features
 
-- **52-week Raja Yoga curriculum** linked to specific sūtras from Patañjali's Yoga Sūtras
+- **52-week curriculum** linked to specific sūtras from Patañjali's Yoga Sūtras
 - **Daily practice tracking** with checkbox completion and personal notes
 - **Weekly review system** with completion flags, enjoyment ratings, bookmarks, and reflection notes
 - **Progress dashboard** showing statistics, recent activity, and bookmarked weeks
@@ -38,7 +38,7 @@ A year-long Raja Yoga journey tracker based on the Yoga Sūtras, guiding users t
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd raja-yoga
+   cd dailysutra
    ```
 
 2. **Install dependencies**
@@ -116,10 +116,10 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 }
 ```
 
-### Journey Documents (`users/{uid}/journeys/raja-yoga-v1`)
+### Journey Documents (`users/{uid}/journeys/dailysutra-v1`)
 ```javascript
 {
-  programKey: "raja-yoga-v1",
+  programKey: "dailysutra-v1",
   programVersion: "1.0",
   dayProgress: {
     1: { completed: true, notes: "..." },
@@ -197,7 +197,7 @@ PWA functionality is disabled in development mode (`NODE_ENV=development`).
 
 ### 52-Week Program Structure
 
-The complete Raja Yoga curriculum is defined in `data/yogaProgram.ts` as the `YOGA_PROGRAM` array. Each week includes:
+The complete curriculum is defined in `data/yogaProgram.ts` as the `YOGA_PROGRAM` array. Each week includes:
 
 - Week number (1-52)
 - Theme and core sūtras

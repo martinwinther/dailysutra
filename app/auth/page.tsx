@@ -47,7 +47,7 @@ export default function AuthPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Welcome to 52 Weeks of Raja Yoga"
+        title="Welcome to Daily Sutra"
         subtitle="Create a free account to begin your 1-month trial and track your journey through the Yoga Sūtras."
       />
 
