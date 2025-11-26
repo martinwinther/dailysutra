@@ -39,19 +39,19 @@ export function MainNav() {
       >
         <span
           className={cn(
-            "h-0.5 w-5 bg-[hsl(var(--text))] transition-all",
+            "h-0.5 w-5 bg-[hsl(var(--text))] opacity-100 transition-all duration-300",
             mobileMenuOpen && "translate-y-2 rotate-45"
           )}
         />
         <span
           className={cn(
-            "h-0.5 w-5 bg-[hsl(var(--text))] transition-all",
-            mobileMenuOpen && "opacity-0"
+            "h-0.5 w-5 bg-[hsl(var(--text))] transition-opacity duration-300",
+            mobileMenuOpen ? "opacity-0" : "opacity-100"
           )}
         />
         <span
           className={cn(
-            "h-0.5 w-5 bg-[hsl(var(--text))] transition-all",
+            "h-0.5 w-5 bg-[hsl(var(--text))] opacity-100 transition-all duration-300",
             mobileMenuOpen && "-translate-y-2 -rotate-45"
           )}
         />
@@ -60,7 +60,7 @@ export function MainNav() {
       {/* Mobile menu overlay */}
       {mobileMenuOpen && (
         <div
-          className="fixed inset-0 z-30 bg-black/50 sm:hidden"
+          className="fixed inset-0 z-30 bg-black/40 backdrop-blur-sm sm:hidden"
           onClick={() => setMobileMenuOpen(false)}
         />
       )}
@@ -68,9 +68,14 @@ export function MainNav() {
       {/* Mobile menu */}
       <nav
         className={cn(
-          "fixed left-0 top-0 z-40 h-full w-64 transform bg-[hsl(var(--background))] shadow-xl transition-transform duration-300 ease-in-out sm:relative sm:z-auto sm:h-auto sm:w-auto sm:transform-none sm:bg-transparent sm:shadow-none",
+          "fixed left-0 top-0 z-40 h-full w-64 transform transition-transform duration-300 ease-in-out sm:relative sm:z-auto sm:h-auto sm:w-auto sm:transform-none sm:bg-transparent sm:shadow-none",
           mobileMenuOpen ? "translate-x-0" : "-translate-x-full sm:translate-x-0",
-          "flex flex-col gap-4 p-6 text-sm text-[hsl(var(--muted))] sm:flex-row sm:items-center sm:p-0"
+          "flex flex-col gap-4 p-6 text-sm text-[hsl(var(--muted))] sm:flex-row sm:items-center sm:p-0",
+          // Glass morphism styling for mobile menu
+          "bg-gradient-to-br from-[hsla(var(--surface),0.92)] to-[hsla(var(--surface-soft),0.88)]",
+          "border-r border-[hsla(var(--border),0.35)]",
+          "backdrop-blur-[18px] backdrop-saturate-[150%]",
+          "shadow-[0_0_0_1px_hsla(var(--surface-soft),0.35),0_22px_60px_rgba(0,0,0,0.55)]"
         )}
       >
         {links.map((link) => {
