@@ -42,31 +42,49 @@ export default function HomePage() {
     return (
       <div className="space-y-6">
         <PageHeader
-          title="Daily Sutra"
-          subtitle="A guided year-long journey through the Yoga Sūtras, with one small practice each day."
+          title="About Daily Sutra"
+          subtitle="A year-long, realistic exploration of the Yoga Sūtras of Patañjali."
         />
+
+        <div className="flex items-center justify-between px-6">
+          <h2 className="text-sm font-medium uppercase tracking-wide text-[hsl(var(--muted))]">
+            What this is
+          </h2>
+        </div>
+
         <GlassCard>
           <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
-            <h2 className="text-sm font-medium text-[hsl(var(--text))]">
-              Start your free month
-            </h2>
-            <p className="mt-2 text-sm text-[hsl(var(--muted))]">
-              Create a free account to begin a 1-month trial. You&apos;ll get a clear
-              weekly theme, a daily micro-practice, and space to track notes and
-              reflections as you move through the 52 weeks.
+            <p className="text-sm text-[hsl(var(--muted))]">
+              Daily Sutra is a structured journey through the Yoga Sūtras.
+              Each week you focus on one theme from Patañjali&apos;s text, with a small
+              daily practice and space to reflect on how it shows up in real life.
             </p>
+
+            <h3 className="mt-4 text-xs font-semibold text-[hsl(var(--text))]">
+              How it works
+            </h3>
+            <ul className="mt-2 space-y-1 text-sm text-[hsl(var(--muted))]">
+              <li>• 52 weeks, each linked to specific sūtras and a clear key idea.</li>
+              <li>• Each day, you mark whether you practiced and optionally write a note.</li>
+              <li>• At the end of each week you can review, bookmark, and reflect.</li>
+              <li>• Progress syncs across devices via your account.</li>
+            </ul>
+
+            <h3 className="mt-4 text-xs font-semibold text-[hsl(var(--text))]">
+              Free month and beyond
+            </h3>
+            <p className="mt-2 text-sm text-[hsl(var(--muted))]">
+              When you sign up, you get a 1-month free trial to explore the structure
+              and see if it serves you. After the trial, you can still read your notes
+              and see your journey, but marking new practice and editing notes is
+              locked until you upgrade in a future version.
+            </p>
+
             <div className="mt-4 flex flex-wrap gap-3">
               <Link href="/auth" className="btn-primary">
-                Create account
-              </Link>
-              <Link href="/auth" className="btn-ghost text-xs">
-                Already have an account? Log in
+                Create account / Sign in
               </Link>
             </div>
-            <p className="mt-3 text-[10px] text-[hsl(var(--muted))]">
-              No spam. Your email is used only to save your progress and manage your
-              subscription status.
-            </p>
           </div>
         </GlassCard>
       </div>

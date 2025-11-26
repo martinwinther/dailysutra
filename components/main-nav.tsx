@@ -7,7 +7,6 @@ import { useAuth } from "../context/auth-context";
 
 const publicLinks = [
   { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
   { href: "/sutras", label: "Sutras" },
   { href: "/glossary", label: "Glossary" },
 ];
