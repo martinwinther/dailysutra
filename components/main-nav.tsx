@@ -2,126 +2,147 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 import { cn } from "../lib/cn";
 import { useAuth } from "../context/auth-context";
 
 const publicLinks = [
-  { href: "/", label: "Home" },
-  { href: "/sutras", label: "Sutras" },
-  { href: "/glossary", label: "Glossary" },
+  { href: "/", label: "Home", emoji: "🏠" },
+  { href: "/sutras", label: "Sutras", emoji: "📿" },
+  { href: "/glossary", label: "Glossary", emoji: "📖" },
 ];
 
 const authenticatedLinks = [
-  { href: "/progress", label: "Progress" },
-  { href: "/journal", label: "Journal" },
-  { href: "/settings", label: "Settings" },
+  { href: "/progress", label: "Progress", emoji: "📊" },
+  { href: "/journal", label: "Journal", emoji: "📝" },
+  { href: "/settings", label: "Settings", emoji: "⚙️" },
 ];
 
 export function MainNav() {
   const pathname = usePathname();
   const { user, signOut, authLoading } = useAuth();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const links = user
     ? [...publicLinks, ...authenticatedLinks]
     : publicLinks;
 
+  const isAuthActive = pathname === "/auth";
+
   return (
-    <>
-      {/* Mobile hamburger button */}
-      <button
-        type="button"
-        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        className="flex flex-col gap-1.5 p-2 sm:hidden"
-        aria-label="Toggle menu"
-        aria-expanded={mobileMenuOpen}
-      >
-        <span
-          className={cn(
-            "h-0.5 w-5 bg-[hsl(var(--text))] opacity-100 transition-all duration-300",
-            mobileMenuOpen && "translate-y-2 rotate-45"
-          )}
-        />
-        <span
-          className={cn(
-            "h-0.5 w-5 bg-[hsl(var(--text))] transition-opacity duration-300",
-            mobileMenuOpen ? "opacity-0" : "opacity-100"
-          )}
-        />
-        <span
-          className={cn(
-            "h-0.5 w-5 bg-[hsl(var(--text))] opacity-100 transition-all duration-300",
-            mobileMenuOpen && "-translate-y-2 -rotate-45"
-          )}
-        />
-      </button>
+    <nav className="flex w-full items-center gap-2 sm:gap-4">
+      {links.map((link) => {
+        const isActive =
+          link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
 
-      {/* Mobile menu overlay */}
-      {mobileMenuOpen && (
-        <div
-          className="fixed inset-0 z-30 bg-black/40 backdrop-blur-sm sm:hidden"
-          onClick={() => setMobileMenuOpen(false)}
-        />
-      )}
-
-      {/* Mobile menu */}
-      <nav
-        className={cn(
-          "fixed left-0 top-0 z-40 h-full w-64 transform transition-transform duration-300 ease-in-out sm:relative sm:z-auto sm:h-auto sm:w-auto sm:transform-none sm:bg-transparent sm:shadow-none",
-          mobileMenuOpen ? "translate-x-0" : "-translate-x-full sm:translate-x-0",
-          "flex flex-col gap-4 p-6 text-sm text-[hsl(var(--muted))] sm:flex-row sm:items-center sm:p-0",
-          // Glass morphism styling for mobile menu
-          "bg-gradient-to-br from-[hsla(var(--surface),0.92)] to-[hsla(var(--surface-soft),0.88)]",
-          "border-r border-[hsla(var(--border),0.35)]",
-          "backdrop-blur-[18px] backdrop-saturate-[150%]",
-          "shadow-[0_0_0_1px_hsla(var(--surface-soft),0.35),0_22px_60px_rgba(0,0,0,0.55)]"
-        )}
-      >
-        {links.map((link) => {
-          const isActive =
-            link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
-
-          return (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={() => setMobileMenuOpen(false)}
+        return (
+          <Link
+            key={link.href}
+            href={link.href}
+            className={cn(
+              "flex items-center justify-center transition-all duration-200",
+              "sm:px-3 sm:py-2 sm:rounded-lg",
+              "hover:text-[hsl(var(--text))]",
+              isActive && "text-[hsl(var(--text))]"
+            )}
+            aria-label={link.label}
+          >
+            {/* Mobile: emoji in circle */}
+            <span
               className={cn(
-                "transition-colors hover:text-[hsl(var(--text))]",
-                isActive && "text-[hsl(var(--text))] font-medium"
+                "flex h-10 w-10 items-center justify-center rounded-full text-lg",
+                "backdrop-blur-sm transition-all duration-200",
+                "border",
+                "sm:hidden",
+                isActive
+                  ? "bg-white/12 border-white/25 shadow-[0_0_8px_rgba(255,255,255,0.1)]"
+                  : "bg-white/5 border-white/10 hover:bg-white/8 hover:border-white/15"
+              )}
+            >
+              {link.emoji}
+            </span>
+            {/* Desktop: text label */}
+            <span
+              className={cn(
+                "hidden text-sm transition-colors sm:block",
+                isActive
+                  ? "text-[hsl(var(--text))] font-medium"
+                  : "text-[hsl(var(--muted))]"
               )}
             >
               {link.label}
-            </Link>
-          );
-        })}
-        <div className="mt-auto flex flex-col gap-3 border-t border-white/10 pt-4 sm:mt-0 sm:flex-row sm:border-0 sm:pt-0">
-          {user && (
-            <button
-              type="button"
-              onClick={() => {
-                setMobileMenuOpen(false);
-                signOut();
-              }}
-              className="btn-ghost text-left text-[10px] sm:text-right"
-              disabled={authLoading}
+            </span>
+          </Link>
+        );
+      })}
+      <div className="ml-auto flex items-center gap-2 sm:gap-3">
+        {user && (
+          <button
+            type="button"
+            onClick={signOut}
+            className={cn(
+              "flex items-center justify-center transition-all duration-200",
+              "sm:px-3 sm:py-2 sm:rounded-lg",
+              "btn-ghost sm:text-sm"
+            )}
+            disabled={authLoading}
+            aria-label="Sign out"
+          >
+            {/* Mobile: emoji in circle */}
+            <span
+              className={cn(
+                "flex h-10 w-10 items-center justify-center rounded-full text-lg",
+                "backdrop-blur-sm transition-all duration-200",
+                "border border-white/10",
+                "bg-white/5 hover:bg-white/8 hover:border-white/15",
+                "sm:hidden",
+                authLoading && "opacity-50"
+              )}
             >
-              Sign out
-            </button>
-          )}
-          {!user && (
-            <Link
-              href="/auth"
-              onClick={() => setMobileMenuOpen(false)}
-              className="btn-ghost text-[10px]"
+              🚪
+            </span>
+            {/* Desktop: text label */}
+            <span className="hidden text-[10px] sm:block">Sign out</span>
+          </button>
+        )}
+        {!user && (
+          <Link
+            href="/auth"
+            className={cn(
+              "flex items-center justify-center transition-all duration-200",
+              "sm:px-3 sm:py-2 sm:rounded-lg",
+              "btn-ghost sm:text-sm",
+              isAuthActive && "text-[hsl(var(--text))]"
+            )}
+            aria-label="Sign in"
+          >
+            {/* Mobile: emoji in circle */}
+            <span
+              className={cn(
+                "flex h-10 w-10 items-center justify-center rounded-full text-lg",
+                "backdrop-blur-sm transition-all duration-200",
+                "border",
+                "sm:hidden",
+                isAuthActive
+                  ? "bg-white/12 border-white/25 shadow-[0_0_8px_rgba(255,255,255,0.1)]"
+                  : "bg-white/5 border-white/10 hover:bg-white/8 hover:border-white/15"
+              )}
+            >
+              🔑
+            </span>
+            {/* Desktop: text label */}
+            <span
+              className={cn(
+                "hidden text-[10px] transition-colors sm:block",
+                isAuthActive
+                  ? "text-[hsl(var(--text))] font-medium"
+                  : "text-[hsl(var(--muted))]"
+              )}
             >
               Sign in
-            </Link>
-          )}
-        </div>
-      </nav>
-    </>
+            </span>
+          </Link>
+        )}
+      </div>
+    </nav>
   );
 }
 
