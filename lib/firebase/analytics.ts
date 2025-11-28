@@ -68,7 +68,8 @@ export function trackPurchase(value: number, currency: string = "USD") {
   if (!analytics) return;
 
   try {
-    logEvent(analytics, "purchase", {
+    // Use type assertion for custom purchase event
+    logEvent(analytics, "purchase" as any, {
       value,
       currency,
     });
@@ -97,7 +98,8 @@ export function trackPracticeComplete(dayNumber: number, weekNumber: number) {
   if (!analytics) return;
 
   try {
-    logEvent(analytics, "practice_complete", {
+    // Use type assertion for custom event
+    logEvent(analytics, "practice_complete" as any, {
       day_number: dayNumber,
       week_number: weekNumber,
     });
@@ -113,7 +115,8 @@ export function trackWeekComplete(weekNumber: number) {
   if (!analytics) return;
 
   try {
-    logEvent(analytics, "week_complete", {
+    // Use type assertion for custom event
+    logEvent(analytics, "week_complete" as any, {
       week_number: weekNumber,
     });
   } catch (error) {
@@ -157,7 +160,8 @@ export function trackEvent(eventName: string, parameters?: Record<string, any>) 
   if (!analytics) return;
 
   try {
-    logEvent(analytics, eventName, parameters);
+    // Use type assertion for custom events
+    logEvent(analytics, eventName as any, parameters);
   } catch (error) {
     console.warn(`Failed to track event ${eventName}:`, error);
   }
