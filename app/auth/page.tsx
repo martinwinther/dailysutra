@@ -14,11 +14,29 @@ export default function AuthPage() {
   const [password, setPassword] = useState("");
   const [showVerificationMessage, setShowVerificationMessage] = useState(false);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [resendSuccess, setResendSuccess] = useState(false);
 
   useEffect(() => {
     if (user && user.emailVerified) {
       router.push("/");
     }
+  }, [user, router]);
+
+  // Check email verification status periodically if user is logged in but not verified
+  useEffect(() => {
+    if (!user || user.emailVerified) return;
+
+    // Reload user to check verification status every 5 seconds
+    const interval = setInterval(async () => {
+      if (user) {
+        await user.reload();
+        if (user.emailVerified) {
+          router.push("/");
+        }
+      }
+    }, 5000);
+
+    return () => clearInterval(interval);
   }, [user, router]);
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -44,8 +62,26 @@ export default function AuthPage() {
   const handleResendVerification = async () => {
     try {
       await resendVerificationEmail();
+      setResendSuccess(true);
+      setTimeout(() => setResendSuccess(false), 5000);
     } catch (error) {
       // Error is handled in auth context
+      setResendSuccess(false);
+    }
+  };
+
+  const handleCheckVerification = async () => {
+    if (!user) return;
+    try {
+      await user.reload();
+      if (user.emailVerified) {
+        router.push("/");
+      } else {
+        // Show message that verification is still pending
+        setResendSuccess(false);
+      }
+    } catch (error) {
+      // Error handled silently
     }
   };
 
@@ -58,18 +94,42 @@ export default function AuthPage() {
 
       <GlassCard>
         {user && !user.emailVerified && (
-          <div className="mb-4 rounded-lg bg-blue-500/20 border border-blue-400/30 px-4 py-3">
-            <p className="text-sm text-blue-100 mb-2">
-              Please check your email and click the verification link to complete your account setup.
-            </p>
-            <button
-              type="button"
-              onClick={handleResendVerification}
-              className="text-xs text-blue-200 hover:text-blue-100 underline"
-              disabled={authLoading}
-            >
-              {authLoading ? "Sending..." : "Resend verification email"}
-            </button>
+          <div className="mb-4 rounded-lg bg-blue-500/20 border border-blue-400/30 px-4 py-3 space-y-3">
+            <div>
+              <p className="text-sm text-blue-100 mb-1 font-medium">
+                Email verification required
+              </p>
+              <p className="text-xs text-blue-200 mb-2">
+                We&apos;ve sent a verification link to <strong>{user.email}</strong>. Please check your email and click the link to complete your account setup.
+              </p>
+              <p className="text-xs text-blue-200/80">
+                After clicking the link, your account will be verified automatically. You can also click the button below to check if you&apos;ve already verified.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={handleCheckVerification}
+                className="text-xs text-blue-200 hover:text-blue-100 underline"
+                disabled={authLoading}
+              >
+                Check verification status
+              </button>
+              <span className="text-xs text-blue-300/60">•</span>
+              <button
+                type="button"
+                onClick={handleResendVerification}
+                className="text-xs text-blue-200 hover:text-blue-100 underline"
+                disabled={authLoading}
+              >
+                {authLoading ? "Sending..." : "Resend verification email"}
+              </button>
+            </div>
+            {resendSuccess && (
+              <p className="text-xs text-green-300">
+                Verification email sent! Please check your inbox.
+              </p>
+            )}
           </div>
         )}
         

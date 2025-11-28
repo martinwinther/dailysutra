@@ -14,10 +14,17 @@ import { useAuth } from "../../context/auth-context";
 import { useNotifications } from "../../context/notification-context";
 import { createLogger } from "../../lib/logger";
 import { generatePDFExport } from "../../lib/pdf-export";
+import { getUserLocale } from "../../lib/date-format";
 
 const logger = createLogger("Settings");
 
 export default function SettingsPage() {
+  const [userLocale, setUserLocale] = useState<string>("en-GB");
+  
+  useEffect(() => {
+    // Detect user locale on client side
+    setUserLocale(getUserLocale());
+  }, []);
   const { settings, dispatch } = useProgress();
   const {
     status,
@@ -412,14 +419,17 @@ export default function SettingsPage() {
           <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
             <label htmlFor="start-date" className="flex flex-col text-sm text-[hsl(var(--muted))]">
               <span className="mb-1">Journey start date</span>
-              <input
-                id="start-date"
-                type="date"
-                value={settings.startDate ?? ""}
-                onChange={handleDateChange}
-                className="rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7"
-                aria-label="Journey start date"
-              />
+              <div lang={userLocale}>
+                <input
+                  id="start-date"
+                  type="date"
+                  value={settings.startDate ?? ""}
+                  onChange={handleDateChange}
+                  className="rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7"
+                  aria-label="Journey start date"
+                  lang={userLocale}
+                />
+              </div>
             </label>
           </div>
         </div>
