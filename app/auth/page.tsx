@@ -13,6 +13,7 @@ export default function AuthPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showVerificationMessage, setShowVerificationMessage] = useState(false);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
 
   useEffect(() => {
     if (user && user.emailVerified) {
@@ -23,6 +24,10 @@ export default function AuthPage() {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!email || !password) return;
+
+    if (mode === "signup" && !acceptedTerms) {
+      return;
+    }
 
     try {
       if (mode === "signup") {
@@ -81,6 +86,7 @@ export default function AuthPage() {
                 setMode("signup");
                 setEmail("");
                 setPassword("");
+                setAcceptedTerms(false);
               }}
             >
               Sign up
@@ -149,6 +155,41 @@ export default function AuthPage() {
               </p>
             </div>
 
+            {mode === "signup" && (
+              <div className="space-y-2">
+                <label className="flex items-start gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={acceptedTerms}
+                    onChange={(e) => setAcceptedTerms(e.target.checked)}
+                    required
+                    className="mt-0.5 h-4 w-4 rounded border-[hsla(var(--border),0.4)] bg-white/5 text-[hsl(var(--accent))] focus:ring-[hsl(var(--accent))]"
+                    aria-required="true"
+                  />
+                  <span className="text-xs text-[hsl(var(--muted))]">
+                    I agree to the{" "}
+                    <a
+                      href="/terms"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[hsl(var(--accent))] hover:underline"
+                    >
+                      Terms of Service
+                    </a>{" "}
+                    and{" "}
+                    <a
+                      href="/privacy"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[hsl(var(--accent))] hover:underline"
+                    >
+                      Privacy Policy
+                    </a>
+                  </span>
+                </label>
+              </div>
+            )}
+
             {authError && (
               <div role="alert" aria-live="assertive">
                 <p id="email-error" className="text-xs text-red-300">{authError}</p>
@@ -167,7 +208,7 @@ export default function AuthPage() {
             <button
               type="submit"
               className="btn-primary mt-2"
-              disabled={authLoading}
+              disabled={authLoading || (mode === "signup" && !acceptedTerms)}
             >
               {authLoading
                 ? mode === "signup"

@@ -63,6 +63,7 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
         await setDoc(userRef, {
           subscriptionStatus: "trial",
           trialStartedAt: Timestamp.fromDate(now),
+          termsAcceptedAt: Timestamp.fromDate(now),
           createdAt: Timestamp.fromDate(now),
           updatedAt: Timestamp.fromDate(now),
         });
