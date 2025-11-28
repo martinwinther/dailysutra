@@ -19,11 +19,18 @@ import { getUserLocale } from "../../lib/date-format";
 const logger = createLogger("Settings");
 
 export default function SettingsPage() {
+  // Initialize with European locale as default
   const [userLocale, setUserLocale] = useState<string>("en-GB");
   
   useEffect(() => {
     // Detect user locale on client side
-    setUserLocale(getUserLocale());
+    const detected = getUserLocale();
+    setUserLocale(detected);
+    
+    // Also update the HTML lang attribute if possible
+    if (typeof document !== "undefined" && document.documentElement) {
+      document.documentElement.lang = detected;
+    }
   }, []);
   const { settings, dispatch } = useProgress();
   const {
@@ -235,7 +242,10 @@ export default function SettingsPage() {
 
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        throw new Error(data.error || "Failed to start checkout.");
+        const errorMessage = data.error || "Failed to start checkout.";
+        throw new Error(
+          `${errorMessage} If this problem persists, please contact support@dailysutra.app or use our contact form.`
+        );
       }
 
       const data = (await res.json()) as { url?: string };
@@ -246,8 +256,11 @@ export default function SettingsPage() {
       window.location.href = data.url;
     } catch (error: any) {
       logger.warn("Upgrade error", error, { action: "createCheckoutSession", userId: user?.uid });
+      const errorMessage = error?.message || "Something went wrong when starting checkout.";
       setUpgradeError(
-        error?.message || "Something went wrong when starting checkout."
+        errorMessage.includes("support") 
+          ? errorMessage 
+          : `${errorMessage} If this problem persists, please contact support@dailysutra.app or use our contact form.`
       );
     } finally {
       setUpgradeLoading(false);
@@ -419,7 +432,7 @@ export default function SettingsPage() {
           <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
             <label htmlFor="start-date" className="flex flex-col text-sm text-[hsl(var(--muted))]">
               <span className="mb-1">Journey start date</span>
-              <div lang={userLocale}>
+              <div lang={userLocale} style={{ isolation: "isolate" }}>
                 <input
                   id="start-date"
                   type="date"
@@ -428,6 +441,7 @@ export default function SettingsPage() {
                   className="rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7"
                   aria-label="Journey start date"
                   lang={userLocale}
+                  data-locale={userLocale}
                 />
               </div>
             </label>

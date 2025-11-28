@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
         firebaseUid: uid,
       },
       success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/settings`,
+      cancel_url: `${origin}/checkout/cancel`,
     });
 
     if (!session.url) {
@@ -47,10 +47,19 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ url: session.url });
 
-  } catch (error) {
+  } catch (error: any) {
     logger.error("Failed to create checkout session", error, { action: "createCheckoutSession" });
+    
+    // Provide more specific error messages
+    let errorMessage = "Failed to create checkout session";
+    if (error?.type === "StripeInvalidRequestError") {
+      errorMessage = "Invalid payment configuration. Please contact support.";
+    } else if (error?.message) {
+      errorMessage = error.message;
+    }
+    
     return NextResponse.json(
-      { error: "Failed to create checkout session" },
+      { error: errorMessage },
       { status: 500 }
     );
   }
