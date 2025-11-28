@@ -100,6 +100,7 @@ export default function BookPage({ params }: BookPageProps) {
               title={sutra.title}
               sutraText={sutra.sutraText}
               commentary={sutra.commentary}
+              book={`Book ${bookValue}`}
             />
           ))}
         </div>

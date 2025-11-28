@@ -3,6 +3,8 @@
 import * as React from "react";
 import ReactMarkdown from "react-markdown";
 import { GlassCard } from "./glass-card";
+import { ShareButton } from "./share-button";
+import { formatSutraForSharing } from "../lib/sharing";
 import type { Sutra } from "../types/sutra";
 
 interface SutraAccordionProps {
@@ -10,6 +12,7 @@ interface SutraAccordionProps {
   title: string;
   sutraText: string;
   commentary: string;
+  book?: string;
 }
 
 export function SutraAccordion({
@@ -17,6 +20,7 @@ export function SutraAccordion({
   title,
   sutraText,
   commentary,
+  book = "Book",
 }: SutraAccordionProps) {
   const [isExpanded, setIsExpanded] = React.useState(false);
 
@@ -87,9 +91,23 @@ export function SutraAccordion({
         aria-hidden={!isExpanded}
       >
         <div className="mt-4 space-y-3 border-t border-[hsla(var(--border),0.3)] pt-4">
-          <h4 className="text-xs font-medium uppercase tracking-wide text-[hsl(var(--muted))]">
-            Commentary
-          </h4>
+          <div className="flex items-center justify-between gap-4">
+            <h4 className="text-xs font-medium uppercase tracking-wide text-[hsl(var(--muted))]">
+              Commentary
+            </h4>
+            <ShareButton
+              content={formatSutraForSharing({
+                book,
+                sutraNumber,
+                title,
+                sutraText,
+                commentary,
+              })}
+              title={`${book} ${sutraNumber}`}
+              variant="ghost"
+              className="flex-shrink-0"
+            />
+          </div>
           <div className="prose prose-sm prose-invert max-w-none text-sm leading-relaxed text-[hsl(var(--text))]">
             <ReactMarkdown
               components={{

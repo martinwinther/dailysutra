@@ -10,6 +10,7 @@ import {
   TOTAL_WEEKS,
   getWeekForDay,
   getDayIndexInWeek,
+  YOGA_PROGRAM,
 } from "../../data/yogaProgram";
 import { getDateForDayNumber } from "../../lib/progress-time";
 import Link from "next/link";
@@ -116,6 +117,16 @@ export default function ProgressPage() {
         subtitle="Track your journey through stats, notes, and reflections across all 52 weeks."
       />
 
+      {hasAnyData && (
+        <div className="flex justify-end">
+          <ShareButton
+            content={formatProgressForSharing({ stats, settings })}
+            title="My Daily Sutra Journey"
+            variant="primary"
+          />
+        </div>
+      )}
+
       <GlassCard>
         <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
           <div className="grid gap-4 sm:grid-cols-4">
@@ -170,34 +181,56 @@ export default function ProgressPage() {
             </p>
 
             <div className="mt-4 space-y-3">
-              {dailyEntries.map((entry) => (
-                <Link
-                  key={entry.dayNumber}
-                  href={`/day/${entry.dayNumber}`}
-                  className="block rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-3 text-left text-sm transition-colors hover:border-[hsla(var(--border),0.7)]"
-                >
-                  <div className="flex items-center justify-between gap-2">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="rounded-full bg-white/10 px-2 py-0.5 text-[11px] font-medium">
-                        Week {entry.weekNumber} · Day {entry.dayIndex}
-                      </span>
-                      {entry.dateLabel && (
-                        <span className="text-[11px] text-[hsl(var(--muted))]">
-                          {entry.dateLabel}
-                        </span>
-                      )}
+              {dailyEntries.map((entry) => {
+                const weekData = getWeekForDay(entry.dayNumber);
+                return (
+                  <div
+                    key={entry.dayNumber}
+                    className="group rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-3 transition-colors hover:border-[hsla(var(--border),0.7)]"
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <Link
+                        href={`/day/${entry.dayNumber}`}
+                        className="flex-1"
+                      >
+                        <div className="flex items-center justify-between gap-2">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className="rounded-full bg-white/10 px-2 py-0.5 text-[11px] font-medium">
+                              Week {entry.weekNumber} · Day {entry.dayIndex}
+                            </span>
+                            {entry.dateLabel && (
+                              <span className="text-[11px] text-[hsl(var(--muted))]">
+                                {entry.dateLabel}
+                              </span>
+                            )}
+                          </div>
+                          {entry.didPractice && (
+                            <span className="rounded-full bg-emerald-500/20 px-2 py-0.5 text-[11px] font-medium text-emerald-200">
+                              Practiced
+                            </span>
+                          )}
+                        </div>
+                        <p className="mt-2 line-clamp-3 text-sm text-[hsl(var(--muted))]">
+                          {entry.note}
+                        </p>
+                      </Link>
+                      <ShareButton
+                        content={formatDailyNoteForSharing({
+                          weekNumber: entry.weekNumber,
+                          weekTheme: weekData?.theme || "",
+                          dayIndex: entry.dayIndex,
+                          dateLabel: entry.dateLabel,
+                          note: entry.note,
+                          didPractice: entry.didPractice,
+                        })}
+                        title={`Week ${entry.weekNumber} - Day ${entry.dayIndex}`}
+                        variant="ghost"
+                        className="opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0"
+                      />
                     </div>
-                    {entry.didPractice && (
-                      <span className="rounded-full bg-emerald-500/20 px-2 py-0.5 text-[11px] font-medium text-emerald-200">
-                        Practiced
-                      </span>
-                    )}
                   </div>
-                  <p className="mt-2 line-clamp-3 text-sm text-[hsl(var(--muted))]">
-                    {entry.note}
-                  </p>
-                </Link>
-              ))}
+                );
+              })}
             </div>
           </div>
         </GlassCard>
@@ -221,36 +254,58 @@ export default function ProgressPage() {
                 if (week.bookmarked) tags.push("Bookmarked");
 
                 const firstDayOfWeek = (week.weekNumber - 1) * 7 + 1;
+                const weekData = getWeekForDay(firstDayOfWeek);
 
                 return (
-                  <Link
+                  <div
                     key={week.weekNumber}
-                    href={`/day/${firstDayOfWeek}`}
-                    className="block rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-3 text-left text-sm transition-colors hover:border-[hsla(var(--border),0.7)]"
+                    className="group rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-3 transition-colors hover:border-[hsla(var(--border),0.7)]"
                   >
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="rounded-full bg-white/10 px-2 py-0.5 text-[11px] font-medium">
-                        Week {week.weekNumber}
-                      </span>
-                      {tags.length > 0 && (
-                        <div className="flex flex-wrap gap-1">
-                          {tags.map((tag) => (
-                            <span
-                              key={tag}
-                              className="rounded-full bg-white/8 px-2 py-0.5 text-[10px] text-[hsl(var(--muted))]"
-                            >
-                              {tag}
-                            </span>
-                          ))}
+                    <div className="flex items-start justify-between gap-2">
+                      <Link
+                        href={`/day/${firstDayOfWeek}`}
+                        className="flex-1"
+                      >
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="rounded-full bg-white/10 px-2 py-0.5 text-[11px] font-medium">
+                            Week {week.weekNumber}
+                          </span>
+                          {tags.length > 0 && (
+                            <div className="flex flex-wrap gap-1">
+                              {tags.map((tag) => (
+                                <span
+                                  key={tag}
+                                  className="rounded-full bg-white/8 px-2 py-0.5 text-[10px] text-[hsl(var(--muted))]"
+                                >
+                                  {tag}
+                                </span>
+                              ))}
+                            </div>
+                          )}
                         </div>
+                        {week.reflection && (
+                          <p className="mt-2 line-clamp-3 text-sm text-[hsl(var(--muted))]">
+                            {week.reflection}
+                          </p>
+                        )}
+                      </Link>
+                      {week.reflection && (
+                        <ShareButton
+                          content={formatWeeklyReflectionForSharing({
+                            weekNumber: week.weekNumber,
+                            weekTheme: weekData?.theme || "",
+                            reflection: week.reflection,
+                            completed: week.completed,
+                            enjoyed: week.enjoyed,
+                            bookmarked: week.bookmarked,
+                          })}
+                          title={`Week ${week.weekNumber} Reflection`}
+                          variant="ghost"
+                          className="opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0"
+                        />
                       )}
                     </div>
-                    {week.reflection && (
-                      <p className="mt-2 line-clamp-3 text-sm text-[hsl(var(--muted))]">
-                        {week.reflection}
-                      </p>
-                    )}
-                  </Link>
+                  </div>
                 );
               })}
             </div>

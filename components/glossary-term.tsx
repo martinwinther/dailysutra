@@ -3,6 +3,8 @@
 import * as React from "react";
 import ReactMarkdown from "react-markdown";
 import { GlassCard } from "./glass-card";
+import { ShareButton } from "./share-button";
+import { formatGlossaryTermForSharing } from "../lib/sharing";
 import type { GlossaryTerm } from "../types/glossary";
 
 interface GlossaryTermProps {
@@ -64,6 +66,18 @@ export function GlossaryTermCard({ term, definition }: GlossaryTermProps) {
         aria-hidden={!isExpanded}
       >
         <div className="mt-4 space-y-3 border-t border-[hsla(var(--border),0.3)] pt-4">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex-1" />
+            <ShareButton
+              content={formatGlossaryTermForSharing({
+                term,
+                definition,
+              })}
+              title={term}
+              variant="ghost"
+              className="flex-shrink-0"
+            />
+          </div>
           <div className="prose prose-sm prose-invert max-w-none text-sm leading-relaxed text-[hsl(var(--text))]">
             <ReactMarkdown
               components={{

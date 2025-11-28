@@ -12,6 +12,11 @@ import {
 import { useProgress } from "../../../context/progress-context";
 import { useSubscription } from "../../../context/subscription-context";
 import { getDateForDayNumber, getCurrentWeekAndDay } from "../../../lib/progress-time";
+import { ShareButton } from "../../../components/share-button";
+import {
+  formatDailyNoteForSharing,
+  formatWeeklyReflectionForSharing,
+} from "../../../lib/sharing";
 
 interface DayPageProps {
   params: {
@@ -274,27 +279,44 @@ export default function DayPage({ params }: DayPageProps) {
 
       <GlassCard>
         <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
-          <div className="flex flex-col gap-2">
-            <p className="text-sm font-medium text-[hsl(var(--text))]">
-              Today&apos;s note
-            </p>
-            <p className="text-xs text-[hsl(var(--muted))]">
-              Jot down what you noticed in practice, any resistance, or a single
-              sentence about how the day related to this week&apos;s theme.
-            </p>
-            <textarea
-              value={note}
-              onChange={handleNoteChange}
-              rows={5}
-              className="mt-2 w-full rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7 disabled:opacity-40 disabled:cursor-not-allowed"
-              placeholder={
-                canAccessThisDay
-                  ? "For example: I noticed how often my mind jumped to planning today. Pausing to observe it made things feel a bit slower."
-                  : "Editing locked – this content requires a paid subscription. You can still read past notes."
-              }
-              disabled={!canAccessThisDay}
-            />
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex-1 flex flex-col gap-2">
+              <p className="text-sm font-medium text-[hsl(var(--text))]">
+                Today&apos;s note
+              </p>
+              <p className="text-xs text-[hsl(var(--muted))]">
+                Jot down what you noticed in practice, any resistance, or a single
+                sentence about how the day related to this week&apos;s theme.
+              </p>
+            </div>
+            {note.trim() && (
+              <ShareButton
+                content={formatDailyNoteForSharing({
+                  weekNumber: week.week,
+                  weekTheme: week.theme,
+                  dayIndex,
+                  dateLabel,
+                  note: note.trim(),
+                  didPractice,
+                })}
+                title={`Week ${week.week} - Day ${dayIndex}`}
+                variant="ghost"
+                className="flex-shrink-0"
+              />
+            )}
           </div>
+          <textarea
+            value={note}
+            onChange={handleNoteChange}
+            rows={5}
+            className="mt-2 w-full rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7 disabled:opacity-40 disabled:cursor-not-allowed"
+            placeholder={
+              canAccessThisDay
+                ? "For example: I noticed how often my mind jumped to planning today. Pausing to observe it made things feel a bit slower."
+                : "Editing locked – this content requires a paid subscription. You can still read past notes."
+            }
+            disabled={!canAccessThisDay}
+          />
         </div>
       </GlassCard>
 
@@ -349,13 +371,32 @@ export default function DayPage({ params }: DayPageProps) {
               </div>
 
               <div className="mt-2 flex flex-col gap-2">
-                <p className="text-sm font-medium text-[hsl(var(--text))]">
-                  Weekly reflection
-                </p>
-                <p className="text-xs text-[hsl(var(--muted))]">
-                  A few lines about what shifted (or didn&apos;t) for you this
-                  week is enough.
-                </p>
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-[hsl(var(--text))]">
+                      Weekly reflection
+                    </p>
+                    <p className="text-xs text-[hsl(var(--muted))]">
+                      A few lines about what shifted (or didn&apos;t) for you this
+                      week is enough.
+                    </p>
+                  </div>
+                  {reflectionNote.trim() && (
+                    <ShareButton
+                      content={formatWeeklyReflectionForSharing({
+                        weekNumber: week.week,
+                        weekTheme: week.theme,
+                        reflection: reflectionNote.trim(),
+                        completed: weekCompleted,
+                        enjoyed: weekEnjoyed,
+                        bookmarked: weekBookmarked,
+                      })}
+                      title={`Week ${week.week} Reflection`}
+                      variant="ghost"
+                      className="flex-shrink-0"
+                    />
+                  )}
+                </div>
                 <textarea
                   value={reflectionNote}
                   onChange={handleReflectionChange}
