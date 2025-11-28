@@ -390,7 +390,7 @@ export default function SettingsPage() {
         <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
           <p className="text-sm text-[hsl(var(--muted))]">
             Your free trial includes the first 4 weeks of content. Upgrade to
-            access all 52 weeks of the program.
+            access all 52 weeks of the program with a one-time payment. The exact price will be shown in the secure checkout.
           </p>
         <div className="mt-3 flex flex-wrap items-center gap-3">
           <div className="rounded-xl bg-white/5 px-3 py-2">
@@ -415,7 +415,7 @@ export default function SettingsPage() {
               weeks. Weeks 5-52 require a paid subscription.
             </p>
             <p>
-              Upgrade to unlock full access to all 52 weeks of content.
+              Upgrade to unlock full access to all 52 weeks of content with a one-time payment (lifetime access).
             </p>
             {user?.email && (
               <p className="mt-2 text-xs text-[hsl(var(--muted))]">

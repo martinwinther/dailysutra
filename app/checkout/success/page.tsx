@@ -25,7 +25,9 @@ function CheckoutSuccessContent() {
 
       const sessionId = searchParams.get("session_id");
       if (!sessionId) {
-        setError("Missing session ID. Please contact support if payment was successful.");
+        setError(
+          "Missing session ID. If your payment was successful, please contact us at support@dailysutra.app or use our contact form."
+        );
         setVerifying(false);
         return;
       }
@@ -71,7 +73,7 @@ function CheckoutSuccessContent() {
         logger.warn("Failed to verify or update", err, { action: "verifyPayment", sessionId });
         setError(
           err?.message ||
-            "We could not verify your payment. The webhook will update your account shortly, or you can contact support."
+            "We could not verify your payment. The webhook will update your account shortly. If you need assistance, contact us at support@dailysutra.app or use our contact form."
         );
       } finally {
         setVerifying(false);
@@ -95,7 +97,24 @@ function CheckoutSuccessContent() {
               Verifying your payment...
             </p>
           ) : error ? (
-            <p className="text-sm text-red-300">{error}</p>
+            <div className="space-y-3">
+              <p className="text-sm text-red-300">{error}</p>
+              <div className="flex flex-wrap gap-2">
+                <a
+                  href="mailto:support@dailysutra.app"
+                  className="text-xs text-[hsl(var(--accent))] hover:underline"
+                >
+                  Email Support
+                </a>
+                <span className="text-xs text-[hsl(var(--muted))]">•</span>
+                <Link
+                  href="/contact"
+                  className="text-xs text-[hsl(var(--accent))] hover:underline"
+                >
+                  Contact Form
+                </Link>
+              </div>
+            </div>
           ) : (
             <p className="text-sm text-[hsl(var(--muted))]">
               Your account has been upgraded. You now have full access to all 52

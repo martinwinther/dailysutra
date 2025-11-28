@@ -77,7 +77,7 @@ export default function HomePage() {
               When you sign up, you get a 1-month free trial to explore the structure
               and see if it serves you. After the trial, you can still read your notes
               and see your journey, but marking new practice and editing notes is
-              locked until you upgrade in a future version.
+              locked until you upgrade with a one-time payment. The exact price will be shown in the secure checkout.
             </p>
 
             <div className="mt-4 flex flex-wrap gap-3">
