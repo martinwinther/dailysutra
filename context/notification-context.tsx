@@ -183,7 +183,8 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
           body: payload.notification?.body || "",
           icon: "/icons/android-chrome-192x192.png",
           badge: "/icons/android-chrome-192x192.png",
-          tag: payload.notification?.tag || "daily-reminder",
+          tag: (payload.data?.tag as string) || "daily-reminder",
+          data: payload.data || {},
         };
 
         new Notification(notificationTitle, notificationOptions);
