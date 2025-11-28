@@ -28,6 +28,9 @@ export const config = {
   app: {
     url: requireEnvOptional("NEXT_PUBLIC_APP_URL", "http://localhost:3000"),
   },
+  firebaseMessaging: {
+    vapidKey: requireEnvOptional("NEXT_PUBLIC_FIREBASE_VAPID_KEY", ""),
+  },
 } as const;
 
 

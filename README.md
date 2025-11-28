@@ -104,6 +104,9 @@ FIREBASE_SERVICE_ACCOUNT='{"type":"service_account",...}' # JSON string of servi
 
 # App URL (fallback for Stripe checkout URLs)
 NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+# Firebase Cloud Messaging (for push notifications)
+NEXT_PUBLIC_FIREBASE_VAPID_KEY=your_vapid_key # Get from Firebase Console → Project Settings → Cloud Messaging
 ```
 
 ## Firebase Structure
@@ -201,6 +204,43 @@ For production, you must configure Stripe webhooks:
 
 PWA functionality is disabled in development mode (`NODE_ENV=development`).
 
+## Push Notifications
+
+The app supports push notifications for daily practice reminders using Firebase Cloud Messaging (FCM).
+
+### Setup Instructions
+
+1. **Enable Cloud Messaging in Firebase Console:**
+   - Go to Firebase Console → Project Settings → Cloud Messaging tab
+   - Ensure "Firebase Cloud Messaging API (V1)" is enabled (should show a green checkmark)
+   - Scroll down to "Web configuration" → "Web Push certificates"
+   - Click "Generate key pair" button
+   - Copy the generated public key (this is your VAPID key - it will be a long string)
+
+2. **Set environment variable:**
+   ```bash
+   NEXT_PUBLIC_FIREBASE_VAPID_KEY=your_generated_vapid_key_here
+   ```
+   Paste the key you copied from step 1.
+
+3. **Generate service worker (after setting up Firebase config):**
+   ```bash
+   node scripts/generate-firebase-messaging-sw.js
+   ```
+   This script injects your Firebase config into the service worker.
+
+4. **User preferences:**
+   - Users can enable/disable notifications in Settings
+   - Users can customize reminder time and days of week
+   - FCM tokens are stored in Firestore at `users/{uid}/fcmTokens/{token}`
+
+### Sending Notifications
+
+To send scheduled daily reminders, you can:
+- Use a cron job or scheduled function (e.g., Vercel Cron, Cloud Functions)
+- Call `/api/notifications/send` with user ID and notification content
+- The API will send to all registered FCM tokens for that user
+
 ## Development Notes
 
 ### 52-Week Program Structure
@@ -224,7 +264,6 @@ The app uses a custom "glass morphism" design system with:
 - Dark theme optimized for contemplative use
 
 ## Future Work / TODO
-- **Implement push notifications** for daily practice reminders
 - **Add social features** like sharing bookmarked weeks or insights
 - **Create admin dashboard** for program content management
 - **Add accessibility improvements** for screen readers and keyboard navigation

@@ -7,6 +7,7 @@ import { AuthProvider } from "../context/auth-context";
 import { SubscriptionProvider } from "../context/subscription-context";
 import { ProgressProvider } from "../context/progress-context";
 import { AppStatusProvider } from "../context/app-status-context";
+import { NotificationProvider } from "../context/notification-context";
 
 export const metadata: Metadata = {
   title: "Daily Sutra",
@@ -66,8 +67,9 @@ export default function RootLayout({
         <ThemeProvider>
           <AppStatusProvider>
             <AuthProvider>
-              <SubscriptionProvider>
-                <ProgressProvider>
+              <NotificationProvider>
+                <SubscriptionProvider>
+                  <ProgressProvider>
                   <div className="flex min-h-screen flex-col">
                     <header className="glass-nav sticky top-0 z-20">
                       <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
@@ -81,8 +83,9 @@ export default function RootLayout({
                       </div>
                     </main>
                   </div>
-                </ProgressProvider>
-              </SubscriptionProvider>
+                  </ProgressProvider>
+                </SubscriptionProvider>
+              </NotificationProvider>
             </AuthProvider>
           </AppStatusProvider>
         </ThemeProvider>

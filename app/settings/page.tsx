@@ -10,6 +10,7 @@ import {
 } from "../../context/progress-context";
 import { useSubscription } from "../../context/subscription-context";
 import { useAuth } from "../../context/auth-context";
+import { useNotifications } from "../../context/notification-context";
 import { createLogger } from "../../lib/logger";
 import { generatePDFExport } from "../../lib/pdf-export";
 
@@ -24,6 +25,13 @@ export default function SettingsPage() {
     isExpired,
   } = useSubscription();
   const { user, authLoading, changeEmail, changePassword, sendPasswordReset, authError } = useAuth();
+  const {
+    permission,
+    preferences,
+    loading: notificationsLoading,
+    requestPermission,
+    updatePreferences,
+  } = useNotifications();
   const [upgradeLoading, setUpgradeLoading] = useState(false);
   const [upgradeError, setUpgradeError] = useState<string | null>(null);
   
@@ -594,6 +602,124 @@ export default function SettingsPage() {
               {passwordResetLoading ? "Sending…" : "Send password reset email"}
             </button>
           </form>
+        </div>
+      </GlassCard>
+
+      <div className="flex items-center justify-between px-6">
+        <h2 className="text-sm font-medium uppercase tracking-wide text-[hsl(var(--muted))]">
+          Notifications
+        </h2>
+      </div>
+
+      <GlassCard>
+        <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+          <p className="text-sm text-[hsl(var(--muted))]">
+            Enable push notifications to receive daily practice reminders. You can customize when and how often you receive them.
+          </p>
+          
+          {permission === "default" && (
+            <div className="mt-4">
+              <button
+                type="button"
+                onClick={async () => {
+                  const granted = await requestPermission();
+                  if (granted && preferences) {
+                    await updatePreferences({ enabled: true });
+                  }
+                }}
+                className="btn-primary"
+                disabled={notificationsLoading || authLoading}
+              >
+                Enable notifications
+              </button>
+            </div>
+          )}
+
+          {permission === "denied" && (
+            <div className="mt-4">
+              <p className="text-xs text-red-300">
+                Notifications are blocked. Please enable them in your browser settings to receive reminders.
+              </p>
+            </div>
+          )}
+
+          {permission === "granted" && preferences && (
+            <div className="mt-4 space-y-4">
+              <label className="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  checked={preferences.enabled}
+                  onChange={async (e) => {
+                    await updatePreferences({ enabled: e.target.checked });
+                  }}
+                  className="h-4 w-4 rounded border-[hsla(var(--border),0.4)] bg-white/5 text-[hsl(var(--accent))] focus:ring-[hsl(var(--accent))]"
+                  disabled={notificationsLoading || authLoading}
+                />
+                <span className="text-sm text-[hsl(var(--text))]">
+                  Enable daily practice reminders
+                </span>
+              </label>
+
+              {preferences.enabled && (
+                <>
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm text-[hsl(var(--muted))]">
+                      Reminder time
+                    </label>
+                    <input
+                      type="time"
+                      value={preferences.reminderTime}
+                      onChange={async (e) => {
+                        await updatePreferences({ reminderTime: e.target.value });
+                      }}
+                      className="rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7"
+                      disabled={notificationsLoading || authLoading}
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm text-[hsl(var(--muted))]">
+                      Days of week
+                    </label>
+                    <div className="flex flex-wrap gap-2">
+                      {[
+                        { value: 0, label: "Sun" },
+                        { value: 1, label: "Mon" },
+                        { value: 2, label: "Tue" },
+                        { value: 3, label: "Wed" },
+                        { value: 4, label: "Thu" },
+                        { value: 5, label: "Fri" },
+                        { value: 6, label: "Sat" },
+                      ].map((day) => (
+                        <label
+                          key={day.value}
+                          className="flex items-center gap-1.5"
+                        >
+                          <input
+                            type="checkbox"
+                            checked={preferences.reminderDays.includes(day.value)}
+                            onChange={async (e) => {
+                              const newDays = e.target.checked
+                                ? [...preferences.reminderDays, day.value]
+                                : preferences.reminderDays.filter(
+                                    (d) => d !== day.value
+                                  );
+                              await updatePreferences({ reminderDays: newDays });
+                            }}
+                            className="h-3.5 w-3.5 rounded border-[hsla(var(--border),0.4)] bg-white/5 text-[hsl(var(--accent))] focus:ring-[hsl(var(--accent))]"
+                            disabled={notificationsLoading || authLoading}
+                          />
+                          <span className="text-xs text-[hsl(var(--text))]">
+                            {day.label}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
         </div>
       </GlassCard>
 
