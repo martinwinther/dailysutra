@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PageHeader } from "../../components/page-header";
 import { GlassCard } from "../../components/glass-card";
 import {
@@ -19,9 +19,37 @@ export default function SettingsPage() {
     isActivePaid,
     isExpired,
   } = useSubscription();
-  const { user, authLoading } = useAuth();
+  const { user, authLoading, changeEmail, changePassword, sendPasswordReset, authError } = useAuth();
   const [upgradeLoading, setUpgradeLoading] = useState(false);
   const [upgradeError, setUpgradeError] = useState<string | null>(null);
+  
+  // Email change state
+  const [emailChangeLoading, setEmailChangeLoading] = useState(false);
+  const [emailChangeError, setEmailChangeError] = useState<string | null>(null);
+  const [emailChangeSuccess, setEmailChangeSuccess] = useState(false);
+  const [newEmail, setNewEmail] = useState("");
+  const [emailPassword, setEmailPassword] = useState("");
+  
+  // Password change state
+  const [passwordChangeLoading, setPasswordChangeLoading] = useState(false);
+  const [passwordChangeError, setPasswordChangeError] = useState<string | null>(null);
+  const [passwordChangeSuccess, setPasswordChangeSuccess] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  
+  // Password reset state
+  const [passwordResetLoading, setPasswordResetLoading] = useState(false);
+  const [passwordResetError, setPasswordResetError] = useState<string | null>(null);
+  const [passwordResetSuccess, setPasswordResetSuccess] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
+
+  // Update reset email when user loads
+  useEffect(() => {
+    if (user?.email && !resetEmail) {
+      setResetEmail(user.email);
+    }
+  }, [user?.email, resetEmail]);
 
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value || null;
@@ -170,6 +198,88 @@ export default function SettingsPage() {
     }
   };
 
+  const handleEmailChange = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!newEmail || !emailPassword) {
+      setEmailChangeError("Please fill in all fields");
+      return;
+    }
+
+    setEmailChangeLoading(true);
+    setEmailChangeError(null);
+    setEmailChangeSuccess(false);
+
+    try {
+      await changeEmail(newEmail, emailPassword);
+      setEmailChangeSuccess(true);
+      setNewEmail("");
+      setEmailPassword("");
+    } catch (error) {
+      // Error is handled in auth context
+      setEmailChangeError(authError || "Failed to change email");
+    } finally {
+      setEmailChangeLoading(false);
+    }
+  };
+
+  const handlePasswordChange = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      setPasswordChangeError("Please fill in all fields");
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      setPasswordChangeError("New passwords do not match");
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      setPasswordChangeError("Password must be at least 6 characters");
+      return;
+    }
+
+    setPasswordChangeLoading(true);
+    setPasswordChangeError(null);
+    setPasswordChangeSuccess(false);
+
+    try {
+      await changePassword(newPassword, currentPassword);
+      setPasswordChangeSuccess(true);
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+    } catch (error) {
+      // Error is handled in auth context
+      setPasswordChangeError(authError || "Failed to change password");
+    } finally {
+      setPasswordChangeLoading(false);
+    }
+  };
+
+  const handlePasswordReset = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!resetEmail) {
+      setPasswordResetError("Please enter your email address");
+      return;
+    }
+
+    setPasswordResetLoading(true);
+    setPasswordResetError(null);
+    setPasswordResetSuccess(false);
+
+    try {
+      await sendPasswordReset(resetEmail);
+      setPasswordResetSuccess(true);
+      setResetEmail("");
+    } catch (error) {
+      // Error is handled in auth context
+      setPasswordResetError(authError || "Failed to send password reset email");
+    } finally {
+      setPasswordResetLoading(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <PageHeader
@@ -292,6 +402,165 @@ export default function SettingsPage() {
             </span>
           )}
         </div>
+        </div>
+      </GlassCard>
+
+      <div className="flex items-center justify-between px-6">
+        <h2 className="text-sm font-medium uppercase tracking-wide text-[hsl(var(--muted))]">
+          Account management
+        </h2>
+      </div>
+
+      <GlassCard>
+        <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+          <p className="text-sm text-[hsl(var(--muted))]">
+            Change your account email address. You&apos;ll need to verify the new email address and re-enter your current password.
+          </p>
+          <form onSubmit={handleEmailChange} className="mt-4 space-y-3">
+            <div className="flex flex-col gap-2">
+              <label className="text-sm text-[hsl(var(--muted))]">
+                New email address
+              </label>
+              <input
+                type="email"
+                value={newEmail}
+                onChange={(e) => setNewEmail(e.target.value)}
+                placeholder={user?.email || "your@email.com"}
+                className="rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7"
+                disabled={emailChangeLoading || authLoading}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label className="text-sm text-[hsl(var(--muted))]">
+                Current password
+              </label>
+              <input
+                type="password"
+                value={emailPassword}
+                onChange={(e) => setEmailPassword(e.target.value)}
+                placeholder="Enter your current password"
+                className="rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7"
+                disabled={emailChangeLoading || authLoading}
+              />
+            </div>
+            {emailChangeError && (
+              <p className="text-xs text-red-300">{emailChangeError}</p>
+            )}
+            {emailChangeSuccess && (
+              <p className="text-xs text-green-300">
+                Email changed successfully. Please check your new email for verification.
+              </p>
+            )}
+            <button
+              type="submit"
+              className="btn-primary"
+              disabled={emailChangeLoading || authLoading || !newEmail || !emailPassword}
+            >
+              {emailChangeLoading ? "Changing email…" : "Change email"}
+            </button>
+          </form>
+        </div>
+      </GlassCard>
+
+      <GlassCard>
+        <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+          <p className="text-sm text-[hsl(var(--muted))]">
+            Change your account password. You&apos;ll need to enter your current password to confirm the change.
+          </p>
+          <form onSubmit={handlePasswordChange} className="mt-4 space-y-3">
+            <div className="flex flex-col gap-2">
+              <label className="text-sm text-[hsl(var(--muted))]">
+                Current password
+              </label>
+              <input
+                type="password"
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                placeholder="Enter your current password"
+                className="rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7"
+                disabled={passwordChangeLoading || authLoading}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label className="text-sm text-[hsl(var(--muted))]">
+                New password
+              </label>
+              <input
+                type="password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                placeholder="Enter your new password"
+                className="rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7"
+                disabled={passwordChangeLoading || authLoading}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label className="text-sm text-[hsl(var(--muted))]">
+                Confirm new password
+              </label>
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Confirm your new password"
+                className="rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7"
+                disabled={passwordChangeLoading || authLoading}
+              />
+            </div>
+            {passwordChangeError && (
+              <p className="text-xs text-red-300">{passwordChangeError}</p>
+            )}
+            {passwordChangeSuccess && (
+              <p className="text-xs text-green-300">
+                Password changed successfully.
+              </p>
+            )}
+            <button
+              type="submit"
+              className="btn-primary"
+              disabled={passwordChangeLoading || authLoading || !currentPassword || !newPassword || !confirmPassword}
+            >
+              {passwordChangeLoading ? "Changing password…" : "Change password"}
+            </button>
+          </form>
+        </div>
+      </GlassCard>
+
+      <GlassCard>
+        <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+          <p className="text-sm text-[hsl(var(--muted))]">
+            Forgot your password? Enter your email address and we&apos;ll send you a link to reset it.
+          </p>
+          <form onSubmit={handlePasswordReset} className="mt-4 space-y-3">
+            <div className="flex flex-col gap-2">
+              <label className="text-sm text-[hsl(var(--muted))]">
+                Email address
+              </label>
+              <input
+                type="email"
+                value={resetEmail}
+                onChange={(e) => setResetEmail(e.target.value)}
+                placeholder="your@email.com"
+                className="rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7"
+                disabled={passwordResetLoading || authLoading}
+              />
+            </div>
+            {passwordResetError && (
+              <p className="text-xs text-red-300">{passwordResetError}</p>
+            )}
+            {passwordResetSuccess && (
+              <p className="text-xs text-green-300">
+                Password reset email sent. Please check your inbox and follow the instructions.
+              </p>
+            )}
+            <button
+              type="submit"
+              className="btn-primary"
+              disabled={passwordResetLoading || authLoading || !resetEmail}
+            >
+              {passwordResetLoading ? "Sending…" : "Send password reset email"}
+            </button>
+          </form>
         </div>
       </GlassCard>
 

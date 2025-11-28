@@ -13,6 +13,11 @@ import {
   signInWithEmailAndPassword,
   signOut as firebaseSignOut,
   sendEmailVerification,
+  updateEmail,
+  updatePassword,
+  sendPasswordResetEmail,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
   User,
 } from "firebase/auth";
 import { auth } from "../lib/firebase/client";
@@ -26,6 +31,9 @@ interface AuthContextValue {
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
   resendVerificationEmail: () => Promise<void>;
+  changeEmail: (newEmail: string, currentPassword: string) => Promise<void>;
+  changePassword: (newPassword: string, currentPassword: string) => Promise<void>;
+  sendPasswordReset: (email: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
@@ -117,6 +125,74 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const changeEmail = async (newEmail: string, currentPassword: string) => {
+    if (!user || !user.email) {
+      setAuthError("No user logged in");
+      throw new Error("No user logged in");
+    }
+
+    setAuthLoading(true);
+    setAuthError(null);
+    try {
+      // Re-authenticate user before changing email
+      const credential = EmailAuthProvider.credential(user.email, currentPassword);
+      await reauthenticateWithCredential(user, credential);
+      
+      // Update email
+      await updateEmail(user, newEmail);
+      
+      // Send verification email to new address
+      await sendEmailVerification(user);
+    } catch (error: any) {
+      // eslint-disable-next-line no-console
+      console.warn("[Auth] changeEmail error:", error);
+      setAuthError(error?.message ?? "Could not change email. Please check your current password.");
+      throw error;
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
+  const changePassword = async (newPassword: string, currentPassword: string) => {
+    if (!user || !user.email) {
+      setAuthError("No user logged in");
+      throw new Error("No user logged in");
+    }
+
+    setAuthLoading(true);
+    setAuthError(null);
+    try {
+      // Re-authenticate user before changing password
+      const credential = EmailAuthProvider.credential(user.email, currentPassword);
+      await reauthenticateWithCredential(user, credential);
+      
+      // Update password
+      await updatePassword(user, newPassword);
+    } catch (error: any) {
+      // eslint-disable-next-line no-console
+      console.warn("[Auth] changePassword error:", error);
+      setAuthError(error?.message ?? "Could not change password. Please check your current password.");
+      throw error;
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
+  const sendPasswordReset = async (email: string) => {
+    setAuthLoading(true);
+    setAuthError(null);
+    try {
+      await sendPasswordResetEmail(auth, email);
+    } catch (error: any) {
+      // eslint-disable-next-line no-console
+      console.warn("[Auth] sendPasswordReset error:", error);
+      setAuthError(error?.message ?? "Could not send password reset email.");
+      throw error;
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
   const value: AuthContextValue = {
     user,
     loading,
@@ -126,6 +202,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     signIn,
     signOut,
     resendVerificationEmail,
+    changeEmail,
+    changePassword,
+    sendPasswordReset,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

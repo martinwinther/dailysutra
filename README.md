@@ -225,8 +225,6 @@ The app uses a custom "glass morphism" design system with:
 
 ## Future Work / TODO
 
-- **Implement account management** features (email change, password reset) in Settings
-- **Improve PWA assets** with better icons, splash screens, and branding
 - **Add multi-program support** for other 52-week spiritual/philosophical journeys
 - **Replace console.warn logging** with proper error tracking (e.g., Sentry)
 - **Add data export formats** beyond JSON (CSV, PDF reports)
