@@ -224,8 +224,6 @@ The app uses a custom "glass morphism" design system with:
 - Dark theme optimized for contemplative use
 
 ## Future Work / TODO
-
-- **Add data export formats** beyond JSON (CSV, PDF reports)
 - **Implement push notifications** for daily practice reminders
 - **Add social features** like sharing bookmarked weeks or insights
 - **Create admin dashboard** for program content management

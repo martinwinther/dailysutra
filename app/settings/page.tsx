@@ -11,6 +11,7 @@ import {
 import { useSubscription } from "../../context/subscription-context";
 import { useAuth } from "../../context/auth-context";
 import { createLogger } from "../../lib/logger";
+import { generatePDFExport } from "../../lib/pdf-export";
 
 const logger = createLogger("Settings");
 
@@ -104,6 +105,37 @@ export default function SettingsPage() {
     } catch (error) {
       logger.warn("Failed to export progress", error, { action: "exportProgress" });
       window.alert("Sorry, something went wrong while exporting your data.");
+    }
+  };
+
+  const handleExportPDF = () => {
+    try {
+      const raw = window.localStorage.getItem(PROGRESS_STORAGE_KEY);
+      let exportState: ProgressState | null = null;
+
+      if (raw) {
+        const parsed = JSON.parse(raw) as ProgressState | null;
+        if (parsed && typeof parsed === "object") {
+          exportState = parsed;
+        }
+      }
+
+      // If nothing in storage yet, still export a minimal empty state
+      if (!exportState) {
+        exportState = {
+          dayProgress: {},
+          weekProgress: {},
+          settings,
+        };
+      }
+
+      generatePDFExport({
+        progressState: exportState,
+        userEmail: user?.email || null,
+      });
+    } catch (error) {
+      logger.warn("Failed to export PDF", error, { action: "exportPDF" });
+      window.alert("Sorry, something went wrong while generating the PDF.");
     }
   };
 
@@ -574,13 +606,14 @@ export default function SettingsPage() {
       <GlassCard>
         <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
           <p className="text-sm text-[hsl(var(--muted))]">
-            You can export your current journey to a JSON file and later import it
-            on this or another device. This is useful if you uninstall the app,
-            switch browsers, or want a manual backup.
+            You can export your current journey to a JSON file or a formatted PDF. The PDF includes all your notes and reflections in a clean, printable format. JSON exports are useful for backups and importing on other devices.
           </p>
         <div className="mt-4 flex flex-wrap items-center gap-3">
-          <button type="button" onClick={handleExport} className="btn-primary">
-            Export progress as JSON
+          <button type="button" onClick={handleExportPDF} className="btn-primary">
+            Export as PDF
+          </button>
+          <button type="button" onClick={handleExport} className="btn-ghost">
+            Export as JSON
           </button>
           <label className="inline-flex cursor-pointer items-center gap-2 text-xs text-[hsl(var(--muted))]">
             <span className="rounded-full bg-white/5 px-2 py-1 text-[11px] font-medium">
