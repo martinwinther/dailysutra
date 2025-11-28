@@ -69,13 +69,13 @@ export default function AuthPage() {
         )}
         
         <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <button
               type="button"
-              className={`btn-ghost text-xs ${
+              className={`relative px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 ${
                 mode === "signup"
-                  ? "border border-[hsla(var(--border),0.7)] bg-white/10"
-                  : ""
+                  ? "text-[hsl(var(--accent))] bg-[hsla(var(--accent),0.15)] backdrop-blur-sm"
+                  : "text-[hsl(var(--muted))] hover:text-[hsl(var(--text))] hover:bg-white/5"
               }`}
               onClick={() => {
                 setMode("signup");
@@ -84,13 +84,16 @@ export default function AuthPage() {
               }}
             >
               Sign up
+              {mode === "signup" && (
+                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[hsl(var(--accent))] rounded-full" />
+              )}
             </button>
             <button
               type="button"
-              className={`btn-ghost text-xs ${
+              className={`relative px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 ${
                 mode === "login"
-                  ? "border border-[hsla(var(--border),0.7)] bg-white/10"
-                  : ""
+                  ? "text-[hsl(var(--accent))] bg-[hsla(var(--accent),0.15)] backdrop-blur-sm"
+                  : "text-[hsl(var(--muted))] hover:text-[hsl(var(--text))] hover:bg-white/5"
               }`}
               onClick={() => {
                 setMode("login");
@@ -99,6 +102,9 @@ export default function AuthPage() {
               }}
             >
               Log in
+              {mode === "login" && (
+                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[hsl(var(--accent))] rounded-full" />
+              )}
             </button>
           </div>
 
