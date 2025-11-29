@@ -96,7 +96,7 @@ export function Footer() {
                       rel="noopener noreferrer"
                       className="text-xs text-[hsl(var(--muted))] transition-colors hover:text-[hsl(var(--text))]"
                     >
-                      180focus.app
+                      180 Focus
                     </a>
                   </li>
                   <li>
