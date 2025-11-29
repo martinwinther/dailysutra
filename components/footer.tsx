@@ -91,12 +91,12 @@ export function Footer() {
                   </li>
                   <li>
                     <a
-                      href="https://www.dailysutra.app/"
+                      href="https://180focus.app/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-xs text-[hsl(var(--muted))] transition-colors hover:text-[hsl(var(--text))]"
                     >
-                      Daily Sutra
+                      180focus.app
                     </a>
                   </li>
                   <li>
