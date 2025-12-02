@@ -82,3 +82,53 @@ export function getRecentDayHistory(options: {
   return items;
 }
 
+export interface StreakInfo {
+  count: number;
+  isActive: boolean;
+}
+
+/**
+ * Calculate the current practice streak.
+ * A streak is active if the user has practiced today (including today).
+ * The streak counts consecutive days of practice going backwards from today.
+ */
+export function calculateStreak(options: {
+  dayProgress: Record<number, DayProgress>;
+  currentDayNumber: number | null;
+}): StreakInfo {
+  const { dayProgress, currentDayNumber } = options;
+
+  // If we don't have a valid current day, return no streak
+  if (!currentDayNumber || currentDayNumber < 1 || currentDayNumber > TOTAL_DAYS) {
+    return { count: 0, isActive: false };
+  }
+
+  // Check if today is practiced - if not, streak is not active
+  const today = dayProgress[currentDayNumber];
+  const todayPracticed = today?.didPractice ?? false;
+
+  if (!todayPracticed) {
+    return { count: 0, isActive: false };
+  }
+
+  // Count consecutive days going backwards from today
+  let streakCount = 0;
+  let dayNumber = currentDayNumber;
+
+  while (dayNumber >= 1) {
+    const day = dayProgress[dayNumber];
+    if (day?.didPractice) {
+      streakCount++;
+      dayNumber--;
+    } else {
+      // Break when we hit a day without practice
+      break;
+    }
+  }
+
+  return {
+    count: streakCount,
+    isActive: true, // If we got here, today is practiced
+  };
+}
+

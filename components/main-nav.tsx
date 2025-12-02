@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { cn } from "../lib/cn";
 import { useAuth } from "../context/auth-context";
+import { StreakCounter } from "./streak-counter";
 
 const publicLinks = [
   { href: "/", label: "Home", icon: Home },
@@ -40,13 +41,14 @@ export function MainNav() {
       {links.map((link) => {
         const isActive =
           link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
+        const Icon = link.icon;
 
         return (
           <Link
             key={link.href}
             href={link.href}
             className={cn(
-              "flex items-center justify-center transition-all duration-200",
+              "relative flex items-center gap-2 transition-all duration-200",
               "sm:px-3 sm:py-2 sm:rounded-lg",
               "hover:text-[hsl(var(--text))]",
               isActive && "text-[hsl(var(--text))]"
@@ -65,7 +67,7 @@ export function MainNav() {
                   : "bg-transparent border-white/10 hover:bg-white/5 hover:border-white/15"
               )}
             >
-              <link.icon
+              <Icon
                 className={cn(
                   "h-5 w-5 transition-colors",
                   isActive ? "text-white" : "text-white/70"
@@ -73,27 +75,45 @@ export function MainNav() {
                 strokeWidth={isActive ? 2.5 : 2}
               />
             </span>
-            {/* Desktop: text label */}
+            {/* Desktop: icon + text label */}
             <span
               className={cn(
-                "hidden text-sm transition-colors sm:block",
+                "hidden items-center gap-2 text-sm transition-colors sm:flex",
                 isActive
                   ? "text-[hsl(var(--text))] font-medium"
                   : "text-[hsl(var(--muted))]"
               )}
             >
+              <Icon
+                className={cn(
+                  "h-4 w-4 transition-colors",
+                  isActive ? "text-[hsl(var(--accent))]" : "text-[hsl(var(--muted))]"
+                )}
+                strokeWidth={isActive ? 2.5 : 2}
+              />
               {link.label}
             </span>
+            {/* Active underline indicator */}
+            {isActive && (
+              <span
+                className={cn(
+                  "absolute bottom-0 left-0 right-0 h-0.5",
+                  "hidden sm:block",
+                  "bg-[hsl(var(--accent))]"
+                )}
+              />
+            )}
           </Link>
         );
       })}
       <div className="ml-auto flex items-center gap-2 sm:gap-3">
+        <StreakCounter />
         {user && (
           <button
             type="button"
             onClick={signOut}
             className={cn(
-              "flex items-center justify-center transition-all duration-200",
+              "relative flex items-center gap-2 transition-all duration-200",
               "sm:px-3 sm:py-2 sm:rounded-lg",
               "btn-ghost sm:text-sm"
             )}
@@ -113,15 +133,18 @@ export function MainNav() {
             >
               <LogOut className="h-5 w-5 text-white/70" strokeWidth={2} />
             </span>
-            {/* Desktop: text label */}
-            <span className="hidden text-[10px] sm:block">Sign out</span>
+            {/* Desktop: icon + text label */}
+            <span className="hidden items-center gap-2 text-sm sm:flex">
+              <LogOut className="h-4 w-4 text-[hsl(var(--muted))]" strokeWidth={2} />
+              Sign out
+            </span>
           </button>
         )}
         {!user && (
           <Link
             href="/auth"
             className={cn(
-              "flex items-center justify-center transition-all duration-200",
+              "relative flex items-center gap-2 transition-all duration-200",
               "sm:px-3 sm:py-2 sm:rounded-lg",
               "btn-ghost sm:text-sm",
               isAuthActive && "text-[hsl(var(--text))]"
@@ -148,17 +171,36 @@ export function MainNav() {
                 strokeWidth={isAuthActive ? 2.5 : 2}
               />
             </span>
-            {/* Desktop: text label */}
+            {/* Desktop: icon + text label */}
             <span
               className={cn(
-                "hidden text-[10px] transition-colors sm:block",
+                "hidden items-center gap-2 text-sm transition-colors sm:flex",
                 isAuthActive
                   ? "text-[hsl(var(--text))] font-medium"
                   : "text-[hsl(var(--muted))]"
               )}
             >
+              <LogIn
+                className={cn(
+                  "h-4 w-4 transition-colors",
+                  isAuthActive
+                    ? "text-[hsl(var(--accent))]"
+                    : "text-[hsl(var(--muted))]"
+                )}
+                strokeWidth={isAuthActive ? 2.5 : 2}
+              />
               Sign in
             </span>
+            {/* Active underline indicator */}
+            {isAuthActive && (
+              <span
+                className={cn(
+                  "absolute bottom-0 left-0 right-0 h-0.5",
+                  "hidden sm:block",
+                  "bg-[hsl(var(--accent))]"
+                )}
+              />
+            )}
           </Link>
         )}
       </div>
