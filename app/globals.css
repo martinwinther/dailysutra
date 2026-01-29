@@ -130,6 +130,8 @@ body::before {
   -webkit-backdrop-filter: blur(18px) saturate(160%);
   border-bottom: 1px solid hsla(var(--border), 0.28);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+  /* iOS PWA: prevent the sticky header from sitting under the status bar */
+  padding-top: env(safe-area-inset-top);
 }
 
 .btn-primary {

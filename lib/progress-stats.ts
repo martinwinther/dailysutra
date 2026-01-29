@@ -173,4 +173,3 @@ export function calculateStreak(options: {
     isActive: true, // If we got here, today is practiced
   };
 }
-
