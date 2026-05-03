@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { GlassCard } from "./glass-card";
 
 const COOKIE_NOTICE_KEY = "dailysutra-cookie-notice-dismissed";
 
@@ -9,12 +10,17 @@ export function CookieConsent() {
   const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {
-    // Check if notice has been dismissed
     if (typeof window === "undefined") return;
 
-    const dismissed = localStorage.getItem(COOKIE_NOTICE_KEY);
-    if (!dismissed) {
-      // Small delay to avoid flash on page load
+    try {
+      const dismissed = window.localStorage.getItem(COOKIE_NOTICE_KEY);
+      if (!dismissed) {
+        const timer = setTimeout(() => {
+          setShowBanner(true);
+        }, 500);
+        return () => clearTimeout(timer);
+      }
+    } catch {
       const timer = setTimeout(() => {
         setShowBanner(true);
       }, 500);
@@ -24,8 +30,12 @@ export function CookieConsent() {
 
   const handleDismiss = () => {
     if (typeof window === "undefined") return;
-    localStorage.setItem(COOKIE_NOTICE_KEY, "true");
-    localStorage.setItem(`${COOKIE_NOTICE_KEY}-date`, new Date().toISOString());
+    try {
+      window.localStorage.setItem(COOKIE_NOTICE_KEY, "true");
+      window.localStorage.setItem(`${COOKIE_NOTICE_KEY}-date`, new Date().toISOString());
+    } catch {
+      // Ignore storage failures; the banner will simply reappear later.
+    }
     setShowBanner(false);
   };
 
@@ -39,7 +49,7 @@ export function CookieConsent() {
       aria-describedby="cookie-consent-description"
     >
       <div className="mx-auto max-w-5xl">
-        <div className="glass-card rounded-2xl border border-[hsla(var(--border),0.3)] p-6 shadow-[0_8px_24px_rgba(0,0,0,0.4)] backdrop-blur-xl">
+        <GlassCard variant="elevated" className="border border-[hsla(var(--border),0.3)]">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div className="flex-1 space-y-2">
               <h3
@@ -74,7 +84,7 @@ export function CookieConsent() {
               </button>
             </div>
           </div>
-        </div>
+        </GlassCard>
       </div>
     </div>
   );

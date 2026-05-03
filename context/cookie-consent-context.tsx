@@ -18,11 +18,16 @@ export function CookieConsentProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const dismissed = localStorage.getItem(COOKIE_NOTICE_KEY);
-    const date = localStorage.getItem(`${COOKIE_NOTICE_KEY}-date`);
+    try {
+      const dismissed = window.localStorage.getItem(COOKIE_NOTICE_KEY);
+      const date = window.localStorage.getItem(`${COOKIE_NOTICE_KEY}-date`);
 
-    setNoticeDismissed(dismissed === "true");
-    setDismissedDate(date);
+      setNoticeDismissed(dismissed === "true");
+      setDismissedDate(date);
+    } catch {
+      setNoticeDismissed(false);
+      setDismissedDate(null);
+    }
   }, []);
 
   return (
