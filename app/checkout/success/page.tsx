@@ -98,7 +98,7 @@ function CheckoutSuccessContent() {
       />
 
       <GlassCard>
-        <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+        <div className="-mx-4 px-4 py-4">
           {verifying ? (
             <p className="text-sm text-[hsl(var(--muted))]">
               Verifying your payment...
@@ -154,7 +154,7 @@ export default function CheckoutSuccessPage() {
             subtitle="Your subscription is active. Thank you for supporting this work."
           />
           <GlassCard>
-            <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+            <div className="-mx-4 px-4 py-4">
               <p className="text-sm text-[hsl(var(--muted))]">
                 Loading...
               </p>

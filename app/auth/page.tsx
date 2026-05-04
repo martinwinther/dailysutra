@@ -133,13 +133,13 @@ export default function AuthPage() {
           </div>
         )}
         
-        <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+        <div className="-mx-4 px-4 py-4">
           <div className="flex items-center gap-3">
             <button
               type="button"
               className={`relative px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 ${
                 mode === "signup"
-                  ? "text-[hsl(var(--accent))] bg-[hsla(var(--accent),0.15)] backdrop-blur-sm"
+                  ? "text-[hsl(var(--accent))] bg-[hsla(var(--accent),0.12)]"
                   : "text-[hsl(var(--muted))] hover:text-[hsl(var(--text))] hover:bg-white/5"
               }`}
               onClick={() => {
@@ -158,7 +158,7 @@ export default function AuthPage() {
               type="button"
               className={`relative px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 ${
                 mode === "login"
-                  ? "text-[hsl(var(--accent))] bg-[hsla(var(--accent),0.15)] backdrop-blur-sm"
+                  ? "text-[hsl(var(--accent))] bg-[hsla(var(--accent),0.12)]"
                   : "text-[hsl(var(--muted))] hover:text-[hsl(var(--text))] hover:bg-white/5"
               }`}
               onClick={() => {

@@ -47,7 +47,7 @@ export function WeekGrid() {
         ))}
       </div>
 
-      <p className="mt-1 rounded-lg bg-white/6 px-6 py-2 text-[10px] text-[hsl(var(--muted))] shadow-[0_2px_8px_rgba(0,0,0,0.25)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_4px_12px_rgba(0,0,0,0.35)]">
+      <p className="mt-1 px-6 py-2 text-[10px] text-[hsl(var(--muted))] transition-all duration-200 ease-out">
         Green squares indicate days where you marked the practice as done.
       </p>
     </section>
@@ -78,12 +78,12 @@ function WeekCard({ weekNumber, todayGlobalDayNumber, currentWeek }: WeekCardPro
 
   return (
     <GlassCard className="week-card">
-      <div
-        className={cn(
-          "-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]",
-          isCurrentWeek && "border-2 border-[hsla(var(--accent-soft),0.7)]"
-        )}
-      >
+         <div
+           className={cn(
+             "px-6 py-4 transition-all duration-200 ease-out hover:-translate-y-1",
+             isCurrentWeek && "border-2 border-[hsla(var(--accent-soft),0.7)]"
+           )}
+         >
         <div className="flex items-center justify-between gap-2 mb-3">
           <div className="flex flex-col">
             <span className="text-xs font-semibold uppercase tracking-wide text-[hsl(var(--muted))]">

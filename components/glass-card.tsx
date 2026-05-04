@@ -13,12 +13,13 @@ export function GlassCard({
   variant = "default",
   ...props
 }: GlassCardProps) {
+  // Softer, more minimal surface styles — avoid heavy nested cards
   const variantClasses =
     variant === "elevated"
-      ? "glass-card rounded-2xl p-6 shadow-[0_28px_72px_rgba(0,0,0,0.62)] backdrop-blur-[22px]"
+      ? "rounded-xl p-5 bg-white/6 border border-[hsla(var(--border),0.12)] shadow-sm"
       : variant === "subtle"
-      ? "glass-card rounded-2xl p-6 shadow-[0_16px_36px_rgba(0,0,0,0.28)] backdrop-blur-[14px]"
-      : "glass-card rounded-2xl p-6";
+      ? "rounded-lg p-3 bg-white/4 border border-[hsla(var(--border),0.06)]"
+      : "rounded-xl p-4 bg-white/5 border border-[hsla(var(--border),0.08)]";
 
   return (
     <div

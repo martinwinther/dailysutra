@@ -18,7 +18,7 @@ export default function SutrasPage() {
       />
 
       <GlassCard>
-        <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm">
+        <div className="-mx-4 px-4 py-4">
           <p className="text-sm text-[hsl(var(--text))]">
             This is a community translation and commentary. We strongly recommend also reading a scholarly source, such as:
           </p>
@@ -37,7 +37,7 @@ export default function SutrasPage() {
         {books.map((book) => (
           <GlassCard key={book.id}>
             <Link href={book.href} className="block">
-              <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+              <div className="-mx-4 px-4 py-4 transition-all duration-200 ease-out hover:-translate-y-1">
                 <h2 className="text-sm font-semibold text-[hsl(var(--text))]">
                   {book.label}
                 </h2>

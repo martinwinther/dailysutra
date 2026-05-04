@@ -195,7 +195,7 @@ export default function DayPage({ params }: DayPageProps) {
       </div>
 
       <GlassCard>
-        <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+        <div className="-mx-4 px-4 py-4">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex flex-col">
               <p className="text-xs font-bold uppercase tracking-wide text-[hsl(var(--muted))]">
@@ -238,7 +238,7 @@ export default function DayPage({ params }: DayPageProps) {
       </GlassCard>
 
       <GlassCard>
-        <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+        <div className="-mx-4 px-4 py-4">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-sm font-medium text-[hsl(var(--text))]">
@@ -274,7 +274,7 @@ export default function DayPage({ params }: DayPageProps) {
       </GlassCard>
 
       <GlassCard>
-        <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+        <div className="-mx-4 px-4 py-4">
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1 flex flex-col gap-2">
               <p className="text-sm font-medium text-[hsl(var(--text))]">
@@ -324,7 +324,7 @@ export default function DayPage({ params }: DayPageProps) {
 
       {isLastDayOfWeek && (
         <GlassCard>
-          <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+          <div className="-mx-4 px-4 py-4">
             <div className="flex flex-col gap-4">
               <div>
                 <p className="text-sm font-medium text-[hsl(var(--text))]">

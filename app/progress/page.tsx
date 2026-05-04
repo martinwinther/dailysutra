@@ -126,7 +126,7 @@ export default function ProgressPage() {
       )}
 
       <GlassCard>
-        <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+        <div className="-mx-4 px-4 py-4">
           <div className="grid gap-4 sm:grid-cols-4">
             <StatBlock
               label="Days practiced"
@@ -157,7 +157,7 @@ export default function ProgressPage() {
 
       {!hasAnyData && !hasAnyJournal && (
         <GlassCard>
-          <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+          <div className="-mx-4 px-4 py-4">
             <p className="text-sm text-[hsl(var(--muted))]">
               You haven&apos;t recorded any practice yet. Once you start checking off
               days and writing notes on the day pages, your progress will appear
@@ -170,7 +170,7 @@ export default function ProgressPage() {
       {dailyEntries.length > 0 && (
         <section aria-labelledby="daily-notes-heading">
           <GlassCard>
-            <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+            <div className="-mx-4 px-4 py-4">
               <h2 id="daily-notes-heading" className="text-sm font-medium text-[hsl(var(--text))]">
                 Daily notes
               </h2>
@@ -239,7 +239,7 @@ export default function ProgressPage() {
       {weeklyEntries.length > 0 && (
         <section aria-labelledby="weekly-reflections-heading">
           <GlassCard>
-            <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+            <div className="-mx-4 px-4 py-4">
               <h2 id="weekly-reflections-heading" className="text-sm font-medium text-[hsl(var(--text))]">
                 Weekly reflections
               </h2>
@@ -318,7 +318,7 @@ export default function ProgressPage() {
       {bookmarkedWeekNumbers.length > 0 && (
         <section aria-labelledby="bookmarked-weeks-heading">
         <GlassCard>
-          <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+          <div className="-mx-4 px-4 py-4">
             <div className="flex items-center justify-between gap-2">
               <div>
                 <h2 id="bookmarked-weeks-heading" className="text-sm font-medium text-[hsl(var(--text))]">

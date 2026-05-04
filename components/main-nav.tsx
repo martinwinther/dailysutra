@@ -59,12 +59,12 @@ export function MainNav() {
             <span
               className={cn(
                 "flex h-10 w-10 items-center justify-center rounded-full",
-                "backdrop-blur-sm transition-all duration-200",
+                "transition-all duration-200",
                 "border",
                 "sm:hidden",
                 isActive
-                  ? "bg-white/12 border-white/25 shadow-[0_0_8px_rgba(255,255,255,0.1)]"
-                  : "bg-transparent border-white/10 hover:bg-white/5 hover:border-white/15"
+                  ? "bg-white/8 border-white/20"
+                  : "bg-transparent border-white/10 hover:bg-white/4 hover:border-white/15"
               )}
             >
               <Icon
@@ -124,9 +124,9 @@ export function MainNav() {
             <span
               className={cn(
                 "flex h-10 w-10 items-center justify-center rounded-full",
-                "backdrop-blur-sm transition-all duration-200",
+                "transition-all duration-200",
                 "border border-white/10",
-                "bg-transparent hover:bg-white/5 hover:border-white/15",
+                "bg-transparent hover:bg-white/4 hover:border-white/15",
                 "sm:hidden",
                 authLoading && "opacity-50"
               )}
@@ -155,12 +155,12 @@ export function MainNav() {
             <span
               className={cn(
                 "flex h-10 w-10 items-center justify-center rounded-full",
-                "backdrop-blur-sm transition-all duration-200",
+                "transition-all duration-200",
                 "border",
                 "sm:hidden",
                 isAuthActive
-                  ? "bg-white/12 border-white/25 shadow-[0_0_8px_rgba(255,255,255,0.1)]"
-                  : "bg-transparent border-white/10 hover:bg-white/5 hover:border-white/15"
+                  ? "bg-white/8 border-white/20"
+                  : "bg-transparent border-white/10 hover:bg-white/4 hover:border-white/15"
               )}
             >
               <LogIn

@@ -34,7 +34,7 @@ export default function ContactPage() {
       />
 
       <GlassCard>
-        <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm">
+        <div className="-mx-4 px-4 py-4">
           <h2 className="text-sm font-medium text-[hsl(var(--text))] mb-2">
             Get in Touch
           </h2>
@@ -107,7 +107,7 @@ export default function ContactPage() {
       </GlassCard>
 
       <GlassCard>
-        <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm">
+        <div className="-mx-4 px-4 py-4">
           <h2 className="text-sm font-medium text-[hsl(var(--text))] mb-2">
             Other Ways to Reach Us
           </h2>

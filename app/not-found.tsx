@@ -11,7 +11,7 @@ export default function NotFound() {
       />
 
       <GlassCard>
-        <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm">
+        <div className="-mx-4 px-4 py-4">
           <p className="text-sm text-[hsl(var(--muted))]">
             The page you tried to access could not be found. It may have been moved, deleted, or the URL might be incorrect.
           </p>

@@ -55,7 +55,7 @@ export default function GlossaryPage() {
       />
 
       <GlassCard>
-        <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm">
+        <div className="-mx-4 px-4 py-4">
           <label htmlFor="glossary-search" className="sr-only">
             Search glossary terms
           </label>
@@ -65,7 +65,7 @@ export default function GlossaryPage() {
             placeholder="Search terms or definitions..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full rounded-lg bg-white/5 px-4 py-2 text-sm text-[hsl(var(--text))] placeholder:text-[hsl(var(--muted))] border border-[hsla(var(--border),0.4)] backdrop-blur-sm focus:border-[hsl(var(--accent))] focus:bg-white/7 focus:outline-none transition-all duration-200"
+            className="w-full rounded-none bg-transparent px-1 py-2 text-sm text-[hsl(var(--text))] placeholder:text-[hsl(var(--muted))] border-b border-[hsla(var(--border),0.28)] focus:border-[hsl(var(--accent))] focus:outline-none transition-all duration-200"
           />
         </div>
       </GlassCard>

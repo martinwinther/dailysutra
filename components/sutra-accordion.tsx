@@ -30,7 +30,7 @@ export function SutraAccordion({
 
   return (
     <GlassCard>
-      <div className="-mx-6 rounded-lg bg-white/6 px-6 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)] backdrop-blur-sm">
+      <div className="-mx-4 px-4 py-4">
         <button
           type="button"
           onClick={handleToggle}

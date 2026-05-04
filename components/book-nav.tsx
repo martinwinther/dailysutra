@@ -25,7 +25,7 @@ export function BookNav() {
             className={cn(
               "flex whitespace-nowrap rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 ease-out",
               isActive
-                ? "bg-white/7 text-[hsl(var(--text))] shadow-[0_2px_8px_rgba(0,0,0,0.2)] backdrop-blur-sm"
+                ? "bg-[color-mix(in srgb, var(--accent) 8%, transparent)] text-[hsl(var(--text))] ring-1 ring-[hsla(var(--accent-soft),0.12)]"
                 : "bg-white/5 text-[hsl(var(--muted))] hover:bg-white/6 hover:text-[hsl(var(--text))]"
             )}
           >
