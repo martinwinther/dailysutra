@@ -306,7 +306,7 @@ export default function DayPage({ params }: DayPageProps) {
             value={note}
             onChange={handleNoteChange}
             rows={5}
-            className="mt-2 w-full rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="mt-2 w-full input-soft px-3 py-2 text-sm"
             placeholder={
               canAccessThisDay
                 ? "For example: I noticed how often my mind jumped to planning today. Pausing to observe it made things feel a bit slower."
@@ -408,7 +408,7 @@ export default function DayPage({ params }: DayPageProps) {
                   onChange={handleReflectionChange}
                   rows={4}
                   disabled={!canAccessThisDay}
-                  className="mt-1 w-full rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7 disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="mt-1 w-full input-soft px-3 py-2 text-sm"
                   placeholder={
                     canAccessThisDay
                       ? "What did you notice about this week&apos;s theme in your day-to-day life?"

@@ -74,7 +74,7 @@ export default function ContactPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7"
+                  className="input-soft px-3 py-2 text-sm"
                   placeholder="your@email.com"
                 />
               </div>
@@ -89,7 +89,7 @@ export default function ContactPage() {
                   onChange={(e) => setMessage(e.target.value)}
                   required
                   rows={6}
-                  className="rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7"
+                  className="input-soft px-3 py-2 text-sm"
                   placeholder="How can we help you?"
                 />
               </div>

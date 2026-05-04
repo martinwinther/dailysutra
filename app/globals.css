@@ -123,6 +123,42 @@ body::before {
   padding-top: env(safe-area-inset-top);
 }
 
+.surface {
+  background: hsla(var(--surface), 0.6);
+  border: 1px solid hsla(var(--border), 0.18);
+  border-radius: 0.75rem;
+}
+
+.surface-subtle {
+  background: hsla(var(--surface-soft), 0.2);
+  border: 1px solid hsla(var(--border), 0.14);
+  border-radius: 0.75rem;
+}
+
+.surface-outline {
+  background: hsla(var(--surface-soft), 0.22);
+  border: 1px solid hsla(var(--border), 0.35);
+  border-radius: 0.75rem;
+}
+
+.input-soft {
+  border-radius: 0.75rem;
+  border: 1px solid hsla(var(--border), 0.4);
+  background: hsla(var(--surface-soft), 0.2);
+  color: hsl(var(--text));
+  outline: none;
+}
+
+.input-soft:focus {
+  border-color: hsl(var(--accent));
+  background: hsla(var(--surface-soft), 0.28);
+}
+
+.input-soft:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 .btn-primary {
   @apply inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium transition-transform transition-shadow;
   background: linear-gradient(

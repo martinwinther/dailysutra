@@ -442,7 +442,7 @@ export default function SettingsPage() {
                   type="date"
                   value={settings.startDate ?? ""}
                   onChange={handleDateChange}
-                  className="rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7"
+                  className="input-soft px-3 py-2 text-sm"
                   aria-label="Journey start date"
                   lang={userLocale}
                   data-locale={userLocale}
@@ -566,7 +566,7 @@ export default function SettingsPage() {
                 value={newEmail}
                 onChange={(e) => setNewEmail(e.target.value)}
                 placeholder={user?.email || "your@email.com"}
-                className="rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7"
+                className="input-soft px-3 py-2 text-sm"
                 disabled={emailChangeLoading || authLoading}
               />
             </div>
@@ -579,7 +579,7 @@ export default function SettingsPage() {
                 value={emailPassword}
                 onChange={(e) => setEmailPassword(e.target.value)}
                 placeholder="Enter your current password"
-                className="rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7"
+                className="input-soft px-3 py-2 text-sm"
                 disabled={emailChangeLoading || authLoading}
               />
             </div>
@@ -617,7 +617,7 @@ export default function SettingsPage() {
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
                 placeholder="Enter your current password"
-                className="rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7"
+                className="input-soft px-3 py-2 text-sm"
                 disabled={passwordChangeLoading || authLoading}
               />
             </div>
@@ -630,7 +630,7 @@ export default function SettingsPage() {
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="Enter your new password"
-                className="rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7"
+                className="input-soft px-3 py-2 text-sm"
                 disabled={passwordChangeLoading || authLoading}
               />
             </div>
@@ -643,7 +643,7 @@ export default function SettingsPage() {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Confirm your new password"
-                className="rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7"
+                className="input-soft px-3 py-2 text-sm"
                 disabled={passwordChangeLoading || authLoading}
               />
             </div>
@@ -681,7 +681,7 @@ export default function SettingsPage() {
                 value={resetEmail}
                 onChange={(e) => setResetEmail(e.target.value)}
                 placeholder="your@email.com"
-                className="rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7"
+                className="input-soft px-3 py-2 text-sm"
                 disabled={passwordResetLoading || authLoading}
               />
             </div>
@@ -771,7 +771,7 @@ export default function SettingsPage() {
                       onChange={async (e) => {
                         await updatePreferences({ reminderTime: e.target.value });
                       }}
-                      className="rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7"
+                      className="input-soft px-3 py-2 text-sm"
                       disabled={notificationsLoading || authLoading}
                     />
                   </div>
@@ -885,7 +885,7 @@ export default function SettingsPage() {
                   value={deleteConfirmText}
                   onChange={(e) => setDeleteConfirmText(e.target.value)}
                   placeholder="DELETE"
-                  className="rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))] focus:bg-white/7"
+                  className="input-soft px-3 py-2 text-sm"
                   disabled={deleteAccountLoading || authLoading}
                 />
               </div>

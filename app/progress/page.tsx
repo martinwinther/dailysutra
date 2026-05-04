@@ -185,7 +185,7 @@ export default function ProgressPage() {
                 return (
                   <div
                     key={entry.dayNumber}
-                    className="group rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-3 transition-colors hover:border-[hsla(var(--border),0.7)]"
+                    className="group surface-outline px-3 py-3 transition-colors hover:border-[hsla(var(--border),0.7)]"
                   >
                     <div className="flex items-start justify-between gap-2">
                       <Link
@@ -260,7 +260,7 @@ export default function ProgressPage() {
                 return (
                   <div
                     key={week.weekNumber}
-                    className="group rounded-xl border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-3 transition-colors hover:border-[hsla(var(--border),0.7)]"
+                    className="group surface-outline px-3 py-3 transition-colors hover:border-[hsla(var(--border),0.7)]"
                   >
                     <div className="flex items-start justify-between gap-2">
                       <Link
