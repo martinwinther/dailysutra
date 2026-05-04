@@ -8,8 +8,8 @@ export function AppStatusBanner() {
   if (isOnline && !lastError) return null;
 
   return (
-    <div 
-      className="bg-amber-600/80 text-[11px] text-white text-center py-1"
+    <div
+      className="status-banner text-[11px] text-center py-1"
       role="status"
       aria-live="polite"
       aria-atomic="true"

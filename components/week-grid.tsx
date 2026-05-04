@@ -96,7 +96,7 @@ function WeekCard({ weekNumber, todayGlobalDayNumber, currentWeek }: WeekCardPro
 
           <div className="flex items-center gap-1">
             {isCompleted && (
-              <span className="rounded-full bg-emerald-500/20 px-2 py-0.5 text-xs font-medium text-emerald-300">
+              <span className="badge badge-success">
                 Done
               </span>
             )}
@@ -142,9 +142,9 @@ function WeekCard({ weekNumber, todayGlobalDayNumber, currentWeek }: WeekCardPro
               const dayClassName = cn(
                 "flex h-8 w-8 items-center justify-center rounded-xl border text-xs transition-colors",
                 isToday
-                  ? "border-emerald-400/80 bg-emerald-500/25 text-emerald-50 ring-2 ring-emerald-400/60 ring-offset-1 ring-offset-black/30"
+                  ? "border-[hsla(var(--success),0.7)] bg-[hsla(var(--success),0.2)] text-[hsl(var(--text))] ring-2 ring-[hsla(var(--success),0.55)] ring-offset-1 ring-offset-[hsl(var(--bg))]"
                   : done && canAccess && isPastOrCurrent
-                  ? "border-emerald-400/80 bg-emerald-500/25 text-emerald-50"
+                  ? "border-[hsla(var(--success),0.6)] bg-[hsla(var(--success),0.16)] text-[hsl(var(--text))]"
                   : isLocked
                   ? "border-[hsla(var(--border),0.2)] bg-white/3 text-[hsl(var(--muted))] opacity-40 cursor-not-allowed"
                   : "border-[hsla(var(--border),0.35)] bg-white/6 text-[hsl(var(--muted))] hover:border-[hsla(var(--border),0.7)]"

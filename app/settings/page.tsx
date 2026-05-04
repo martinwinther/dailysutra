@@ -468,7 +468,7 @@ export default function SettingsPage() {
           <button
             type="button"
             onClick={handleReset}
-            className="mt-4 btn-primary"
+            className="mt-4 btn-danger"
             aria-label="Reset all progress and notes. This action cannot be undone."
           >
             Reset all progress
@@ -489,7 +489,7 @@ export default function SettingsPage() {
             access all 52 weeks of the program with a one-time payment. The exact price will be shown in the secure checkout.
           </p>
         <div className="mt-3 flex flex-wrap items-center gap-3">
-          <div className="rounded-xl bg-white/5 px-3 py-2">
+          <div className="surface px-3 py-2">
             <p className="text-xs uppercase tracking-wide text-[hsl(var(--muted))]">
               Status
             </p>
@@ -534,7 +534,7 @@ export default function SettingsPage() {
               : "Upgrade to full access"}
           </button>
           {upgradeError && (
-            <p className="text-[10px] text-red-300">{upgradeError}</p>
+            <p className="text-[10px] text-[hsl(var(--danger))]">{upgradeError}</p>
           )}
           {!isActivePaid && !upgradeError && (
             <span className="text-[10px] text-[hsl(var(--muted))]">
@@ -584,10 +584,10 @@ export default function SettingsPage() {
               />
             </div>
             {emailChangeError && (
-              <p className="text-xs text-red-300">{emailChangeError}</p>
+              <p className="text-xs text-[hsl(var(--danger))]">{emailChangeError}</p>
             )}
             {emailChangeSuccess && (
-              <p className="text-xs text-green-300">
+              <p className="text-xs text-[hsl(var(--success))]">
                 Email changed successfully. Please check your new email for verification.
               </p>
             )}
@@ -648,10 +648,10 @@ export default function SettingsPage() {
               />
             </div>
             {passwordChangeError && (
-              <p className="text-xs text-red-300">{passwordChangeError}</p>
+              <p className="text-xs text-[hsl(var(--danger))]">{passwordChangeError}</p>
             )}
             {passwordChangeSuccess && (
-              <p className="text-xs text-green-300">
+              <p className="text-xs text-[hsl(var(--success))]">
                 Password changed successfully.
               </p>
             )}
@@ -686,10 +686,10 @@ export default function SettingsPage() {
               />
             </div>
             {passwordResetError && (
-              <p className="text-xs text-red-300">{passwordResetError}</p>
+              <p className="text-xs text-[hsl(var(--danger))]">{passwordResetError}</p>
             )}
             {passwordResetSuccess && (
-              <p className="text-xs text-green-300">
+              <p className="text-xs text-[hsl(var(--success))]">
                 Password reset email sent. Please check your inbox and follow the instructions.
               </p>
             )}
@@ -736,7 +736,7 @@ export default function SettingsPage() {
 
           {permission === "denied" && (
             <div className="mt-4">
-              <p className="text-xs text-red-300">
+              <p className="text-xs text-[hsl(var(--warning))]">
                 Notifications are blocked. Please enable them in your browser settings to receive reminders.
               </p>
             </div>
@@ -873,7 +873,7 @@ export default function SettingsPage() {
           
           {showDeleteConfirm ? (
             <div className="mt-4 space-y-3">
-              <p className="text-xs text-red-300 font-medium">
+              <p className="text-xs text-[hsl(var(--danger))] font-medium">
                 This action is permanent and cannot be undone. All your data will be deleted.
               </p>
               <div className="flex flex-col gap-2">
@@ -890,14 +890,14 @@ export default function SettingsPage() {
                 />
               </div>
               {deleteAccountError && (
-                <p className="text-xs text-red-300">{deleteAccountError}</p>
+                <p className="text-xs text-[hsl(var(--danger))]">{deleteAccountError}</p>
               )}
               <div className="flex flex-wrap gap-2">
                 <button
                   type="button"
                   onClick={handleDeleteAccount}
                   disabled={deleteAccountLoading || authLoading || deleteConfirmText !== "DELETE"}
-                  className="btn-primary bg-red-600/80 hover:bg-red-600/90 text-white"
+                  className="btn-danger"
                 >
                   {deleteAccountLoading ? "Deleting account…" : "Permanently Delete Account"}
                 </button>
@@ -921,7 +921,7 @@ export default function SettingsPage() {
                 type="button"
                 onClick={handleDeleteAccount}
                 disabled={deleteAccountLoading || authLoading}
-                className="btn-primary bg-red-600/80 hover:bg-red-600/90 text-white"
+                className="btn-danger"
               >
                 Delete Account
               </button>

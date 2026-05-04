@@ -65,7 +65,7 @@ export default function GlossaryPage() {
             placeholder="Search terms or definitions..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full rounded-none bg-transparent px-1 py-2 text-sm text-[hsl(var(--text))] placeholder:text-[hsl(var(--muted))] border-b border-[hsla(var(--border),0.28)] focus:border-[hsl(var(--accent))] focus:outline-none transition-all duration-200"
+            className="w-full input-soft px-3 py-2 text-sm placeholder:text-[hsl(var(--muted))]"
           />
         </div>
       </GlassCard>

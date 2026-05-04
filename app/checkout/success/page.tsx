@@ -105,7 +105,7 @@ function CheckoutSuccessContent() {
             </p>
           ) : error ? (
             <div className="space-y-3">
-              <p className="text-sm text-red-300">{error}</p>
+              <p className="text-sm text-[hsl(var(--danger))]">{error}</p>
               <div className="flex flex-wrap gap-2">
                 <a
                   href="mailto:support@dailysutra.app"

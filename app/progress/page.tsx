@@ -194,7 +194,7 @@ export default function ProgressPage() {
                       >
                         <div className="flex items-center justify-between gap-2">
                           <div className="flex flex-wrap items-center gap-2">
-                            <span className="rounded-full bg-white/10 px-2 py-0.5 text-[11px] font-medium">
+                            <span className="badge badge-muted">
                               Week {entry.weekNumber} · Day {entry.dayIndex}
                             </span>
                             {entry.dateLabel && (
@@ -204,7 +204,7 @@ export default function ProgressPage() {
                             )}
                           </div>
                           {entry.didPractice && (
-                            <span className="rounded-full bg-emerald-500/20 px-2 py-0.5 text-[11px] font-medium text-emerald-200">
+                            <span className="badge badge-success">
                               Practiced
                             </span>
                           )}
@@ -268,7 +268,7 @@ export default function ProgressPage() {
                         className="flex-1"
                       >
                         <div className="flex items-center justify-between gap-2">
-                          <span className="rounded-full bg-white/10 px-2 py-0.5 text-[11px] font-medium">
+                          <span className="badge badge-muted">
                             Week {week.weekNumber}
                           </span>
                           {tags.length > 0 && (
@@ -276,7 +276,7 @@ export default function ProgressPage() {
                               {tags.map((tag) => (
                                 <span
                                   key={tag}
-                                  className="rounded-full bg-white/8 px-2 py-0.5 text-[10px] text-[hsl(var(--muted))]"
+                                  className="badge badge-muted"
                                 >
                                   {tag}
                                 </span>
@@ -343,7 +343,7 @@ export default function ProgressPage() {
                 <Link
                   key={weekNumber}
                   href={`/day/${firstDayOfWeek}`}
-                  className="flex items-center gap-2 rounded-full border border-[hsla(var(--border),0.4)] bg-white/5 px-3 py-1.5 text-xs text-[hsl(var(--muted))] hover:border-[hsla(var(--border),0.7)]"
+                  className="flex items-center gap-2 rounded-full border border-[hsla(var(--border),0.4)] bg-[hsla(var(--surface-soft),0.24)] px-3 py-1.5 text-xs text-[hsl(var(--muted))] hover:border-[hsla(var(--border),0.7)]"
                 >
                   <span className="font-medium">Week {weekNumber}</span>
                   <span className="truncate text-[10px] max-w-[10rem]">{week.theme}</span>
@@ -367,7 +367,7 @@ interface StatBlockProps {
 
 function StatBlock({ label, value, helper }: StatBlockProps) {
   return (
-    <div className="rounded-xl bg-white/5 px-3 py-3">
+    <div className="surface px-3 py-3">
       <p className="text-xs font-medium uppercase tracking-wide text-[hsl(var(--muted))]">
         {label}
       </p>

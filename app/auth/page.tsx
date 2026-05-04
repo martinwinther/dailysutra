@@ -94,15 +94,15 @@ export default function AuthPage() {
 
       <GlassCard>
         {user && !user.emailVerified && (
-          <div className="mb-4 rounded-lg bg-blue-500/20 border border-blue-400/30 px-4 py-3 space-y-3">
+          <div className="mb-4 callout callout-info space-y-3">
             <div>
-              <p className="text-sm text-blue-100 mb-1 font-medium">
+              <p className="text-sm mb-1 font-medium">
                 Email verification required
               </p>
-              <p className="text-xs text-blue-200 mb-2">
+              <p className="text-xs text-[hsl(var(--muted))] mb-2">
                 We&apos;ve sent a verification link to <strong>{user.email}</strong>. Please check your email and click the link to complete your account setup.
               </p>
-              <p className="text-xs text-blue-200/80">
+              <p className="text-xs text-[hsl(var(--muted))]">
                 After clicking the link, your account will be verified automatically. You can also click the button below to check if you&apos;ve already verified.
               </p>
             </div>
@@ -110,23 +110,23 @@ export default function AuthPage() {
               <button
                 type="button"
                 onClick={handleCheckVerification}
-                className="text-xs text-blue-200 hover:text-blue-100 underline"
+                className="text-xs text-[hsl(var(--accent))] hover:underline"
                 disabled={authLoading}
               >
                 Check verification status
               </button>
-              <span className="text-xs text-blue-300/60">•</span>
+              <span className="text-xs text-[hsl(var(--muted))]">•</span>
               <button
                 type="button"
                 onClick={handleResendVerification}
-                className="text-xs text-blue-200 hover:text-blue-100 underline"
+                className="text-xs text-[hsl(var(--accent))] hover:underline"
                 disabled={authLoading}
               >
                 {authLoading ? "Sending..." : "Resend verification email"}
               </button>
             </div>
             {resendSuccess && (
-              <p className="text-xs text-green-300">
+              <p className="text-xs text-[hsl(var(--success))]">
                 Verification email sent! Please check your inbox.
               </p>
             )}
@@ -185,7 +185,7 @@ export default function AuthPage() {
                 autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-xl border border-[hsla(var(--border),0.7)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))]"
+                className="w-full input-soft px-3 py-2 text-sm"
                 required
                 aria-required="true"
                 aria-invalid={authError ? "true" : "false"}
@@ -203,7 +203,7 @@ export default function AuthPage() {
                 autoComplete={mode === "signup" ? "new-password" : "current-password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-xl border border-[hsla(var(--border),0.7)] bg-white/5 px-3 py-2 text-sm text-[hsl(var(--text))] outline-none focus:border-[hsl(var(--accent))]"
+                className="w-full input-soft px-3 py-2 text-sm"
                 required
                 minLength={6}
                 aria-required="true"
@@ -252,14 +252,14 @@ export default function AuthPage() {
 
             {authError && (
               <div role="alert" aria-live="assertive">
-                <p id="email-error" className="text-xs text-red-300">{authError}</p>
+                <p id="email-error" className="text-xs text-[hsl(var(--danger))]">{authError}</p>
                 <p id="password-error" className="sr-only">{authError}</p>
               </div>
             )}
 
             {showVerificationMessage && (
               <div role="status" aria-live="polite">
-                <p className="text-xs text-green-300">
+                <p className="text-xs text-[hsl(var(--success))]">
                   Account created! Please check your email for a verification link.
                 </p>
               </div>

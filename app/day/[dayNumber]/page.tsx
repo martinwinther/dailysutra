@@ -129,27 +129,27 @@ export default function DayPage({ params }: DayPageProps) {
 
       {isTrialActive && !canAccessThisDay && (
         <GlassCard>
-          <p className="text-sm font-medium text-[hsl(var(--text))]">
-            Upgrade to continue
-          </p>
-          <p className="mt-1 text-xs text-[hsl(var(--muted))]">
-            Your free trial includes the first 4 weeks of content. To access
-            weeks 5-52, please upgrade to a paid subscription. In the future,
-            this is where an upgrade option will appear.
-          </p>
+          <div className="callout callout-warning">
+            <p className="text-sm font-medium">Upgrade to continue</p>
+            <p className="mt-1 text-xs text-[hsl(var(--muted))]">
+              Your free trial includes the first 4 weeks of content. To access
+              weeks 5-52, please upgrade to a paid subscription. In the future,
+              this is where an upgrade option will appear.
+            </p>
+          </div>
         </GlassCard>
       )}
 
       {isExpired && (
         <GlassCard>
-          <p className="text-sm font-medium text-[hsl(var(--text))]">
-            Subscription required
-          </p>
-          <p className="mt-1 text-xs text-[hsl(var(--muted))]">
-            You can still read your past notes and see your journey, but marking
-            new practice and editing notes requires an active subscription. In
-            the future, this is where an upgrade option will appear.
-          </p>
+          <div className="callout callout-warning">
+            <p className="text-sm font-medium">Subscription required</p>
+            <p className="mt-1 text-xs text-[hsl(var(--muted))]">
+              You can still read your past notes and see your journey, but marking
+              new practice and editing notes requires an active subscription. In
+              the future, this is where an upgrade option will appear.
+            </p>
+          </div>
         </GlassCard>
       )}
 
@@ -256,8 +256,8 @@ export default function DayPage({ params }: DayPageProps) {
                 canAccessThisDay
                   ? didPractice
                     ? "btn-primary"
-                    : "btn-ghost border border-[hsla(var(--border),0.7)]"
-                  : "btn-ghost opacity-40 cursor-not-allowed border border-[hsla(var(--border),0.4)]"
+                    : "btn-outline"
+                  : "btn-outline opacity-40 cursor-not-allowed"
               }
               disabled={!canAccessThisDay}
               aria-label={didPractice ? "Mark practice as not done" : "Mark practice as done"}

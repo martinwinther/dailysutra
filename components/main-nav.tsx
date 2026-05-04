@@ -49,7 +49,7 @@ export function MainNav() {
             href={link.href}
             className={cn(
               "relative flex items-center gap-2 transition-all duration-200",
-              "sm:px-3 sm:py-2 sm:rounded-lg",
+              "sm:px-3 sm:py-2 sm:rounded-xl",
               "hover:text-[hsl(var(--text))]",
               isActive && "text-[hsl(var(--text))]"
             )}
@@ -114,7 +114,7 @@ export function MainNav() {
             onClick={signOut}
             className={cn(
               "relative flex items-center gap-2 transition-all duration-200",
-              "sm:px-3 sm:py-2 sm:rounded-lg",
+              "sm:px-3 sm:py-2 sm:rounded-xl",
               "btn-ghost sm:text-sm"
             )}
             disabled={authLoading}
@@ -145,7 +145,7 @@ export function MainNav() {
             href="/auth"
             className={cn(
               "relative flex items-center gap-2 transition-all duration-200",
-              "sm:px-3 sm:py-2 sm:rounded-lg",
+              "sm:px-3 sm:py-2 sm:rounded-xl",
               "btn-ghost sm:text-sm",
               isAuthActive && "text-[hsl(var(--text))]"
             )}

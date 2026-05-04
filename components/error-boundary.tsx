@@ -61,12 +61,12 @@ export class ErrorBoundary extends Component<Props, State> {
               </p>
 
               {process.env.NODE_ENV === "development" && this.state.error && (
-                <div className="rounded-lg border border-red-400/30 bg-red-500/20 px-4 py-3">
-                  <p className="break-all text-xs font-mono text-red-200">
+                <div className="callout callout-danger">
+                  <p className="break-all text-xs font-mono text-[hsl(var(--danger))]">
                     {this.state.error.toString()}
                   </p>
                   {this.state.error.stack && (
-                    <pre className="mt-2 whitespace-pre-wrap break-all text-[10px] text-red-300/80">
+                    <pre className="mt-2 whitespace-pre-wrap break-all text-[10px] text-[hsl(var(--muted))]">
                       {this.state.error.stack}
                     </pre>
                   )}

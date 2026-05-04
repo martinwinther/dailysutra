@@ -50,8 +50,8 @@ export default function ContactPage() {
           </p>
 
           {submitted ? (
-            <div className="rounded-lg bg-green-500/20 border border-green-400/30 px-4 py-3">
-              <p className="text-sm text-green-100">
+            <div className="callout callout-success">
+              <p className="text-sm">
                 Thank you! Your email client should open with your message. If it doesn&apos;t, please email us directly at{" "}
                 <a
                   href="mailto:support@dailysutra.app"
@@ -95,7 +95,7 @@ export default function ContactPage() {
               </div>
 
               {error && (
-                <p className="text-xs text-red-300">{error}</p>
+                <p className="text-xs text-[hsl(var(--danger))]">{error}</p>
               )}
 
               <button type="submit" className="btn-primary">
