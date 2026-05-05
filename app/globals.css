@@ -54,6 +54,11 @@
   --danger-soft: 5 75% 92%;
   --info: 230 80% 66%;
   --info-soft: 230 90% 92%;
+
+  /* Motion tokens */
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 * {
@@ -114,6 +119,16 @@ body::before {
   border: 1px solid hsla(var(--border), 0.2);
   backdrop-filter: blur(16px) saturate(180%);
   box-shadow: 0 18px 45px hsla(0 0% 0% / 0.35);
+  transition:
+    transform 220ms var(--ease-out-quart),
+    box-shadow 220ms var(--ease-out-quart),
+    border-color 220ms var(--ease-out-quart);
+}
+
+.glass-card:hover {
+  transform: translateY(-2px);
+  border-color: hsla(var(--border), 0.35);
+  box-shadow: 0 22px 52px hsla(0 0% 0% / 0.42);
 }
 
 .glass-card.week-card {
@@ -140,6 +155,9 @@ body::before {
   background: hsla(var(--surface), 0.6);
   border: 1px solid hsla(var(--border), 0.18);
   border-radius: 0.75rem;
+  transition:
+    border-color 200ms var(--ease-out-quart),
+    background-color 200ms var(--ease-out-quart);
 }
 
 .surface-subtle {
@@ -152,6 +170,9 @@ body::before {
   background: hsla(var(--surface-soft), 0.22);
   border: 1px solid hsla(var(--border), 0.35);
   border-radius: 0.75rem;
+  transition:
+    border-color 200ms var(--ease-out-quart),
+    background-color 200ms var(--ease-out-quart);
 }
 
 .input-soft {
@@ -160,6 +181,10 @@ body::before {
   background: hsla(var(--surface-soft), 0.2);
   color: hsl(var(--text));
   outline: none;
+  transition:
+    border-color 180ms var(--ease-out-quart),
+    background-color 180ms var(--ease-out-quart),
+    box-shadow 180ms var(--ease-out-quart);
 }
 
 .input-soft:focus {
@@ -183,6 +208,10 @@ body::before {
   box-shadow:
     0 0 0 1px hsla(var(--accent-soft), 0.9),
     0 10px 30px hsla(var(--accent), 0.55);
+  transition:
+    transform 160ms var(--ease-out-quart),
+    box-shadow 200ms var(--ease-out-quart),
+    filter 200ms var(--ease-out-quart);
 }
 
 .btn-primary:hover {
@@ -193,7 +222,7 @@ body::before {
 }
 
 .btn-primary:active {
-  transform: translateY(0);
+  transform: translateY(0) scale(0.98);
   box-shadow:
     0 0 0 1px hsla(var(--accent-soft), 0.9),
     0 6px 20px hsla(var(--accent), 0.5);
@@ -204,6 +233,10 @@ body::before {
   background: hsla(var(--surface-soft), 0.2);
   color: hsl(var(--text));
   border: 1px solid hsla(var(--border), 0.3);
+  transition:
+    transform 160ms var(--ease-out-quart),
+    background-color 200ms var(--ease-out-quart),
+    border-color 200ms var(--ease-out-quart);
 }
 
 .btn-ghost:hover {
@@ -211,16 +244,28 @@ body::before {
   border-color: hsla(var(--accent-soft), 0.6);
 }
 
+.btn-ghost:active {
+  transform: scale(0.98);
+}
+
 .btn-outline {
   @apply inline-flex items-center justify-center rounded-xl px-3 py-1.5 text-sm font-medium transition-all;
   background: hsla(var(--surface), 0.28);
   color: hsl(var(--text));
   border: 1px solid hsla(var(--border), 0.5);
+  transition:
+    transform 160ms var(--ease-out-quart),
+    background-color 200ms var(--ease-out-quart),
+    border-color 200ms var(--ease-out-quart);
 }
 
 .btn-outline:hover {
   background: hsla(var(--surface), 0.36);
   border-color: hsla(var(--border), 0.7);
+}
+
+.btn-outline:active {
+  transform: scale(0.98);
 }
 
 .btn-danger {
@@ -234,10 +279,18 @@ body::before {
   box-shadow:
     0 0 0 1px hsla(var(--danger-soft), 0.9),
     0 10px 26px hsla(var(--danger), 0.45);
+  transition:
+    transform 160ms var(--ease-out-quart),
+    box-shadow 200ms var(--ease-out-quart),
+    filter 200ms var(--ease-out-quart);
 }
 
 .btn-danger:hover {
   filter: brightness(1.03);
+}
+
+.btn-danger:active {
+  transform: scale(0.98);
 }
 
 .callout {
@@ -297,5 +350,33 @@ body::before {
   background: hsla(var(--warning), 0.26);
   color: hsl(var(--text));
   border-bottom: 1px solid hsla(var(--warning), 0.4);
+}
+
+.page-shell {
+  animation: page-fade-up 420ms var(--ease-out-expo);
+}
+
+@keyframes page-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .page-shell {
+    animation: none;
+  }
 }
 

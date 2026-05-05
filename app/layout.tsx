@@ -118,7 +118,7 @@ export default function RootLayout({
                             </header>
                             <AppStatusBanner />
                             <main id="main-content" className="flex-1" role="main">
-                              <div className="mx-auto max-w-5xl px-4 py-8 sm:py-10">
+                              <div className="page-shell mx-auto max-w-5xl px-4 py-8 sm:py-10">
                                 {children}
                               </div>
                             </main>
