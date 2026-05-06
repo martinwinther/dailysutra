@@ -91,14 +91,14 @@ function CheckoutSuccessContent() {
   }, [user, updated, searchParams]);
 
   return (
-    <div className="space-y-6">
+    <div className="page-stack">
       <PageHeader
         title="Welcome to the full journey"
         subtitle="Your subscription is active. Thank you for supporting this work."
       />
 
       <GlassCard>
-        <div className="-mx-4 px-4 py-4">
+        <div className="card-section">
           {verifying ? (
             <p className="text-sm text-[hsl(var(--muted))]">
               Verifying your payment...
@@ -148,13 +148,13 @@ export default function CheckoutSuccessPage() {
   return (
     <Suspense
       fallback={
-        <div className="space-y-6">
+        <div className="page-stack">
           <PageHeader
             title="Welcome to the full journey"
             subtitle="Your subscription is active. Thank you for supporting this work."
           />
           <GlassCard>
-            <div className="-mx-4 px-4 py-4">
+            <div className="card-section">
               <p className="text-sm text-[hsl(var(--muted))]">
                 Loading...
               </p>

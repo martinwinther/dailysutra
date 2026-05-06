@@ -48,14 +48,14 @@ export default function GlossaryPage() {
   }, [terms, searchQuery]);
 
   return (
-    <div className="space-y-6">
+    <div className="page-stack">
       <PageHeader
         title="Glossary"
         subtitle="Key Sanskrit and technical terms used in the Yoga Sūtras teachings and commentary. Click on any term to expand its definition."
       />
 
       <GlassCard>
-        <div className="-mx-4 px-4 py-4">
+        <div className="card-section">
           <label htmlFor="glossary-search" className="sr-only">
             Search glossary terms
           </label>

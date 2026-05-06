@@ -67,7 +67,7 @@ export default function BookPage({ params }: BookPageProps) {
 
   if (error) {
     return (
-      <div className="space-y-6">
+      <div className="page-stack">
         <PageHeader title={`Book ${bookValue}`} />
         <div className="text-sm text-[hsl(var(--muted))]">
           {error}
@@ -77,7 +77,7 @@ export default function BookPage({ params }: BookPageProps) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="page-stack">
       <PageHeader
         title={`Book ${bookValue}`}
         subtitle="Click on any sutra to expand its commentary"

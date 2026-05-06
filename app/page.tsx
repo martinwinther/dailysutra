@@ -24,7 +24,7 @@ export default function HomePage() {
 
   if (authLoading) {
     return (
-      <div className="space-y-6">
+      <div className="page-stack">
         <PageHeader
           title="Daily Sutra"
           subtitle="Loading your journey…"
@@ -40,7 +40,7 @@ export default function HomePage() {
 
   if (!user) {
     return (
-      <div className="space-y-6">
+      <div className="page-stack">
         <PageHeader
           title="About Daily Sutra"
           subtitle="A year-long, realistic exploration of the Yoga Sūtras of Patañjali."
@@ -53,7 +53,7 @@ export default function HomePage() {
         </div>
 
         <GlassCard>
-          <div className="-mx-4 px-4 py-4">
+          <div className="card-section">
             <p className="text-sm text-[hsl(var(--muted))]">
               Daily Sutra is a structured journey through the Yoga Sūtras.
               Each week you focus on one theme from Patañjali&apos;s text, with a small
@@ -92,7 +92,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="page-stack">
       <PageHeader
         title="Your Journey"
         subtitle="A calm, structured 52-week program based on Patañjali&apos;s Yoga Sūtras. One weekly theme, tiny daily actions, and space to reflect."
@@ -101,7 +101,7 @@ export default function HomePage() {
       {hasStartDate ? (
         current && firstWeek ? (
           <GlassCard>
-            <div className="-mx-4 px-4 py-3">
+            <div className="card-section-tight">
               <h2 className="text-sm font-medium text-[hsl(var(--text))]">
                 Today&apos;s position
               </h2>
@@ -130,7 +130,7 @@ export default function HomePage() {
           </GlassCard>
         ) : (
           <GlassCard>
-            <div className="-mx-4 px-4 py-3">
+            <div className="card-section-tight">
               <h2 className="text-sm font-medium text-[hsl(var(--text))]">
                 Today&apos;s position
               </h2>
@@ -144,7 +144,7 @@ export default function HomePage() {
         )
       ) : (
         <GlassCard>
-          <div className="-mx-4 px-4 py-4">
+          <div className="card-section">
             <p className="mb-3 text-xs text-[hsl(var(--muted))]">
               Set your journey start date to anchor which week and day you&apos;re
               on. You can back-date it if you already started.
@@ -169,7 +169,7 @@ export default function HomePage() {
       )}
 
       <GlassCard>
-        <div className="-mx-4 px-4 py-3">
+        <div className="card-section-tight">
           <h2 className="text-sm font-medium text-[hsl(var(--text))]">
             Program overview
           </h2>
@@ -180,7 +180,7 @@ export default function HomePage() {
           </p>
         </div>
         {firstWeek ? (
-          <div className="-mx-4 mt-4 px-4 py-4">
+          <div className="card-section mt-4">
             <p className="text-xs font-medium uppercase tracking-wide text-[hsl(var(--muted))]">
               Week {firstWeek.week} preview
             </p>

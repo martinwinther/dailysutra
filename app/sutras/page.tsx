@@ -11,14 +11,14 @@ const books = [
 
 export default function SutrasPage() {
   return (
-    <div className="space-y-6">
+    <div className="page-stack">
       <PageHeader
         title="The Yoga Sūtras"
         subtitle="Read through all four books of Patañjali&apos;s Yoga Sūtras with commentary. Click on any sutra to expand its commentary."
       />
 
       <GlassCard>
-        <div className="-mx-4 px-4 py-4">
+        <div className="card-section">
           <p className="text-sm text-[hsl(var(--text))]">
             This is a community translation and commentary. We strongly recommend also reading a scholarly source, such as:
           </p>
@@ -37,7 +37,7 @@ export default function SutrasPage() {
         {books.map((book) => (
           <GlassCard key={book.id}>
             <Link href={book.href} className="block">
-              <div className="-mx-4 px-4 py-4 transition-all duration-200 ease-out hover:-translate-y-1">
+              <div className="card-section transition-all duration-200 ease-out hover:-translate-y-1">
                 <h2 className="text-sm font-semibold text-[hsl(var(--text))]">
                   {book.label}
                 </h2>

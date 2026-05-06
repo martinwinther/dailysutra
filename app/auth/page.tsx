@@ -86,7 +86,7 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="page-stack">
       <PageHeader
         title="Welcome to Daily Sutra"
         subtitle="Create a free account to begin your 1-month trial and track your journey through the Yoga Sūtras."
@@ -133,7 +133,7 @@ export default function AuthPage() {
           </div>
         )}
         
-        <div className="-mx-4 px-4 py-4">
+        <div className="card-section">
           <div className="flex items-center gap-3">
             <button
               type="button"

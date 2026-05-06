@@ -121,7 +121,7 @@ export default function DayPage({ params }: DayPageProps) {
   const isLastDayOfWeek = dayIndex === 7;
 
   return (
-    <div className="space-y-6">
+    <div className="page-stack">
       <PageHeader
         title={`Week ${week.week} · Day ${dayIndex}`}
         subtitle={week.theme}
@@ -195,7 +195,7 @@ export default function DayPage({ params }: DayPageProps) {
       </div>
 
       <GlassCard>
-        <div className="-mx-4 px-4 py-4">
+        <div className="card-section">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex flex-col">
               <p className="text-xs font-bold uppercase tracking-wide text-[hsl(var(--muted))]">
@@ -238,7 +238,7 @@ export default function DayPage({ params }: DayPageProps) {
       </GlassCard>
 
       <GlassCard>
-        <div className="-mx-4 px-4 py-4">
+        <div className="card-section">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-sm font-medium text-[hsl(var(--text))]">
@@ -274,7 +274,7 @@ export default function DayPage({ params }: DayPageProps) {
       </GlassCard>
 
       <GlassCard>
-        <div className="-mx-4 px-4 py-4">
+        <div className="card-section">
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1 flex flex-col gap-2">
               <p className="text-sm font-medium text-[hsl(var(--text))]">
@@ -324,7 +324,7 @@ export default function DayPage({ params }: DayPageProps) {
 
       {isLastDayOfWeek && (
         <GlassCard>
-          <div className="-mx-4 px-4 py-4">
+          <div className="card-section">
             <div className="flex flex-col gap-4">
               <div>
                 <p className="text-sm font-medium text-[hsl(var(--text))]">

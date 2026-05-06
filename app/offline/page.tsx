@@ -4,14 +4,14 @@ import { GlassCard } from "../../components/glass-card";
 
 export default function OfflinePage() {
   return (
-    <div className="space-y-6">
+    <div className="page-stack">
       <PageHeader
         title="Offline mode"
         subtitle="You&apos;re currently offline. Some data may be out of date."
       />
 
       <GlassCard>
-        <div className="-mx-4 px-4 py-4">
+        <div className="card-section">
           <p className="text-sm text-[hsl(var(--muted))]">
             The shell of the app is still available, and any changes you make will
             be saved locally when possible. Once you&apos;re back online, the app

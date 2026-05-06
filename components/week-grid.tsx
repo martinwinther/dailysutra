@@ -26,8 +26,8 @@ export function WeekGrid() {
   const currentWeek = current?.week ?? null;
 
   return (
-    <section className="space-y-3" aria-labelledby="journey-heading">
-      <div className="flex items-center justify-between">
+    <section className="section-stack" aria-labelledby="journey-heading">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 id="journey-heading" className="text-sm font-medium uppercase tracking-wide text-[hsl(var(--muted))]">
           Your journey
         </h2>
@@ -36,7 +36,7 @@ export function WeekGrid() {
         </p>
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-2">
+      <div className="grid gap-4 sm:grid-cols-2">
         {weeks.map((weekNumber) => (
           <WeekCard
             key={weekNumber}
@@ -47,7 +47,7 @@ export function WeekGrid() {
         ))}
       </div>
 
-      <p className="mt-1 px-6 py-2 text-[10px] text-[hsl(var(--muted))] transition-all duration-200 ease-out">
+      <p className="px-6 py-2 text-[10px] text-[hsl(var(--muted))] transition-all duration-200 ease-out">
         Green squares indicate days where you marked the practice as done.
       </p>
     </section>
@@ -78,12 +78,12 @@ function WeekCard({ weekNumber, todayGlobalDayNumber, currentWeek }: WeekCardPro
 
   return (
     <GlassCard className="week-card">
-         <div
-           className={cn(
-             "px-6 py-4 transition-all duration-200 ease-out hover:-translate-y-1",
-             isCurrentWeek && "border-2 border-[hsla(var(--accent-soft),0.7)]"
-           )}
-         >
+      <div
+        className={cn(
+          "px-6 py-5 transition-all duration-200 ease-out hover:-translate-y-1",
+          isCurrentWeek && "border-2 border-[hsla(var(--accent-soft),0.7)]"
+        )}
+      >
         <div className="flex items-center justify-between gap-2 mb-3">
           <div className="flex flex-col">
             <span className="text-xs font-semibold uppercase tracking-wide text-[hsl(var(--muted))]">

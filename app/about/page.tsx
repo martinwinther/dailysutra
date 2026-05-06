@@ -4,7 +4,7 @@ import { GlassCard } from "../../components/glass-card";
 
 export default function AboutPage() {
   return (
-    <div className="space-y-6">
+    <div className="page-stack">
       <PageHeader
         title="About Daily Sutra"
         subtitle="A structured, year-long journey through Patañjali&apos;s Yoga Sūtras."

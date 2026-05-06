@@ -4,14 +4,14 @@ import { GlassCard } from "../components/glass-card";
 
 export default function NotFound() {
   return (
-    <div className="space-y-6">
+    <div className="page-stack">
       <PageHeader
         title="Page Not Found"
         subtitle="The page you&apos;re looking for doesn&apos;t exist."
       />
 
       <GlassCard>
-        <div className="-mx-4 px-4 py-4">
+        <div className="card-section">
           <p className="text-sm text-[hsl(var(--muted))]">
             The page you tried to access could not be found. It may have been moved, deleted, or the URL might be incorrect.
           </p>

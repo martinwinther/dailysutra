@@ -6,14 +6,14 @@ import { GlassCard } from "../../../components/glass-card";
 
 export default function CheckoutCancelPage() {
   return (
-    <div className="space-y-6">
+    <div className="page-stack">
       <PageHeader
         title="Payment cancelled"
         subtitle="Your payment was not completed. No charges were made."
       />
 
       <GlassCard>
-        <div className="-mx-4 px-4 py-4">
+        <div className="card-section">
           <div className="space-y-4">
             <p className="text-sm text-[hsl(var(--muted))]">
               Your checkout session was cancelled. No payment was processed and your account remains unchanged.

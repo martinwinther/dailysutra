@@ -4,7 +4,7 @@ import { GlassCard } from "../../components/glass-card";
 
 export default function TermsPage() {
   return (
-    <div className="space-y-6">
+    <div className="page-stack">
       <PageHeader
         title="Terms of Service"
         subtitle="The terms and conditions governing your use of Daily Sutra."

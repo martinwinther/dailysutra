@@ -414,7 +414,7 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="page-stack">
       <PageHeader
         title="Settings"
         subtitle="Adjust your start date, or reset your journey if you want to begin again."
@@ -427,7 +427,7 @@ export default function SettingsPage() {
       </div>
 
       <GlassCard>
-        <div className="-mx-4 px-4 py-4">
+        <div className="card-section">
           <p className="text-sm text-[hsl(var(--muted))]">
             The start date determines which week and day you are on today. You
             can change it if you want to restart or sync the journey to a
@@ -460,7 +460,7 @@ export default function SettingsPage() {
       </div>
 
       <GlassCard>
-        <div className="-mx-4 px-4 py-4">
+        <div className="card-section">
           <p className="text-sm text-[hsl(var(--muted))]">
             This will clear all recorded practice check-ins and notes, and remove
             your start date. You can&apos;t undo this action.
@@ -483,7 +483,7 @@ export default function SettingsPage() {
       </div>
 
       <GlassCard>
-        <div className="-mx-4 px-4 py-4">
+        <div className="card-section">
           <p className="text-sm text-[hsl(var(--muted))]">
             Your free trial includes the first 4 weeks of content. Upgrade to
             access all 52 weeks of the program with a one-time payment. The exact price will be shown in the secure checkout.
@@ -552,7 +552,7 @@ export default function SettingsPage() {
       </div>
 
       <GlassCard>
-        <div className="-mx-4 px-4 py-4">
+        <div className="card-section">
           <p className="text-sm text-[hsl(var(--muted))]">
             Change your account email address. You&apos;ll need to verify the new email address and re-enter your current password.
           </p>
@@ -603,7 +603,7 @@ export default function SettingsPage() {
       </GlassCard>
 
       <GlassCard>
-        <div className="-mx-4 px-4 py-4">
+        <div className="card-section">
           <p className="text-sm text-[hsl(var(--muted))]">
             Change your account password. You&apos;ll need to enter your current password to confirm the change.
           </p>
@@ -667,7 +667,7 @@ export default function SettingsPage() {
       </GlassCard>
 
       <GlassCard>
-        <div className="-mx-4 px-4 py-4">
+        <div className="card-section">
           <p className="text-sm text-[hsl(var(--muted))]">
             Forgot your password? Enter your email address and we&apos;ll send you a link to reset it.
           </p>
@@ -711,7 +711,7 @@ export default function SettingsPage() {
       </div>
 
       <GlassCard>
-        <div className="-mx-4 px-4 py-4">
+        <div className="card-section">
           <p className="text-sm text-[hsl(var(--muted))]">
             Enable push notifications to receive daily practice reminders. You can customize when and how often you receive them.
           </p>
@@ -829,7 +829,7 @@ export default function SettingsPage() {
       </div>
 
       <GlassCard>
-        <div className="-mx-4 px-4 py-4">
+        <div className="card-section">
           <p className="text-sm text-[hsl(var(--muted))]">
             You can export your current journey to a JSON file or a formatted PDF. The PDF includes all your notes and reflections in a clean, printable format. JSON exports are useful for backups and importing on other devices.
           </p>
@@ -866,7 +866,7 @@ export default function SettingsPage() {
       </div>
 
       <GlassCard>
-        <div className="-mx-4 px-4 py-4">
+        <div className="card-section">
           <p className="text-sm text-[hsl(var(--muted))]">
             Permanently delete your account and all associated data. This action cannot be undone. Your journey progress, notes, and account information will be permanently deleted.
           </p>

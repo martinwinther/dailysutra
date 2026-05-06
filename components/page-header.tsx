@@ -7,7 +7,7 @@ interface PageHeaderProps {
 
 export function PageHeader({ title, subtitle }: PageHeaderProps) {
   return (
-    <header className="mb-6 sm:mb-8">
+    <header className="space-y-2">
       <h1 className="text-2xl font-semibold tracking-tight text-[hsl(var(--text))] sm:text-3xl">
         {title}
       </h1>

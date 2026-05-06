@@ -27,14 +27,14 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="page-stack">
       <PageHeader
         title="Contact Us"
         subtitle="We&apos;re here to help. Reach out with questions, feedback, or support requests."
       />
 
       <GlassCard>
-        <div className="-mx-4 px-4 py-4">
+        <div className="card-section">
           <h2 className="text-sm font-medium text-[hsl(var(--text))] mb-2">
             Get in Touch
           </h2>
@@ -107,7 +107,7 @@ export default function ContactPage() {
       </GlassCard>
 
       <GlassCard>
-        <div className="-mx-4 px-4 py-4">
+        <div className="card-section">
           <h2 className="text-sm font-medium text-[hsl(var(--text))] mb-2">
             Other Ways to Reach Us
           </h2>
